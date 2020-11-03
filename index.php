@@ -41,37 +41,34 @@
     <!-- Left Panel -->
 
     <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm ">
+        <nav class="navbar navbar-expand-sm navbar-default">
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
                     </li>
-                    <li class="menu-title">ADMINISTRACIÓN</li><!-- /.menu-title -->
+                    <li class="menu-title">Administración</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CLIENTES</a>
                         <ul class="sub-menu children dropdown-menu">                            
                             <li><i class=""></i><a href="view_cliente.php">Lista clientes</a></li>
-                            
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>VENTAS</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="tables-basic.html">Lista ventas</a></li>
-                        
+                            <li><i class=""></i><a href="tables-basic.html">Basic Table</a></li>
+                            <li><i class=""></i><a href="tables-data.html">Data Table</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="forms-basic.html">Lista facturas</a></li>
-                        
+                            <li><i class=""></i><a href="forms-basic.html">Basic Form</a></li>
+                            <li><i class=""></i><a href="forms-advanced.html">Advanced Form</a></li>
                         </ul>
                     </li>
-
-                    
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -89,7 +86,7 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
                     <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
-                    <a id="menuToggle1" class="menutoggle"><i class="fa fa-bars"></i> </a>
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
             <div class="top-right">
@@ -182,12 +179,13 @@
                                             <table class="table table-responsive">
                                                 <thead class="thead-dark">
                                                     <tr>
-                                                        <th>Codigo</th>
                                                         <th>Cantidad</th>
                                                         <th>Producto</th>
                                                         <th>Peso</th>
                                                         <th>Precio</th>
-                                                        <th>Opciones</th>
+                                                        <th>Impuesto</th>
+                                                        <th>Descuento</th>
+                                                        <th>Eliminar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="cont_ventas">
@@ -217,48 +215,8 @@
                                                     
                                                 </div>
                                             </div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-check form-check-inline">
-                                                        <strong>Impuesto</strong>
-                                                    </div>
-                                                </div>
-                                                    <div class="col">
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="number" class="form-control" id="impuesto" placeholder="Impuesto" required style="width:110px;  height:35px;" disabled>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-check form-check-inline">
-                                                        <strong>Descuento</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="number" class="form-control" id="descuento" placeholder="Desuento" required style="width:110px;  height:35px;" disabled>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
+                                            
+                                            
                                             <hr>
                                             <div class="form-row">
                                                 <div class="col">

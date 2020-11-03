@@ -271,11 +271,10 @@ $(document).ready(function(){
         }
     });
 
-    if($('#tipo_cliente').val()==="Normal"){
+    /*if($('#tipo_cliente').val()==="Normal"){
         $('#info_insti').hide();
-    }
+    }*/
 });
-
 
 
 var valor;
