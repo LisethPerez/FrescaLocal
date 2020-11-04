@@ -415,11 +415,15 @@
                                                                     </div><br>
                                                                     <div id="efectivo">
                                                                         <div class="form-row">
-                                                                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Valor recibido" onkeypress="return onlyNums(event)"><br>        
-                                                                        </div><br>
-                                                                        <div class="form-row">
-                                                                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Valor del cambio" onkeypress="return onlyNums(event)" disabled><br>        
-                                                                        </div>
+                                                                            <div class="col">
+                                                                                <label for="validationCustom03">Ingrese valor recibido</label>
+                                                                                <input type="text" class="form-control" id="valor_ingre" name="valor_ingre" onkeypress="return onlyNums(event)" style="height:120px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                            <div class="col">
+                                                                            <label for="validationCustom03">Valor de cambio</label>
+                                                                                <input type="text" class="form-control" id="nombre" name="nombre" onkeypress="return onlyNums(event)" disabled style="height:120px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                            </div>
                                                                     </div>    
                                                                     
                                                                     

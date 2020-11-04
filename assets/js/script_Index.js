@@ -247,6 +247,15 @@ $('.editbtn').click(function () {
  
  });
 
+ $('#valor_ingre').on('keyup', () => {
+    const value = $('#valor_ingre').val()
+    var chain = String(value.replace(/\D/g, ""))
+    //chain = chain.replace(/[^a-zA-Z0-9]/g, '')
+    const newValue = new Intl.NumberFormat('en-US').format(chain)
+    $('#valor_ingre').val("$ " + newValue)
+
+})
+
 
 //Esconder formulario de busqueda
 $(document).ready(function(){
@@ -270,6 +279,7 @@ $(document).ready(function(){
             });
         }
     });
+    $('#producto').keypress();
 
     /*if($('#tipo_cliente').val()==="Normal"){
         $('#info_insti').hide();
