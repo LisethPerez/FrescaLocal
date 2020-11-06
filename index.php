@@ -226,7 +226,7 @@
                                                     <button class="btn btn-success btn-sm mb-2" type="button" data-toggle="modal" data-target="#infoPago"><i class="fa fa-money"></i>&nbsp;Registrar pago</button> 
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-danger btn-sm mb-2" type="button"  style="background:#F0A744;"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
+                                                    <button class="btn btn-danger btn-sm mb-2" type="button"  id="prueba" style="background:#F0A744;"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
                                                 </div>
                                                 <!--<div class="col">
                                                 <div id="resultado"class="col"></div>

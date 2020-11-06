@@ -254,8 +254,7 @@ $('.editbtn').click(function () {
     const newValue = new Intl.NumberFormat('en-US').format(chain)
     $('#valor_ingre').val("$ " + newValue)
 
-})
-
+});
 
 //Esconder formulario de busqueda
 $(document).ready(function(){
@@ -275,16 +274,38 @@ $(document).ready(function(){
                     result($.map(data,function(item){
                         return item;
                     }));
+                    
                 }
             });
+        },
+        updater : function(item) {
+            this.$element[0].value = item;
+            $.ajax({
+                url:"get_image.php?var="+item,
+                method:"POST",    
+                success:function(data){
+                    alert(data);           
+                }
+            });
+            return item;
+            
         }
     });
-    $('#producto').keypress();
 
-    /*if($('#tipo_cliente').val()==="Normal"){
-        $('#info_insti').hide();
-    }*/
 });
+
+/*$('#producto').change(function () {    
+    var productos = $('#producto').next("ul").find("li.active").data("value");  
+    
+   $.ajax({
+        url:"get_image.php?var="+productos,
+        method:"POST",    
+        success:function(data){
+            alert(data);           
+        }
+    });
+});*/
+
 
 
 var valor;
