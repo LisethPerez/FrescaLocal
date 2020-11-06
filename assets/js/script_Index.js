@@ -255,7 +255,7 @@ $('.editbtn').click(function () {
     $('#valor_ingre').val("$ " + newValue)
 
 });
-
+var nombre_producto;
 //Esconder formulario de busqueda
 $(document).ready(function(){
     //Esconder formulario de busqueda
@@ -280,11 +280,13 @@ $(document).ready(function(){
         },
         updater : function(item) {
             this.$element[0].value = item;
+            nombre_producto = item;
             $.ajax({
                 url:"get_image.php?var="+item,
                 method:"POST",    
                 success:function(data){
-                    alert(data);           
+                    //alert(data);   
+                    $('#productos').html(data);        
                 }
             });
             return item;

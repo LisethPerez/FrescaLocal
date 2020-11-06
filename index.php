@@ -475,12 +475,11 @@
                                             </div>-->
                                             <strong>PRODUCTOS</strong><br>
                                             <div class="card-text col-12" >
-                                                <div class="form-row">
-                                                    <div class="col-8" id="productos">
-                                                           
-                                                        <label>IMAGENES</label>
-                                                    </div>
+                                                <div class="form-row" id="productos">
+                                                    
+                                                    
                                                 </div>
+            
                                             </div>
                                         </div> <!--card-text-->
                                     </div>  <!--card-body-->
