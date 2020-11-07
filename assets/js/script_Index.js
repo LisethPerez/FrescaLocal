@@ -186,6 +186,7 @@ $('#ingresar_login').click(function () {
         url: "login.php",
         data: $("#formulario_ingreso").serialize(),
         success: function(data) {
+            
             if(data === "Datos correctos"){
                 window.location.href="index.php";
             }
@@ -199,7 +200,9 @@ $('#ingresar_login').click(function () {
                     hideClass: {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
-                });     
+                });  
+                $('#email').val('');
+                $('#password').val('');   
             }
         }
     });
@@ -283,6 +286,15 @@ $(document).ready(function(){
             nombre_producto = item;
             $.ajax({
                 url:"get_image.php?var="+item,
+                method:"POST",    
+                success:function(data){
+                    //alert(data);   
+                    $('#productos').html(data);        
+                }
+            });
+
+            $.ajax({
+                url:"ocultar.php?var="+item,
                 method:"POST",    
                 success:function(data){
                     //alert(data);   

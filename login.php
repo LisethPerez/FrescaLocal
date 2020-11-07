@@ -4,8 +4,6 @@ include 'conexionGene.php';
 $usuario = $_POST['email'];
 $contra = $_POST['pass'];
 
-
-
 //Consulta a la base de datos
 $consult = "SELECT * FROM users WHERE email='{$usuario}'";
 $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
@@ -16,12 +14,15 @@ if($number = $sql->num_rows>0){
     if(password_verify($contra, $result->password)) {
         
         $_SESSION['username'] = $usuario;       
-        /*return header("Location: index.php");*/
+        //return header("Location: index.php");
         echo "Datos correctos";
      
-    } else{
+    } else{   
+        //return header("Location: index.php");
         echo "Datos erroneos";
          
     }
+}else{
+    echo "Datos erroneos";
 }
 ?>
