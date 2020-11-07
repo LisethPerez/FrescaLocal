@@ -259,6 +259,7 @@ $('.editbtn').click(function () {
 
 });
 var nombre_producto;
+var tipo;
 //Esconder formulario de busqueda
 $(document).ready(function(){
     //Esconder formulario de busqueda
@@ -294,11 +295,10 @@ $(document).ready(function(){
             });
 
             $.ajax({
-                url:"ocultar.php?var="+item,
+                url:"ocultar.php?var="+nombre_producto,
                 method:"POST",    
-                success:function(data){
-                    //alert(data);   
-                    $('#productos').html(data);        
+                success:function(data){ 
+                     tipo = data;     
                 }
             });
             return item;
@@ -352,7 +352,7 @@ $('#obte').click(function () {
         }
     }); 
 });
-
+var datos = [];
 //Enviar datos por con enter
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
@@ -361,10 +361,21 @@ $('.selec').keypress(function (e) {
     var codigo = $('#producto1').val();
      
     if(e.which == 13) {
-        if(cantidad===''){
+        if(tipo==="cantidad" && cantidad===''){
             Swal.fire({
                 icon: 'error',
                 title: 'Por favor ingrese la cantidad',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });     
+        }else if(tipo==="peso" && peso===''){
+            Swal.fire({
+                icon: 'error',
+                title: 'Por favor ingrese el peso',
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },
@@ -378,7 +389,8 @@ $('.selec').keypress(function (e) {
                 url: "ingresar_tabla.php",
                 data: $("#venta").serialize(),
                 success: function(data) {
-                    var DataArray = JSON.parse(data);
+                    var DataArray = JSON.parse(data);  
+                   datos.push(DataArray);              
                     createRow(DataArray);
                     $('#producto').val('');
                     $('#cantidad').val('');
@@ -388,8 +400,15 @@ $('.selec').keypress(function (e) {
                     deleteRow();
                 }
             });
-        }          
-    }    
+        }     
+        
+        for(var i=0; i<datos.length; i++){
+            var total = datos[i].cantidad * datos[i].precio;
+            $('#total').val(total);
+        }
+        
+    }  
+
 });
 
 function deleteRow(){
@@ -408,6 +427,8 @@ function createRow(data) {                              //dynamically adding row
     <td>`+data[i].producto+`</td>
     <td>`+data[i].peso+`</td>
     <td>`+data[i].precio+`</td>
+    <td>`+data[i].impuesto+`</td>
+    <td>`+data[i].descuento+`</td>
     <td>`+data[i].opcion+`</td>  
     </tr>`;
     $('#cont_ventas').append(trElement);

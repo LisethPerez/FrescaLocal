@@ -179,13 +179,14 @@
                                             <table class="table table-responsive">
                                                 <thead class="thead-dark">
                                                     <tr>
+                                                        <th>Codigo</th>
                                                         <th>Cantidad</th>
                                                         <th>Producto</th>
                                                         <th>Peso</th>
                                                         <th>Precio</th>
                                                         <th>Impuesto</th>
                                                         <th>Descuento</th>
-                                                        <th>Eliminar</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="cont_ventas">
