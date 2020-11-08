@@ -211,7 +211,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-check form-check-inline">
-                                                        <input type="number" class="form-control" id="total" placeholder="Total" required style="width:110px; height:35px;" disabled>
+                                                        <input type="text" class="form-control" id="total" placeholder="Total" required style="width:110px; height:35px;" disabled>
                                                     </div>
                                                     
                                                 </div>

@@ -251,11 +251,10 @@ $('.editbtn').click(function () {
  });
 
  $('#valor_ingre').on('keyup', () => {
-    const value = $('#valor_ingre').val()
-    var chain = String(value.replace(/\D/g, ""))
-    //chain = chain.replace(/[^a-zA-Z0-9]/g, '')
-    const newValue = new Intl.NumberFormat('en-US').format(chain)
-    $('#valor_ingre').val("$ " + newValue)
+    const value = $('#valor_ingre').val();
+    var chain = String(value.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    $('#valor_ingre').val("$ " + newValue);
 
 });
 var nombre_producto;
@@ -408,14 +407,10 @@ $('.selec').keypress(function (e) {
                             'descuento': _data.descuento,
                             'total' : parseInt( _data.cantidad)*parseFloat(_data.precio)
                         })
-                        
-                        /*var total = datos[i].cantidad * datos[i].precio;
-                        $('#total').val(total);*/
+                
                     });
                     $.each(datos, function(i, _data) {
-                       
                         total += _data.total;
-
                     });
                     
                     $('#producto').val('');
@@ -423,9 +418,10 @@ $('.selec').keypress(function (e) {
                     $('#peso').val('');
                     $('#producto1').val('');
                     
-                    deleteRow(datos)
+                    deleteRow(datos);
+                    const newValue = new Intl.NumberFormat('en-US').format(total.toString().replace(/\D/g, ""));
                         
-                    $('#total').val(total);
+                    $('#total').val("$"+newValue);
                     total = 0;
                     alert(JSON.stringify(datos.length));
                 
@@ -436,7 +432,8 @@ $('.selec').keypress(function (e) {
     }
 
 });
-var codigo;
+
+//Eliminar registro del pedido y del array
 function deleteRow(data){
     
     $('.eliRows').click(function () {
@@ -445,9 +442,10 @@ function deleteRow(data){
             return $(this).text();
         });
         var cod = datos[0];
+        var costo = datos[5];
         for(var i=0; i<data.length;i++) {
             if(String(data[i].codigo)===cod){
-                
+                $('#total').val($('#total').val()-data[i].total);
                 data.splice(i, 1);    
             }
         }  
@@ -456,8 +454,9 @@ function deleteRow(data){
     });
 }
 
-function createRow(data) {                              //dynamically adding rows to the Table
-                    //design this according to your requirement    
+//Agregar dinaminicamente columnas a la tabla del array de producto
+function createRow(data) {                             
+                     
     for(var i=0; i<data.length; i++){
     var trElement = `<tr>
     <td>`+data[i].codigo+`</td>
