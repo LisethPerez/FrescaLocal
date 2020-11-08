@@ -35,7 +35,16 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-
+<style>
+.my-custom-scrollbar {
+position: relative;
+height: 100px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+</style>
 </head>
 <body>
     <!-- Left Panel -->
@@ -45,7 +54,7 @@
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li>
+                    <li class="active">
                         <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
@@ -155,7 +164,7 @@
                                             <div class="form-row">
                                                 <div class="col">
                                                     <label for="staticEmail2">Buscar producto</label>
-                                                    <input autocomplete="off"  type="text" class="form-control selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px;" data-minChars="1">
+                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px;" data-minChars="1">
                                                     
                                                 </div>
                                                 <div class="col">
@@ -175,7 +184,7 @@
                                         </form>                
                                                 </div>
                                             </div><hr>
-                                            <div class="form-row">
+                                            <div class="form-row table-wrapper-scroll-y my-custom-scrollbar" >
                                             <table class="table table-responsive">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -203,15 +212,13 @@
                                                 <div class="col">
                                                 </div>
                                                 <div class="col">
+                                                    <div class="form-check form-check-inline">
+                                                        <strong style="font-size:160%">Total</strong>
+                                                </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-check form-check-inline">
-                                                        <strong>Total</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="text" class="form-control" id="total" placeholder="Total" required style="width:110px; height:35px;" disabled>
+                                                        <input type="text" class="form-control" id="total" placeholder="Total" required style="width:150px; height:50px; font-size:150%" disabled>
                                                     </div>
                                                     
                                                 </div>
@@ -267,6 +274,7 @@
                                                                     <hr>
                                                                     <div class="form-row">
                                                                         <div class="col" id="resultado">
+                                                                        <input type="hidden" id="cedula1" name="cedula1">
                                                                         </div>
                                                                     </div>
                                                                    
@@ -274,7 +282,7 @@
                                                             </div><!--card-border-->
                                                         </div><!--model-body-->
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-success btn-sm mb-2" data-dismiss="modal">Confirmar</button>
+                                                            <button type="button" id="confi" class="btn btn-success btn-sm mb-2" data-dismiss="modal">Confirmar</button>
                                                            
                                                         </div>
                                                     </div><!--modal-content-->
@@ -491,24 +499,24 @@
                                         <table class="table table-sm table-borderless">
                                         <tbody>
                                                                 <tr>
-                                                                    <td><button type="button"  id="sele1" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="1">1</button></td>
-                                                                    <td><button type="button"  id="sele2" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="2">2</button></td>
-                                                                    <td> <button type="button" id="sele3" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="3">3</button></td>
+                                                                    <td><button type="button"  id="sele1" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="1">1</button></td>
+                                                                    <td><button type="button"  id="sele2" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="2">2</button></td>
+                                                                    <td> <button type="button" id="sele3" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="3">3</button></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><button type="button" id="sele4" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="4">4</button></td>
-                                                                    <td><button type="button" id="sele5" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="5">5</button></td>
-                                                                    <td><button type="button" id="sele6" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="6">6</button></td>
+                                                                    <td><button type="button" id="sele4" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="4">4</button></td>
+                                                                    <td><button type="button" id="sele5" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="5">5</button></td>
+                                                                    <td><button type="button" id="sele6" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="6">6</button></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><button type="button" id="sele7" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="7">7</button></td>
-                                                                    <td><button type="button" id="sele8" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="8">8</button></td>
-                                                                    <td> <button type="button" id="sele9" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;"  value="9">9</button></td>
+                                                                    <td><button type="button" id="sele7" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="7">7</button></td>
+                                                                    <td><button type="button" id="sele8" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="8">8</button></td>
+                                                                    <td> <button type="button" id="sele9" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%"  value="9">9</button></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><button type="button" id="sele0" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="0">0</button></td>
-                                                                    <td><button type="button" id="sele00" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744;" value="00">00</button></td>
-                                                                    <td> <button type="button" id="seleEli" class="btn btn-danger btn-sm" style="width:75px; background:#F0A744;">&larr;</button></td>
+                                                                    <td><button type="button" id="sele0" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="0">0</button></td>
+                                                                    <td><button type="button" id="sele00" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="00">00</button></td>
+                                                                    <td> <button type="button" id="seleEli" class="btn btn-danger btn-sm" style="width:75px; background:#F0A744; font-size:124%">&larr;</button></td>
                                                                 </tr>
                                                             </tbody>
                                         </table>

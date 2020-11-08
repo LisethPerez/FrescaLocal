@@ -34,7 +34,6 @@ $('#buscar1').click(function () {
         success: function(data) {
             
             $('#resultado').html(data);
-           
             
             if (data === "No existe ese registro"){
                 Swal.fire({
@@ -53,6 +52,10 @@ $('#buscar1').click(function () {
     });
      
 });
+
+$('#confi').click(function () {
+    alert($('#cedula1').val());
+});    
 
 $('#buscar3').click(function () {
     $.ajax({
@@ -352,9 +355,9 @@ $('#obte').click(function () {
     }); 
 });
 var datos = [];
-
 var DataArray = [];
 var total=0;
+//var descuento = 0, impuesto = 0;
 //Enviar datos por con enter
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
@@ -396,20 +399,29 @@ $('.selec').keypress(function (e) {
                     createRow(DataArray);
                     //alert(JSON.stringify(DataArray));
                     $.each(DataArray, function(i, _data) {
+                        var codigo =  _data.codigo;
+                        var cantidad =  parseInt( _data.cantidad);
+                        var producto =  _data.producto;
+                        var peso =  parseFloat(_data.peso);
+                        var precio = parseFloat(_data.precio);
+                        var impuesto =  parseInt(_data.impuesto);
+                        var descuento = parseInt(_data.descuento);
                         
                         datos.push({
-                            'codigo':  _data.codigo,
-                            'cantidad':  _data.cantidad,
-                            'producto':  _data.producto,
-                            'peso':  _data.peso,
-                            'precio' :  _data.precio,
-                            'impuesto':  _data.impuesto,
-                            'descuento': _data.descuento,
-                            'total' : parseInt( _data.cantidad)*parseFloat(_data.precio)
+                            'codigo': codigo,
+                            'cantidad': cantidad,
+                            'producto': producto,
+                            'peso': peso,
+                            'precio' : precio,
+                            'impuesto': impuesto,
+                            'descuento': descuento,
+                            'total' : Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)))
                         })
                 
                     });
+                    
                     $.each(datos, function(i, _data) {
+                        
                         total += _data.total;
                     });
                     
@@ -420,8 +432,13 @@ $('.selec').keypress(function (e) {
                     
                     deleteRow(datos);
                     const newValue = new Intl.NumberFormat('en-US').format(total.toString().replace(/\D/g, ""));
-                        
-                    $('#total').val("$"+newValue);
+                    
+                    if(datos.length===0){
+                        $('#total').val('');
+                    }else{
+                        $('#total').val("$"+newValue);
+                    }
+                    
                     total = 0;
                     alert(JSON.stringify(datos.length));
                 
