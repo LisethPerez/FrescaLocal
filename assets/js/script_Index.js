@@ -353,6 +353,9 @@ $('#obte').click(function () {
     }); 
 });
 var datos = [];
+
+var DataArray = [];
+var total=0;
 //Enviar datos por con enter
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
@@ -389,31 +392,66 @@ $('.selec').keypress(function (e) {
                 url: "ingresar_tabla.php",
                 data: $("#venta").serialize(),
                 success: function(data) {
-                    var DataArray = JSON.parse(data);  
-                   datos.push(DataArray);              
+                    DataArray = JSON.parse(data);  
+                   //datos.push(DataArray);              
                     createRow(DataArray);
+                    //alert(JSON.stringify(DataArray));
+                    $.each(DataArray, function(i, _data) {
+                        
+                        datos.push({
+                            'codigo':  _data.codigo,
+                            'cantidad':  _data.cantidad,
+                            'producto':  _data.producto,
+                            'peso':  _data.peso,
+                            'precio' :  _data.precio,
+                            'impuesto':  _data.impuesto,
+                            'descuento': _data.descuento,
+                            'total' : parseInt( _data.cantidad)*parseFloat(_data.precio)
+                        })
+                        
+                        /*var total = datos[i].cantidad * datos[i].precio;
+                        $('#total').val(total);*/
+                    });
+                    $.each(datos, function(i, _data) {
+                       
+                        total += _data.total;
+
+                    });
+                    
                     $('#producto').val('');
                     $('#cantidad').val('');
                     $('#peso').val('');
                     $('#producto1').val('');
-
-                    deleteRow();
-                }
+                    
+                    deleteRow(datos)
+                        
+                    $('#total').val(total);
+                    total = 0;
+                    alert(JSON.stringify(datos.length));
+                
+            
+                }      
             });
-        }     
-        
-        for(var i=0; i<datos.length; i++){
-            var total = datos[i].cantidad * datos[i].precio;
-            $('#total').val(total);
         }
-        
-    }  
+    }
 
 });
-
-function deleteRow(){
+var codigo;
+function deleteRow(data){
     
     $('.eliRows').click(function () {
+        $tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+        var cod = datos[0];
+        for(var i=0; i<data.length;i++) {
+            if(String(data[i].codigo)===cod){
+                
+                data.splice(i, 1);    
+            }
+        }  
+        
         $(this).closest('tr').remove();
     });
 }
