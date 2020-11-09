@@ -38,7 +38,7 @@
 <style>
 .my-custom-scrollbar {
 position: relative;
-height: 100px;
+height: 200px;
 overflow: auto;
 }
 .table-wrapper-scroll-y {
@@ -164,23 +164,23 @@ display: block;
                                             <div class="form-row">
                                                 <div class="col">
                                                     <label for="staticEmail2">Buscar producto</label>
-                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px;" data-minChars="1">
+                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:30px" data-minChars="1">
                                                     
                                                 </div>
                                                 <div class="col">
                                                         <label><a  id="obte" class="">Peso</a></label>
                                                         <input type="hidden" id="peso" name="peso">
-                                                        <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" required disabled>
+                                                        <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" style="height:30px" required disabled>
                                                 </div>
                                             </div><br>
                                             <div class="form-row">
                                                 <div class="col">
                                                         <label for="staticEmail2">Buscar por código</label>
-                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px;">
+                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:30px">
                                                 </div>
                                                 <div class="col">
                                                     <label for="validationCustom03">Cantidad</label>
-                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
+                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:30px" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
                                         </form>                
                                                 </div>
                                             </div><hr>
@@ -231,7 +231,7 @@ display: block;
                                                     <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente"><i class="fa fa-user"></i>&nbsp;Cliente</button>
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-success btn-sm mb-2" type="button" data-toggle="modal" data-target="#infoPago"><i class="fa fa-money"></i>&nbsp;Registrar pago</button> 
+                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago"><i class="fa fa-money"></i>&nbsp;Registrar pago</button> 
                                                 </div>
                                                 <div class="col">
                                                     <button class="btn btn-danger btn-sm mb-2" type="button"  id="prueba" style="background:#F0A744;"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
@@ -274,7 +274,7 @@ display: block;
                                                                     <hr>
                                                                     <div class="form-row">
                                                                         <div class="col" id="resultado">
-                                                                        <input type="hidden" id="cedula1" name="cedula1">
+                                                                        
                                                                         </div>
                                                                     </div>
                                                                    
@@ -304,7 +304,7 @@ display: block;
                                                             <div class="col">
                                                                             <label for="validationCustom03">Tipo Cliente</label>
                                                                             <select type="text" class="form-control" id="tipo_cliente" name="tipo_cliente" placeholder="Tipo cliente"  onkeypress="return onlyLetters(event)" style="width:160px;" required>
-                                                                                <option value="1">Normal</option>
+                                                                                <option value="1">Corriente</option>
                                                                                 <option value="2">Institucional</option>
                                                                             </select>
                                                                     </div>
@@ -430,7 +430,7 @@ display: block;
                                                                             </div>
                                                                             <div class="col">
                                                                             <label for="validationCustom03">Valor de cambio</label>
-                                                                                <input type="text" class="form-control" id="nombre" name="nombre" onkeypress="return onlyNums(event)" disabled style="height:120px; font-size:300%;"><br>        
+                                                                                <input type="text" class="form-control" id="vueltas" name="vueltas" onkeypress="return onlyNums(event)" disabled style="height:120px; font-size:300%;"><br>        
                                                                             </div>
                                                                             </div>
                                                                     </div>    

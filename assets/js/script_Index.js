@@ -38,7 +38,7 @@ $('#buscar1').click(function () {
             if (data === "No existe ese registro"){
                 Swal.fire({
                     icon: 'error',
-                    title: 'No se encontraron registros con la búsqueda. Por favor ingrese un nuevo cliente',
+                    title: 'No existen registros con la búsqueda',
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -52,11 +52,19 @@ $('#buscar1').click(function () {
     });
      
 });
-
+var cedula_cliente;
+var tipo_cliente;
 $('#confi').click(function () {
-    alert($('#cedula1').val());
-});    
-
+    cedula_cliente = $('#cedula1').val()
+    $.ajax({
+        type: "POST",
+        url: "obtener_tipo.php?var="+cedula_cliente,
+        data: $('#formulario').serialize(),
+        success: function(data) {          
+            tipo_cliente = data;           
+        }
+    });
+});
 $('#buscar3').click(function () {
     $.ajax({
         type: "POST",
@@ -67,7 +75,7 @@ $('#buscar3').click(function () {
             if(data === "No existen registros"){
                 Swal.fire({
                     icon: 'error',
-                    title: 'No se encontraron registros con la búsqueda',
+                    title: 'No existen registros con la búsqueda',
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -389,14 +397,16 @@ $('.selec').keypress(function (e) {
                 }
             });     
         }else{
+
             $.ajax({
                 type: "POST",
-                url: "ingresar_tabla.php",
+                url: "ingresar_tabla.php?var="+tipo_cliente,
                 data: $("#venta").serialize(),
                 success: function(data) {
                     DataArray = JSON.parse(data);  
                    //datos.push(DataArray);              
                     createRow(DataArray);
+                    deleteRow(datos);  
                     //alert(JSON.stringify(DataArray));
                     $.each(DataArray, function(i, _data) {
                         var codigo =  _data.codigo;
@@ -430,24 +440,46 @@ $('.selec').keypress(function (e) {
                     $('#peso').val('');
                     $('#producto1').val('');
                     
-                    deleteRow(datos);
+                    
                     const newValue = new Intl.NumberFormat('en-US').format(total.toString().replace(/\D/g, ""));
                     
                     if(datos.length===0){
                         $('#total').val('');
                     }else{
-                        $('#total').val("$"+newValue);
-                    }
-                    
+                        $('#total').val("$" + newValue);
+                    } 
                     total = 0;
-                    alert(JSON.stringify(datos.length));
-                
-            
-                }      
+                    
+                    
+                }   
+                 
             });
+            venta = datos;
+            
         }
     }
 
+});
+var venta = [];
+$('#valor_ingre').keypress(function (e) {
+    var totaal = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
+    var valor_ingre = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
+    if(e.which == 13) {
+        var residuo = valor_ingre-totaal;
+        const newValue = new Intl.NumberFormat('en-US').format(residuo.toString().replace(/\D/g, ""));
+        $('#vueltas').val("$" + newValue);
+    }
+});   
+$('#realizar_pago').click(function(){
+    alert(JSON.stringify(venta));
+    $.ajax({
+        url: "detalle_venta.php?var="+venta,
+        success: function(data) {
+            var ventas = JSON.parse(data);
+            alert(JSON.stringify(ventas));
+        }
+    });
+    //alert(JSON.stringify(venta));
 });
 
 //Eliminar registro del pedido y del array
@@ -459,13 +491,17 @@ function deleteRow(data){
             return $(this).text();
         });
         var cod = datos[0];
-        var costo = datos[5];
         for(var i=0; i<data.length;i++) {
             if(String(data[i].codigo)===cod){
-                $('#total').val($('#total').val()-data[i].total);
+
+                var cost = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
+                var nuevo = cost-data[i].total;
+                nuevo = new Intl.NumberFormat('en-US').format(nuevo.toString().replace(/\D/g, ""));
+                $('#total').val("$"+nuevo);
                 data.splice(i, 1);    
             }
         }  
+        venta = JSON.parse(JSON.stringify(data));
         
         $(this).closest('tr').remove();
     });

@@ -1,6 +1,8 @@
 <?php
 include 'conexionGene.php';
 
+
+$tipo = $_GET['var'];
 $producto_1 = $_POST['producto'];
 $peso = $_POST['peso'];
 $codigo = $_POST['producto1'];
@@ -17,13 +19,20 @@ if(empty($codigo)){
 $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 if($numFilas = $sql->num_rows>0){
     $result = $sql->fetch_object();
+
+    if($tipo=="1"){
+        $precio = $result->precio_2;
+    }
+    if($tipo=="2"){
+        $precio = $result->precio_1;
+    }
     
     $datos[] = array(
         "codigo"=>$result->ean,
         "cantidad"=>$cantidad,
         "producto"=>$producto_1,
         "peso"=>$peso,
-        "precio"=>$result->costo_compra,
+        "precio"=>$precio,//$result->costo_compra,
         "impuesto"=>$result->valor_impuesto,
         "descuento"=>$result->valor_descuento,
         "opcion"=>'<button class="btn btn-danger btn-sm eliRows" id="eliminar_pro"><i class="fa fa-ban" aria-hidden="true"></i></button>'
