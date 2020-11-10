@@ -38,7 +38,7 @@ $('#buscar1').click(function () {
             if (data === "No existe ese registro"){
                 Swal.fire({
                     icon: 'error',
-                    title: 'No existen registros con la búsqueda',
+                    text: 'No existen registros con la búsqueda',
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -75,7 +75,7 @@ $('#buscar3').click(function () {
             if(data === "No existen registros"){
                 Swal.fire({
                     icon: 'error',
-                    title: 'No existen registros con la búsqueda',
+                    text: 'No existen registros con la búsqueda',
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -144,7 +144,7 @@ $('#registrar2').click(function () {
     if(nombre===''||  documento===''|| telefono===''|| dirección===''|| correo==='' || empresa==='' || nit===''){
         Swal.fire({
             icon: 'error',
-            title: 'Por favor ingrese los datos',
+            text: 'Por favor ingrese los datos',
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
@@ -160,7 +160,7 @@ $('#registrar2').click(function () {
             success: function(data) {
                 Swal.fire({
                     icon: 'success',
-                    title: data,
+                    text: data,
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -183,7 +183,7 @@ $('#ingresar_login').click(function () {
     if(correo==='' || password===''){
         Swal.fire({
             icon: 'error',
-            title: 'Por favor ingrese los datos',
+            text: 'Por favor ingrese los datos',
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
@@ -204,7 +204,7 @@ $('#ingresar_login').click(function () {
             if(data === "Datos erroneos"){
                 Swal.fire({
                     icon: 'error',
-                    title: 'Datos erroneos',
+                    text: 'Datos erroneos',
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -249,7 +249,7 @@ $('.editbtn').click(function () {
         $('#efectivo').hide();
         Swal.fire({
             icon: 'info',
-            title: 'Realice la transeferencia en el datafono',
+            text: 'Realice la transeferencia en el datafono',
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
@@ -377,7 +377,7 @@ $('.selec').keypress(function (e) {
         if(tipo==="cantidad" && cantidad===''){
             Swal.fire({
                 icon: 'error',
-                title: 'Por favor ingrese la cantidad',
+                text: 'Por favor ingrese la cantidad',
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },
@@ -388,7 +388,7 @@ $('.selec').keypress(function (e) {
         }else if(tipo==="peso" && peso===''){
             Swal.fire({
                 icon: 'error',
-                title: 'Por favor ingrese el peso',
+                text: 'Por favor ingrese el peso',
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },
@@ -471,12 +471,14 @@ $('#valor_ingre').keypress(function (e) {
     }
 });   
 $('#realizar_pago').click(function(){
-    alert(JSON.stringify(venta));
+    //alert(JSON.stringify(venta));
     $.ajax({
-        url: "detalle_venta.php?var="+venta,
+        type:"POST",
+        url: "detalle_venta.php",
+        data: {var: venta},
+    
         success: function(data) {
-            var ventas = JSON.parse(data);
-            alert(JSON.stringify(ventas));
+            alert(data);
         }
     });
     //alert(JSON.stringify(venta));
