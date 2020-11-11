@@ -272,6 +272,9 @@ var nombre_producto;
 var tipo;
 //Esconder formulario de busqueda
 $(document).ready(function(){
+    //$('#menuToggle').trigger('click')
+    
+    document.getElementById("menuToggle").click();
     //Esconder formulario de busqueda
     $('#esconder').hide();   
     //Esconder duv de metodo de pago efectivo
@@ -412,23 +415,25 @@ $('.selec').keypress(function (e) {
                     }
                 });     
             }else{ 
+                //Verificar la disponibilidad del producto seleccionado
                 $.ajax({
                     type: "POST",
                     url: "disponibilidad.php?var="+nombre_producto,
                     data:{var2: cantidad},
                     success: function(data) {
                         if(data==="Hay disponibilidad"){
+                            //Si se encuentra disponibilidad de agregar al JSON y la tabla
                              $.ajax({
                                     type: "POST",
                                     url: "ingresar_tabla.php?var="+tipo_cliente,
                                     data: $("#venta").serialize(),
                                     success: function(data) {
-                                    
                                         DataArray = JSON.parse(data);  
-                                    //datos.push(DataArray);              
+                                                
                                         createRow(DataArray);
                                         deleteRow(datos);  
                                         //alert(JSON.stringify(DataArray));
+                                        //Recorrer el array temporal para llenar el nuevo JSON
                                         $.each(DataArray, function(i, _data) {
                                             var codigo =  _data.codigo;
                                             var cantidad =  parseInt( _data.cantidad);
@@ -450,7 +455,7 @@ $('.selec').keypress(function (e) {
                                             })
                                     
                                         });
-                                        
+                                        //Suma de los total por productos seleccionados
                                         $.each(datos, function(i, _data) {
                                             
                                             total += _data.total;
@@ -475,8 +480,10 @@ $('.selec').keypress(function (e) {
                                     }   
                                     
                                 });
+                                //Sincronizar los nuevos productos con la eliminación y agregación
                                 venta = datos;
 
+                        //Mensaje de no existencia de disponibilidad del producto
                         }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no existe"){
                             Swal.fire({
                                 icon: 'error',
@@ -497,6 +504,8 @@ $('.selec').keypress(function (e) {
 
 });
 var venta = [];
+
+//Cambio de la caja del pago en efectivo
 $('#valor_ingre').keypress(function (e) {
     var totaal = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
     var valor_ingre = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
@@ -506,6 +515,8 @@ $('#valor_ingre').keypress(function (e) {
         $('#vueltas').val("$" + newValue);
     }
 });   
+
+//Ingreso de JSON de los productos para descontarlos de stock y realizar la posterior venta
 $('#realizar_pago').click(function(){
     //alert(JSON.stringify(venta));
     $.ajax({
@@ -517,7 +528,6 @@ $('#realizar_pago').click(function(){
             alert(data);
         }
     });
-    //alert(JSON.stringify(venta));
 });
 
 //Eliminar registro del pedido y del array
