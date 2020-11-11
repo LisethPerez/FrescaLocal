@@ -53,7 +53,7 @@ $('#buscar1').click(function () {
      
 });
 var cedula_cliente;
-var tipo_cliente;
+var tipo_cliente=0;
 $('#confi').click(function () {
     cedula_cliente = $('#cedula1').val()
     $.ajax({
@@ -308,7 +308,8 @@ $(document).ready(function(){
                 url:"ocultar.php?var="+nombre_producto,
                 method:"POST",    
                 success:function(data){ 
-                     tipo = data;     
+                     tipo = data;   
+                     //alert(tipo);
                 }
             });
             return item;
@@ -374,6 +375,7 @@ $('.selec').keypress(function (e) {
     var codigo = $('#producto1').val();
      
     if(e.which == 13) {
+        
         if(tipo==="cantidad" && cantidad===''){
             Swal.fire({
                 icon: 'error',
@@ -398,66 +400,100 @@ $('.selec').keypress(function (e) {
             });     
         }else{
 
-            $.ajax({
-                type: "POST",
-                url: "ingresar_tabla.php?var="+tipo_cliente,
-                data: $("#venta").serialize(),
-                success: function(data) {
-                    DataArray = JSON.parse(data);  
-                   //datos.push(DataArray);              
-                    createRow(DataArray);
-                    deleteRow(datos);  
-                    //alert(JSON.stringify(DataArray));
-                    $.each(DataArray, function(i, _data) {
-                        var codigo =  _data.codigo;
-                        var cantidad =  parseInt( _data.cantidad);
-                        var producto =  _data.producto;
-                        var peso =  parseFloat(_data.peso);
-                        var precio = parseFloat(_data.precio);
-                        var impuesto =  parseInt(_data.impuesto);
-                        var descuento = parseInt(_data.descuento);
-                        
-                        datos.push({
-                            'codigo': codigo,
-                            'cantidad': cantidad,
-                            'producto': producto,
-                            'peso': peso,
-                            'precio' : precio,
-                            'impuesto': impuesto,
-                            'descuento': descuento,
-                            'total' : Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)))
-                        })
-                
-                    });
-                    
-                    $.each(datos, function(i, _data) {
-                        
-                        total += _data.total;
-                    });
-                    
-                    $('#producto').val('');
-                    $('#cantidad').val('');
-                    $('#peso').val('');
-                    $('#producto1').val('');
-                    
-                    
-                    const newValue = new Intl.NumberFormat('en-US').format(total.toString().replace(/\D/g, ""));
-                    
-                    if(datos.length===0){
-                        $('#total').val('');
-                    }else{
-                        $('#total').val("$" + newValue);
-                    } 
-                    total = 0;
-                    
-                    
-                }   
-                 
-            });
-            venta = datos;
-            
-        }
-    }
+            if(tipo_cliente===0){
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Por favor ingrese cliente',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });     
+            }else{ 
+                $.ajax({
+                    type: "POST",
+                    url: "disponibilidad.php?var="+nombre_producto,
+                    data:{var2: cantidad},
+                    success: function(data) {
+                        if(data==="Hay disponibilidad"){
+                             $.ajax({
+                                    type: "POST",
+                                    url: "ingresar_tabla.php?var="+tipo_cliente,
+                                    data: $("#venta").serialize(),
+                                    success: function(data) {
+                                    
+                                        DataArray = JSON.parse(data);  
+                                    //datos.push(DataArray);              
+                                        createRow(DataArray);
+                                        deleteRow(datos);  
+                                        //alert(JSON.stringify(DataArray));
+                                        $.each(DataArray, function(i, _data) {
+                                            var codigo =  _data.codigo;
+                                            var cantidad =  parseInt( _data.cantidad);
+                                            var producto =  _data.producto;
+                                            var peso =  parseFloat(_data.peso);
+                                            var precio = parseFloat(_data.precio);
+                                            var impuesto =  parseInt(_data.impuesto);
+                                            var descuento = parseInt(_data.descuento);
+                                            
+                                            datos.push({
+                                                'codigo': codigo,
+                                                'cantidad': cantidad,
+                                                'producto': producto,
+                                                'peso': peso,
+                                                'precio' : precio,
+                                                'impuesto': impuesto,
+                                                'descuento': descuento,
+                                                'total' : Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)))
+                                            })
+                                    
+                                        });
+                                        
+                                        $.each(datos, function(i, _data) {
+                                            
+                                            total += _data.total;
+                                        });
+                                        
+                                        $('#producto').val('');
+                                        $('#cantidad').val('');
+                                        $('#peso').val('');
+                                        $('#producto1').val('');
+                                        
+                                        
+                                        const newValue = new Intl.NumberFormat('en-US').format(total.toString().replace(/\D/g, ""));
+                                        
+                                        if(datos.length===0){
+                                            $('#total').val('');
+                                        }else{
+                                            $('#total').val("$" + newValue);
+                                        } 
+                                        total = 0;
+                                        
+                                        
+                                    }   
+                                    
+                                });
+                                venta = datos;
+
+                        }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no existe"){
+                            Swal.fire({
+                                icon: 'error',
+                                text: data,
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            });     
+                        }
+                    }
+                });
+            }       
+        }//IF DE VALIDAR DATOS VACIOS
+    }//IF DEL ENTER
 
 });
 var venta = [];
