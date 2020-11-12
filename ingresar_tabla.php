@@ -35,7 +35,7 @@ if($numFilas = $sql->num_rows>0){
         "precio"=>$precio,//$result->costo_compra,
         "impuesto"=>$result->valor_impuesto,
         "descuento"=>$result->valor_descuento,
-        "opcion"=>'<button class="btn btn-danger btn-sm eliRows" id="eliminar_pro"><i class="fa fa-ban" aria-hidden="true"></i></button>'
+        "opcion"=>'<button class="btn btn-danger btn-sm eliRows" id="eliminar_pro"><i class="fa fa-trash" aria-hidden="true"></i></button>'
     );
        
     echo json_encode($datos);

@@ -43,7 +43,7 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
+                        <a href="index.php"><i class="menu-icon fa fa-laptop"></i>FRESCA</a>
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
@@ -60,7 +60,7 @@
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>FACTURACIÓN</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th active"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class=""></i><a href="view_facturas.php">Lista facturas</a></li>
                         
@@ -94,13 +94,7 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="salir.php"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
                 </div>

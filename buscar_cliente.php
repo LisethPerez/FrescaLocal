@@ -20,20 +20,7 @@ if($opcion == "documento"){
     if($numFilas = $sql->num_rows>0){
 
         while($row = mysqli_fetch_object($sql)){
-            /*echo '<tr>';    
-            echo '<td>'.$row->id_cliente.'</td>';
-            echo '<td>'.$row->nombre.'</td>';
-            echo '<td>'.$row->empresa.'</td>';
-            echo '<td>'.$row->direccion.'</td>';
-            echo '<td>'.$row->telefono.'</td>';
-            echo '<td>'.$row->correo.'</td>';
-            echo '<td>'.$row->documento.'</td>';
-            echo '<td>'.$row->verificacion_nit.'</td>';
-            echo '<td>'.$row->fecha.'</td>';
-            echo '<td>'; 
-            echo '<button class="btn btn-primary editbtn" id="obtener" data-toggle="modal" data-target="#actualizar_cliente"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>';
-            echo '</td>';
-            echo '</tr>';*/
+            
             $datos[] = array(
                 "id"=>$row->id_cliente,
                 "nombre"=>$row->nombre,
@@ -44,7 +31,7 @@ if($opcion == "documento"){
                 "documento"=>$row->documento,
                 "nit"=>$row->verificacion_nit,
                 "fecha"=>$row->fecha,
-                "opcion"=>'<button class="btn btn-primary editbtn" id="obtener" data-toggle="modal" data-target="#actualizar_cliente"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>'
+                "opcion"=>'<button class="btn btn-white editbtn" id="obtener" style="background:#F0A744; color:#FFF" data-toggle="modal" data-target="#actualizar_cliente"><i class="fa fa-wrench" aria-hidden="true"></i></button>'
             );
         }
         echo json_encode($datos);

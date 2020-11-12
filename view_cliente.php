@@ -52,11 +52,11 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
+                        <a href="index.php"><i class="menu-icon fa fa-laptop"></i>FRESCA</a>
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CLIENTES</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs active"></i>CLIENTES</a>
                         <ul class="sub-menu children dropdown-menu">                            
                             <li><i class=""></i><a href="view_cliente.php">Lista clientes</a></li>
                         </ul>
@@ -64,15 +64,13 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>VENTAS</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="tables-basic.html">Basic Table</a></li>
-                            <li><i class=""></i><a href="tables-data.html">Data Table</a></li>
+                            <li><i class=""></i><a href="tables-basic.html">Lista ventas</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="forms-basic.html">Basic Form</a></li>
-                            <li><i class=""></i><a href="forms-advanced.html">Advanced Form</a></li>
+                        <li><i class=""></i><a href="forms-basic.html">Lista facturas</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -103,13 +101,7 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="salir.php"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
                 </div>
@@ -191,8 +183,8 @@
                                         </div>
                                     </div>
                                     <div>
-                                    <div class="table-wrapper-scroll-y my-custom-scrollbar"> 
-                                    <table class="table table-responsive" id="tabla">
+                                    <div class=""> 
+                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="tabla">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
@@ -225,7 +217,7 @@
                                                         <td><?php echo $row->verificacion_nit;?></td>
                                                         <td><?php echo $row->fecha;?></td>
                                                         <td> 
-                                                            <button class="btn btn-danger btn-sm editbtn" style="background:#F0A744"id="obtener" data-toggle="modal" data-target="#actualizar_cliente">
+                                                            <button class="btn btn-white btn-sm editbtn" style="background:#F0A744; color:#FFF" id="obtener" data-toggle="modal" data-target="#actualizar_cliente">
                                                             <i class="fa fa-wrench" aria-hidden="true"></i></button>
                                                         </td>
                                                     </tr>

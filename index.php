@@ -70,15 +70,15 @@ display: block;
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>VENTAS</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="tables-basic.html">Basic Table</a></li>
-                            <li><i class=""></i><a href="tables-data.html">Data Table</a></li>
+                            <li><i class=""></i><a href="tables-basic.html">Lista ventas</a></li>
+                    
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="forms-basic.html">Basic Form</a></li>
-                            <li><i class=""></i><a href="forms-advanced.html">Advanced Form</a></li>
+                            <li><i class=""></i><a href="forms-basic.html">Lista facturas</a></li>
+                            
                         </ul>
                     </li>
                 </ul>
@@ -109,12 +109,6 @@ display: block;
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
-
                             <a class="nav-link" href="salir.php"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
@@ -234,10 +228,10 @@ display: block;
                                                     <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente"><i class="fa fa-user"></i>&nbsp;Cliente</button>
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago"><i class="fa fa-money"></i>&nbsp;Registrar pago</button> 
+                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-danger btn-sm mb-2" type="button"  id="prueba" style="background:#F0A744;"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
+                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" style="background:#F0A744; color:#FFF"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
                                                 </div>
                                                 <!--<div class="col">
                                                 <div id="resultado"class="col"></div>
@@ -502,24 +496,24 @@ display: block;
                                         <table class="table table-sm table-borderless">
                                         <tbody>
                                                                 <tr>
-                                                                    <td><button type="button"  id="sele1" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="1">1</button></td>
-                                                                    <td><button type="button"  id="sele2" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="2">2</button></td>
-                                                                    <td> <button type="button" id="sele3" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="3">3</button></td>
+                                                                    <td><button type="button"  id="sele1" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="1">1</button></td>
+                                                                    <td><button type="button"  id="sele2" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="2">2</button></td>
+                                                                    <td> <button type="button" id="sele3" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="3">3</button></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><button type="button" id="sele4" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="4">4</button></td>
-                                                                    <td><button type="button" id="sele5" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="5">5</button></td>
-                                                                    <td><button type="button" id="sele6" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="6">6</button></td>
+                                                                    <td><button type="button" id="sele4" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124% ;color:#FFF;" value="4">4</button></td>
+                                                                    <td><button type="button" id="sele5" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="5">5</button></td>
+                                                                    <td><button type="button" id="sele6" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="6">6</button></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><button type="button" id="sele7" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="7">7</button></td>
-                                                                    <td><button type="button" id="sele8" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="8">8</button></td>
-                                                                    <td> <button type="button" id="sele9" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%"  value="9">9</button></td>
+                                                                    <td><button type="button" id="sele7" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="7">7</button></td>
+                                                                    <td><button type="button" id="sele8" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="8">8</button></td>
+                                                                    <td> <button type="button" id="sele9" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;"  value="9">9</button></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><button type="button" id="sele0" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="0">0</button></td>
-                                                                    <td><button type="button" id="sele00" class="btn btn-danger btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%" value="00">00</button></td>
-                                                                    <td> <button type="button" id="seleEli" class="btn btn-danger btn-sm" style="width:75px; background:#F0A744; font-size:124%">&larr;</button></td>
+                                                                    <td><button type="button" id="sele0" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="0">0</button></td>
+                                                                    <td><button type="button" id="sele00" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="00">00</button></td>
+                                                                    <td> <button type="button" id="seleEli" class="btn btn-white btn-sm" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;">&larr;</button></td>
                                                                 </tr>
                                                             </tbody>
                                         </table>
