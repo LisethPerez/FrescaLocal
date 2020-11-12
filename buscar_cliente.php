@@ -37,7 +37,7 @@ if($opcion == "documento"){
             $datos[] = array(
                 "id"=>$row->id_cliente,
                 "nombre"=>$row->nombre,
-                "empresa"=>$row->empresa,
+                "empresa"=>$row->nombre_empresa,
                 "direccion"=>$row->direccion,
                 "telefono"=>$row->telefono,
                 "correo"=>$row->correo,

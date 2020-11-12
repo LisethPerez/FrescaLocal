@@ -1,3 +1,8 @@
+<?php
+    session_start(); 
+    if (empty($_SESSION['username'])): header("Location: page-login.php");
+    else: 
+?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -27,7 +32,16 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-
+<style>
+    .my-custom-scrollbar {
+    position: relative;
+    height: 380px;
+    overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+</style>
 </head>
 <body>
     <!-- Left Panel -->
@@ -176,6 +190,8 @@
                                             </form>
                                         </div>
                                     </div>
+                                    <div>
+                                    <div class="table-wrapper-scroll-y my-custom-scrollbar"> 
                                     <table class="table table-responsive" id="tabla">
                                             <thead class="thead-dark">
                                                 <tr>    
@@ -188,7 +204,7 @@
                                                     <th>Documento</th>
                                                     <th>NIT</th>
                                                     <th>Fecha</th>
-                                                    <th>Opciones</th>
+                                                    <th>Editar</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="conte_tabla">
@@ -201,7 +217,7 @@
                                                     <tr>    
                                                         <td><?php echo $row->id_cliente;?></td>
                                                         <td><?php echo $row->nombre;?></td>
-                                                        <td><?php echo $row->empresa;?></td>
+                                                        <td><?php echo $row->nombre_empresa;?></td>
                                                         <td><?php echo $row->direccion;?></td>
                                                         <td><?php echo $row->telefono;?></td>
                                                         <td><?php echo $row->correo;?></td>
@@ -209,8 +225,8 @@
                                                         <td><?php echo $row->verificacion_nit;?></td>
                                                         <td><?php echo $row->fecha;?></td>
                                                         <td> 
-                                                            <button class="btn btn-primary editbtn" id="obtener" data-toggle="modal" data-target="#actualizar_cliente">
-                                                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                                                            <button class="btn btn-danger btn-sm editbtn" style="background:#F0A744"id="obtener" data-toggle="modal" data-target="#actualizar_cliente">
+                                                            <i class="fa fa-wrench" aria-hidden="true"></i></button>
                                                         </td>
                                                     </tr>
                                                 <?php } 
@@ -218,8 +234,9 @@
                                                 
                                             </tbody>
                                         </table>
-                                
+                                </div>
                             </div>   
+                            </div> 
                     
                     </div><!-- /# column -->
                 </div>
@@ -349,3 +366,5 @@
 
 </body>
 </html>
+
+<?php endif; ?>
