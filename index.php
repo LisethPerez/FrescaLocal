@@ -165,7 +165,7 @@ display: block;
                                                     
                                                 </div>
                                                 <div class="col">
-                                                        <label><a  id="obte" class="">Peso</a></label>
+                                                        <label><a  id="obte" class="">Peso (KG)</a></label>
                                                         <input type="hidden" id="peso" name="peso">
                                                         <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" style="height:30px" required disabled>
                                                 </div>
@@ -241,7 +241,7 @@ display: block;
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="mediumModalLabel">Información Cliente</h5>
+                                                            <h5 class="modal-title" id=""><strong>Información Cliente</strong></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -249,7 +249,7 @@ display: block;
                                                         <div class="modal-body">
                                                             <div class="card border border-secondary">
                                                                 <div class="card-header bg-dark">
-                                                                    <strong class="card-title text-light">Información general</strong>
+                                                                    <strong class="card-title text-light heading">Información general</strong>
                                                                 </div>
                                                                 <div class="card-body">
 
@@ -290,7 +290,7 @@ display: block;
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Información cliente</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Información cliente</strong></h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -300,9 +300,21 @@ display: block;
                                                             <div class="form-row">
                                                             <div class="col">
                                                                             <label for="validationCustom03">Tipo Cliente</label>
+                                                                            <?php 
+                                                                                include 'conexionBD.php';
+                                                                                $consulta = "SELECT * FROM categoria_cliente";
+                                                                                $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
+                                                                            ?>
                                                                             <select type="text" class="form-control" id="tipo_cliente" name="tipo_cliente" placeholder="Tipo cliente"  onkeypress="return onlyLetters(event)" style="width:160px;" required>
-                                                                                <option value="1">Corriente</option>
-                                                                                <option value="2">Institucional</option>
+                                                                            
+                                                                            <?php 
+                                                                                while ($valores = mysqli_fetch_object($sql)) {
+                                                                                    echo '<option value="'.$valores->id_categoria.'">'.$valores->nombre.'</option>';
+                                                                                }
+                                                                            ?>
+                                                                            
+                                                                                <!--<option value="1">Corriente</option>
+                                                                                <option value="2">Institucional</option>-->
                                                                             </select>
                                                                     </div>
                                                             </div>
@@ -390,7 +402,7 @@ display: block;
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="mediumModalLabel">Información Cliente</h5>
+                                                            <h5 class="modal-title" id="mediumModalLabel"><strong>Información Cliente</strong></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>

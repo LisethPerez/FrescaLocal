@@ -12,7 +12,7 @@ $consulta = "SELECT * FROM cliente WHERE nombre LIKE '%{$number}%'";
 }
 
 if($opcion == "documento"){
-    $consulta = "SELECT * FROM cliente WHERE documento={$number}";
+    $consulta = "SELECT * FROM cliente WHERE documento='{$number}'";
 }
     
     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));

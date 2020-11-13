@@ -176,7 +176,7 @@
                                             </div>   
                                                 <br><br>
                                                 <div class="form-group mx-sm-3">   
-                                                    <button type="button" id="buscar3" class="btn btn-outline-primary btn-sm mb-2"> Buscar</button>
+                                                    <button type="button" id="buscar3" class="btn btn-primary btn-sm mb-2"> Buscar</button>
                                                     
                                                 </div>   
                                             </form>
@@ -236,7 +236,7 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Editar cliente</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Editar cliente</strong></h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -311,8 +311,8 @@
                                                         
                                                     </div> <!--modal-body-->
                                                     <div class="modal-footer">
-                                                            <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" id="cacel">Cancel</button>
-                                                            <button type="submit" class="btn btn-outline-success btn-sm" id="guardar">Guardar</button>
+                                                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="cacel">Cancel</button>
+                                                            <button type="submit" class="btn btn-success btn-sm" id="guardar">Guardar</button>
                                   
                                                     </div> <!--modal-footer-->
                                                     </form>

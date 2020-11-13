@@ -134,6 +134,7 @@ function clearCliente(){
 
 //Metodo para el ingreso de los datos del formulario de cliente 
 $('#registrar2').click(function () {   
+    var tipo_cle = $('#tipo_cliente option:selected').val();
     var nombre = $('#nombre').val();
     var documento= $('#documento').val();
     var telefono= $('#telefono').val();
@@ -141,7 +142,8 @@ $('#registrar2').click(function () {
     var correo = $('#correo').val();
     var empresa = $('#empresa').val();
     var nit = $('#nit').val(); 
-    if(nombre===''||  documento===''|| telefono===''|| dirección===''|| correo==='' || empresa==='' || nit===''){
+  
+    if(tipo_cle === '' || nombre===''||  documento===''|| telefono===''|| dirección===''|| correo==='' || empresa==='' || nit===''){
         Swal.fire({
             icon: 'error',
             text: 'Por favor ingrese los datos',
@@ -155,7 +157,7 @@ $('#registrar2').click(function () {
     }else{
         $.ajax({
             type: "POST",
-            url: "registrar_cliente.php",
+            url: "registrar_cliente.php?var="+tipo_cle,
             data: $("#form_cliente").serialize(),
             success: function(data) {
                 Swal.fire({
