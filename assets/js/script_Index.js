@@ -527,7 +527,45 @@ $('#realizar_pago').click(function(){
         data: {var: venta},
     
         success: function(data) {
-            alert(data);
+            //alert(data);
+        }
+    });
+});
+
+$('#volver_stock').click(function(){
+    //alert(JSON.stringify(venta));
+    $.ajax({
+        type:"POST",
+        url: "volverStock.php",
+        data: {var: venta},
+    
+        success: function(data) {
+            //alert(data);
+            if(data==="Adicción realizada"){
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Stock actualizado',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });     
+
+            }
+            if(data ==="No se realizaron cambios"){
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Cambio de stock incompleto',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });     
+            }
         }
     });
 });

@@ -14,6 +14,8 @@ if($number = $sql->num_rows>0){
     if(password_verify($contra, $result->password)) {
         
         $_SESSION['username'] = $usuario;       
+        $_SESSION['idUser'] = $result->id; 
+        $_SESSION['idSede'] = $result->sede_id_sede; 
         //return header("Location: index.php");
         echo "Datos correctos";
      

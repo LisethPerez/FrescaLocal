@@ -451,7 +451,7 @@ display: block;
                                                         </div><!--model-body-->
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
-                                                            <button type="button" class="btn btn-success btn-sm mb-2" id="eliminar">ELIMINAR</button>
+                                                            <button type="button" id="volver_stock" class="btn btn-success btn-sm mb-2" id="eliminar">ELIMINAR</button>
                                                             <button type="button" class="btn btn-success btn-sm mb-2" id="pagar">PAGAR</button>
                                                         </div>
                                                     </div><!--modal-content-->

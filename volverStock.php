@@ -31,7 +31,7 @@ $sql1 = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 if($numFilas1 = $sql1->num_rows>0){
     $result1 = $sql1->fetch_object();
     $cantidad = $result1->disponibilidad;
-    $cantidad = $cantidad - $cantidad_pro;
+    $cantidad = $cantidad + $cantidad_pro;
 
     //echo $cantidad;
 }
@@ -40,7 +40,7 @@ $consult1 = "UPDATE stock SET disponibilidad={$cantidad} WHERE producto_id_produ
 $sql2 = mysqli_query($conn,$consult1) or die(mysqli_error($conn));
 
 if($sql2){
-    echo "datos cambiados";
+    echo "Adicción realizada";
 }else{
     echo "No se realizaron cambios";
 }
