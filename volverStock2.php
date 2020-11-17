@@ -4,6 +4,7 @@
 //$dato = $_GET['var'];
 session_start();
 
+$codigo = $_GET['var'];
 $id_Sede = $_SESSION['idSede'];
 $dato = $_POST['var'];
 $datos = json_decode(json_encode($dato),true);
@@ -29,12 +30,10 @@ foreach ($datos as $product) {
     if($numFilas1 = $sql1->num_rows>0){
         $result1 = $sql1->fetch_object();
         $cantidad = $result1->cantidad;
-        $cantidad = $cantidad + $cantidad_pro;
+        $cantidad = $cantidad - $cantidad_pro;
 
         //echo $cantidad;
     }
-
-
 
     $consult1 = "UPDATE stock SET cantidad={$cantidad} WHERE producto_id_producto='{$id}' AND sede_id_sede='{$id_Sede}'";
     $sql2 = mysqli_query($conn,$consult1) or die(mysqli_error($conn));

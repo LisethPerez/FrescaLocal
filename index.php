@@ -231,7 +231,7 @@ display: block;
                                                     <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" style="background:#F0A744; color:#FFF"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
+                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
                                                 </div>
                                                 <!--<div class="col">
                                                 <div id="resultado"class="col"></div>
@@ -453,6 +453,40 @@ display: block;
                                                             <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
                                                             <button type="button" id="volver_stock" class="btn btn-success btn-sm mb-2" id="eliminar">ELIMINAR</button>
                                                             <button type="button" class="btn btn-success btn-sm mb-2" id="pagar">PAGAR</button>
+                                                        </div>
+                                                    </div><!--modal-content-->
+                                                </div> <!--modal-dialog-->
+                                            </div><!--modal-fade-->
+
+                                            <div class="modal fade" id="descuentoStock" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="mediumModalLabel"><strong>Decuento inventario</strong></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                         </div>
+                                                        <div class="modal-body">
+                                                            <div class="card border border-secondary">
+                                                                <div class="card-header bg-dark">
+                                                                    <strong class="card-title text-light">Información</strong>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="form-row">
+                                                                        <div class="col">
+                                                                            <strong> Ingrese código</strong><br>
+                                                                            <input type="text" class="form-control" id="codigo_inve" name="valor_ingre" onkeypress="return onlyNums(event)" style=""><br>        
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div><!--card-body-->
+                                                            </div><!--card-border-->
+                                                        </div><!--model-body-->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                           
+                                                            <button type="button" class="btn btn-success btn-sm mb-2" id="descontar">DESCONTAR</button>
                                                         </div>
                                                     </div><!--modal-content-->
                                                 </div> <!--modal-dialog-->

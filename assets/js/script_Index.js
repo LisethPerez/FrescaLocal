@@ -423,6 +423,7 @@ $('.selec').keypress(function (e) {
                     url: "disponibilidad.php?var="+nombre_producto,
                     data:{var2: cantidad},
                     success: function(data) {
+                      
                         if(data==="Hay disponibilidad"){
                             //Si se encuentra disponibilidad de agregar al JSON y la tabla
                              $.ajax({
@@ -486,7 +487,7 @@ $('.selec').keypress(function (e) {
                                 venta = datos;
 
                         //Mensaje de no existencia de disponibilidad del producto
-                        }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no existe"){
+                        }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
                             Swal.fire({
                                 icon: 'error',
                                 text: data,
@@ -496,7 +497,7 @@ $('.selec').keypress(function (e) {
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOutUp'
                                 }
-                            });     
+                            });    
                         }
                     }
                 });
@@ -524,10 +525,9 @@ $('#realizar_pago').click(function(){
     $.ajax({
         type:"POST",
         url: "detalle_venta.php",
-        data: {var: venta},
-    
+        data: {var: venta},  
         success: function(data) {
-            //alert(data);
+            alert(data);
         }
     });
 });
@@ -568,6 +568,61 @@ $('#volver_stock').click(function(){
             }
         }
     });
+});
+  
+
+$('#descontar').click(function(){
+    //alert(JSON.stringify(venta));
+    var codigo = $('#codigo_inve').val();
+    if(codigo === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese número de factura',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });     
+
+    }else{
+        $.ajax({
+            type:"POST",
+            url: "volverStock2.php?var="+codigo,
+            data: {var: venta},
+        
+            success: function(data) {
+                //alert(data);
+                if(data==="Adicción realizada"){
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Stock actualizado',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });   
+                    $('#codigo_inve').val('');  
+
+                }
+                if(data ==="No se realizaron cambios"){
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'Cambio de stock incompleto',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });     
+                }
+            }
+        });
+    }
 });
 
 //Eliminar registro del pedido y del array

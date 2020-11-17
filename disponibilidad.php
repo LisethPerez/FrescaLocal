@@ -19,18 +19,23 @@ if($numFilas = $sql->num_rows>0){
     $sql1 = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
     if($num = $sql1->num_rows>0){
         $resultado = $sql1->fetch_object();
-        $cantidad_produ = $resultado->disponibilidad;
+        $diponibilidad = $resultado->disponibilidad;
 
-        if($cantidad<=$cantidad_produ){
-            echo "Hay disponibilidad";
-        }
-        else{
-            echo "Excede la disponibilidad del producto";
-        }
+        if($diponibilidad == "1"){
+            $cantidad_produ = $resultado->cantidad;
 
+            if($cantidad<=$cantidad_produ){
+                echo "Hay disponibilidad";
+            }
+            else{
+                echo "Excede la disponibilidad del producto";
+            }
+        }else{
+            echo "No se encuentra disponibilidad del producto";
+        }
 
     }else{
-        echo "No se encuentra disponibilidad del producto";
+        echo "El producto no se encuentra en stock";
     }
 
 }else{

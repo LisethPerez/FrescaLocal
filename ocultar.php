@@ -10,11 +10,11 @@ $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 if($numFilas = $sql->num_rows>0){
 
     $result = $sql->fetch_object();
-    $unidad = $result->necesita_peso;
+    $unidad = $result->unidad_de_medida;
     //$image = imagecreatefromjpeg($result->imagen);
-    if($unidad==1){
+    if($unidad=="KILO"){
         echo "peso";
-    }if($unidad==2){
+    }if($unidad=="UNIDAD"){
         echo "cantidad";
     }
 
