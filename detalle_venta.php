@@ -1,7 +1,4 @@
 <?php
-
-//include 'conexionGene.php';
-//$dato = $_GET['var'];
 session_start();
 
 $id_Sede = $_SESSION['idSede'];
@@ -13,6 +10,7 @@ $fecha = date('Y-m-d');
 include 'conexionBD.php';
 $consultaExi = "SELECT * FROM detalle_factura ORDER BY id_detallef DESC LIMIT 1";
 $sqlExi = mysqli_query($conn,$consultaExi) or die(mysqli_error($conn));
+
 if($num = $sqlExi->num_rows>0){
     $resultExi = $sqlExi->fetch_object();
     $numero = $resultExi->factura_id_factura;
@@ -62,8 +60,6 @@ foreach ($datos as $product) {
     $consult1 = "UPDATE stock SET cantidad={$cantidad} WHERE producto_id_producto='{$id}' AND sede_id_sede='{$id_Sede}'";
     $sql2 = mysqli_query($conn,$consult1) or die(mysqli_error($conn));
 
-    
-    
         if($peso=='NaN'){
         
             $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura, stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantidad_pro}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$numero}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$resultado->id_empleado}')";
@@ -73,18 +69,9 @@ foreach ($datos as $product) {
         }
     
         $sqlFact = mysqli_query($conn,$consult3) or die(mysqli_error($conn));
-    
-        if($sqlFact){
-            $mensaje = "datos añadidos";
-        }else{
-            $mensaje = "No se realizaron cambios";
-        }
-    
-
-
 }
 //$numero = $numero + 1;
 
-echo $mensaje;
+echo $numero;
 
 ?>

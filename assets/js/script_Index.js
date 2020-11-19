@@ -240,9 +240,10 @@ $('.editbtn').click(function () {
     $('#documento1').val(datos[6]);
     $('#nit1').val(datos[7]);
  });
+var pago;
 
  $('.groupPago').click(function () {
-    var pago = $(this).val();
+    pago = $(this).val();
 
     if(pago === "Efectivo"){
         $('#efectivo').show();
@@ -520,12 +521,24 @@ $('#valor_ingre').keypress(function (e) {
 });   
 
 //Ingreso de JSON de los productos para descontarlos de stock y realizar la posterior venta
+var id_factura;
 $('#realizar_pago').click(function(){
     //alert(JSON.stringify(venta));
     $.ajax({
         type:"POST",
         url: "detalle_venta.php",
         data: {var: venta},  
+        success: function(data) {
+            id_factura = data;
+        }
+    });
+});
+
+$('#pagar').click(function(){
+    $.ajax({
+        type:"POST",
+        url: "agregar_factura.php?var="+id_factura,
+        data:{tipo_pago: pago, cliente: cedula_cliente},
         success: function(data) {
             alert(data);
         }
