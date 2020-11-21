@@ -133,413 +133,140 @@
                 </div>
             </div>
         </div>-->
-        <div class="clearfix"></div>
-        <div class="content">
-            <div class="container">     
+        <div class="container">
                 <div class="clearfix"></div>
-                <!-- Orders -->
-                <div class="orders">
+                    <div class="row">
                     <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="form-group">
-                                    <div class="card bg-flat-color-8 border border-secondary">
-                           
-                                        <div class="card-header bg-dark">
-                                            <strong class="card-title text-light">Información venta</strong>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-row">
+                        <div class="card border border-secondary">
+                            <div class="card-header bg-light">
+                                <strong class="card-title text-dark">Información Facturas</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="row">
+                                        <div id="selección">
+                                            <div class="row">
                                                 <div class="col">
-                                                    <button class="btn btn-outline-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente">Información cliente</button>
+                                               
                                                 </div>
-                                                <div class="col">
-                                                    <button class="btn btn-outline-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoProductos">Información productps</button>
+                                                <div class="form-check form-check-inline">
+                                                    <strong>Seleccione el atributo de búsqueda</strong>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                   
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="nombre">
+                                                    <label class="form-check-label" for="inlineRadio1">Nombre</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="documento">
+                                                    <label class="form-check-label" for="inlineRadio2">Documento</label>
                                                 </div>
                                             </div>
-                                            <div class="modal fade" id="infoCliente" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
-                                                <div class="modal-dialog modal-lg" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="mediumModalLabel">Información Cliente</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                         </div>
-                                                        <div class="modal-body">
-                                                            <div class="card border border-secondary">
-                                                                <div class="card-header bg-dark">
-                                                                    <strong class="card-title text-light">Información general</strong>
-                                                                </div>
-                                                                <div class="card-body">
-
-                                                                    <form  methop="POST" id="formulario" class="form-inline">
-                                                                        <div class="form-group mx-sm-3">       
-                                                                            <label for="staticEmail2">Número de identidad</label>
-                                                                            <input type="text" class="form-control" id="cedula" name="cedula" placeholder="Número">
-                                                                        </div>   
-                                                                        <br><br>
-                                                                        <button type="button" id="buscar1" class="btn btn-outline-primary btn-sm mb-2"> Buscar</button>
-                                                                        <button type="button" id="ingresar" data-toggle="modal" data-target="#cliente" class="btn btn-outline-success btn-sm mb-2" disabled> Ingresar</button> 
-
-                                                                    </form>
-
-                                                                    <form class="needs-validation" novalidate>
-                                                                        <div class="form-row">
-                                                                            <div class="col">
-                                                                                <label for="validationCustom01">Fecha</label>
-                                                                                <input type="datetime" class="form-control" id="" value="<?php echo date("Y/m/d H:i"); ?>" disabled required>
-                                                                                <div class="invalid-feedback">
-                                                                                    Seleccione fecha
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <label for="validationCustom03">Empleado</label>
-                                                                                <select class="form-control" id="Empleado" required>
-                                                                                        <!-- <option value="0" selected="selected">Seleccione...</option>-->
-                                                                                    <?php 
-                                                                                        include 'conexionGene.php';
-                                                                                        $consulta = "SELECT * FROM users";
-                                                                                        $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                                                                    ?>
-                                                                                    <?php foreach($sql as $opciones): ?>
-                                                                                        <option value="<?php echo $opciones['name']?>" selected="selected"><?php echo $opciones['name']?></option>
-                                                                                    <?php endforeach ?>
-                                                                                </select>
-                                                                                <div class="invalid-feedback">
-                                                                                    Seleccione empleado
-                                                                                </div> 
-                                                                            </div>
-                                                                            <div class="col">
-                                                                               <label for="validationCustom03">Tipo pago</label>
-                                                                                <select class="form-control" id="Empleado" placeholder="First name"  required>
-                                                                                    <?php 
-                                                                                        include 'conexionBD.php';
-                                                                                        $consulta = "SELECT * FROM tipo_pago";
-                                                                                        $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                                                                    ?>
-                                                                                    <?php foreach($sql as $opciones): ?>
-                                                                                        <option value="<?php echo $opciones['nombre']?>" selected="selected"><?php echo $opciones['nombre']?></option>
-                                                                                    <?php endforeach ?>
-                                                                                </select>
-                                                                                <div class="invalid-feedback">
-                                                                                    Seleccione tipo de venta
-                                                                                </div>
-                                                                            </div>
-                                                                                    
-                                                                        </div>
-                                                                        <div class="form-row">
-                                                                            <button class="btn btn-outline-primary btn-sm mb-2" id="verificar" type="button">Verificar</button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div><!--card-bod-->
-                                                            </div><!--card-border-->
-                                                        </div><!--model-body-->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                            <button type="button" class="btn btn-primary" id="confirmar">Confirm</button>
-                                                        </div>
-                                                    </div><!--modal-content-->
-                                                </div> <!--modal-dialog-->
-                                            </div><!--modal-fade-->
-
-                                            <div class="modal fade" id="cliente" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                                        </div>
+                                    </div>
+                                </div>  <br>
+                                <div class="form-row">
+                                    <div id="esconder">
+                                            <form method="POST" id="formularioCliente" class="form-inline">
+                                                <div class="form-group mx-sm-3">       
+                                                    <label id="label1" for="staticEmail2"></label><br>
+                                                </div>
+                                                <div class="form-group mx-sm-3">    
+                                                    <input type="text" class="form-control" id="num" name="num" placeholder="">
+                                            </div>   
+                                                <br><br>
+                                                <div class="form-group mx-sm-3">   
+                                                    <button type="button" id="buscar3" class="btn btn-primary btn-sm mb-2"> Buscar</button>
+                                                    
+                                                </div>   
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div>
+                                    <div class=""> 
+                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="tabla">
+                                            <thead class="thead-dark">
+                                                <tr>    
+                                                    <th>ID</th>
+                                                    <th>Total</th>
+                                                    <th>#Productos</th>
+                                                    <th>Fecha</th>
+                                                    <th>Tipo_pago</th>
+                                                    <th>Empleado</th>
+                                                    <th>Cliente</th>
+                                                    <th>Sede</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="conte_tabla">
+                                            <?php 
+                                                    include 'conexionBD.php';
+                                                    $consulta = "SELECT * from factura";
+                                                    $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
+                                                    while($row = mysqli_fetch_object($sql)){
+                                                    ?>
+                                                    <tr>    
+                                                        <td><?php echo $row->id_factura;?></td>
+                                                        <td><?php echo $row->pago_total;?></td>
+                                                        <td><?php echo $row->noproductos;?></td>
+                                                        <td><?php echo $row->fecha;?></td>
+                                                        <td><?php echo $row->tipo_pago_id_tpago;?></td>
+                                                        <td><?php echo $row->empleado_id_empleado;?></td>
+                                                        <td><?php echo $row->cliente_id_cliente;?></td>
+                                                        <td><?php echo $row->sede_id_sede;?></td>
+                                                        <td> 
+                                                            <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos">
+                                                            <i class="fa fa-wrench" aria-hidden="true"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                <?php } 
+                                                ?>
+                                                
+                                            </tbody>
+                                        </table>
+                                </div>
+                                </div>
+                            </div>   
+                        </div> 
+                    
+                    </div><!-- /# column -->
+                </div>
+                <div class="modal fade" id="productos" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Información cliente</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Información venta</strong></h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form class="needs-validation" method="POST" id="form_cliente" novalidate>
-                                                                <div class="form-row">
-                                                                    <div class="col-12">
-                                                                        <label for="validationCustom01">Nombre</label>
-                                                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" onkeypress="return onlyLetters(event)"  required><br>
-                                                                        <div class="invalid-feedback">
-                                                                            Ingrese nombre
-                                                                    </div>
-                                                                </div>
-                                                                </div>
-                                                                <div class="form-row">
-                                                                    <div class="col">
-                                                                            <label for="validationCustom03">Documento</label>
-                                                                            <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento" onkeypress="return onlyNums(event)" max="10" required><br>
-                                                                            <div class="invalid-feedback">
-                                                                            Ingrese documento
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <label for="validationCustom03">Telefono</label>
-                                                                        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefono" max="10" onkeypress="return onlyNums(event)" required><br>
-                                                                        <div class="invalid-feedback">
-                                                                            Ingrese telefono
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                </div>
-                                                                <div class="form-row">
-                                                                    <div class="col">
-                                                                        <label for="validationCustom03">Dirección</label>
-                                                                        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required><br>
-                                                                        <div class="invalid-feedback">
-                                                                            Ingrese dirección
-                                                                        </div>
-                                                                    </div> 
-                                                                    <div class="col">
-                                                                            <label for="validationCustom03">Correo</label>
-                                                                            <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo"  required><br>
-                                                                            <div class="invalid-feedback">
-                                                                            Ingrese correo
-                                                                        </div>
-                                                                    </div>    
-                                                                 
-                                                                </div>
-                                                                <div class="form-row">
-                                                                    <div class="col">
-                                                                        <label for="validationCustom03">Empresa</label>
-                                                                        <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa"  onkeypress="return onlyLetters(event)" required><br>
-                                                                        <div class="invalid-feedback">
-                                                                            Ingrese nombre empresa
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                            <label for="validationCustom03">Indentificación NIT</label>
-                                                                            <input type="number" class="form-control" id="nit" name="nit" placeholder="NIT" value="Mark" onkeypress="return onlyNums(event)" required><br>
-                                                                            <div class="invalid-feedback">
-                                                                            Ingrese identificación NIT
-                                                                        </div>
-                                                                    </div>   
-                                                                </div>
-                                                                <!--<button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>-->
-                                                        
-                                                    </div> <!--modal-body-->
-                                                    <div class="modal-footer">
-                                                            <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Cancel</button>
-                                                            <button type="button" class="btn btn-outline-success btn-sm" id="registrar2">Confirm</button>
-                                  
-                                                    </div> <!--modal-footer-->
-                                                    </form>
-                                                </div><!--modal-content-->
-                                            </div><!--modal-dialog-->
-                                            </div> <!--modal-fade-->
-
-                                            <form class="needs-validation" novalidate>
-                                                <div class="form-row">
-                                                                <!--<div class="col">
-                                                                    <label for="validationCustom01">EAN</label>
-                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark" required><br>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <label for="validationCustom03">Nombre</label>
-                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark" required><br>
-                                                                </div>-->
-                                                    <div id="resultado"class="col">
-
-                                                    </div>
-
-                                                </div>      
-                                            </form>
-                                            <form class="needs-validation" novalidate >      
-                                                <div class="form-row">
-                                                    <div class="col">
-                                                        <label for="validationCustom03">Número factura</label>
-                                                        <input type="number" class="form-control" id="validationCustom01" placeholder="Número Factura" required disabled>
-                                        
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="validationCustom03">Precio unitario</label>
-                                                        <input type="number" class="form-control" id="precio" placeholder="Precio" required disabled>
-                                        
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="validationCustom03">Impuesto</label>
-                                                        <select class="form-control" id="Impuesto" placeholder="First name"  required>
-                                                            <?php 
-                                                                include 'conexionGene.php';
-                                                                $consulta = "SELECT * FROM impuestos";
-                                                                $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                                            ?>
-                                                            <?php foreach($sql as $opciones): ?>
-                                                                <option value="<?php echo $opciones['nombre']?>" selected="selected"><?php echo $opciones['nombre']?></option>
-                                                            <?php endforeach ?>
-                                                        </select>
-                                        
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="validationCustom03">Descuento</label>
-                                                        <select class="form-control" id="Descuento" placeholder="First name"  required>
-                                                            <?php 
-                                                                include 'conexionBD.php';
-                                                                $consulta = "SELECT * FROM descuento";
-                                                                $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                                            ?>
-                                                            <?php foreach($sql as $opciones): ?>
-                                                                <option value="<?php echo $opciones['nombre']?>" selected="selected"><?php echo $opciones['nombre']?></option>
-                                                            <?php endforeach ?>
-                                                        </select>
-                                                                    
-                                                        <div class="invalid-feedback">
-                                                            Seleccione descuento
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="col">
-                                                        <label for="validationCustom03">Fecha</label>
-                                                        <input type="datetime" class="form-control" id="validationCustom01" placeholder="Fecha" value="<?php echo date("Y/m/d H:i"); ?>" disabled required>
-                                                        <div class="invalid-feedback">
-                                                            Seleccione fecha
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="validationCustom03">Peso</label>
-                                                        <input type="number" class="form-control" id="validationCustom01" placeholder="Peso" required disabled>
-                                        
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="validationCustom03">Cantidad</label>
-                                                        <input type="number" class="form-control" id="cantidad" placeholder="Cantidad" required disabled><br>
-                                                        <div class="invalid-feedback">
-                                                            Seleccione la cantidad
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="con" class="form-row">
-                                                    <div class="col-lg-6 col-xl-12">
-                                                        <button type="button"  id="sele1" class="btn btn-outline-secondary btn-sm" value="1">1</button>
-                                                        <button type="button"  id="sele2" class="btn btn-outline-secondary btn-sm" value="2">2</button>
-                                                        <button type="button"  id="sele3" class="btn btn-outline-secondary btn-sm" value="3">3</button>
-                                                    </div>
-                                                </div>
-                                                <div id="con" class="form-row">
-                                                    <div class="col-lg-6 col-xl-12">
-                                                        <button type="button" id="sele4" class="btn btn-outline-secondary btn-sm" value="4">4</button>
-                                                        <button type="button" id="sele5" class="btn btn-outline-secondary btn-sm" value="5">5</button>
-                                                        <button type="button" id="sele6" class="btn btn-outline-secondary btn-sm" value="6">6</button>
-                                                        </div>
-                                                    </div>     
-                                                    <div id="con" class="form-row">
-                                                        <div class="col-lg-6 col-xl-12">
-                                                            <button type="button" id="sele7" class="btn btn-outline-secondary btn-sm" value="7">7</button>
-                                                            <button type="button" id="sele8" class="btn btn-outline-secondary btn-sm" value="8">8</button>
-                                                            <button type="button" id="sele9" class="btn btn-outline-secondary btn-sm" value="9">9</button>
-                                                        </div>
-                                                    </div>        
-                                                        <div id="con" class="form-row">
-                                                            <div class="col-lg-6 col-xl-12">
-                                                                <button type="button" id="sele0" class="btn btn-outline-secondary btn-sm" value="0">0</button>
-                                                                <button type="button" id="seleEli" class="btn btn-outline-secondary btn-sm">&larr;</button>
-                                                            </div>
-            
-                                                        </div>
-                                                        <div  class="form-row">
-                                                            <button class="btn btn-outline-success btn-sm mb-2" type="submit">Registrar producto</button>  
-                                                        </div>  
-                                                </form>
-                                        </div><!--card-body-->
-                       
-                                    </div> <!--card bg-->
-                                </div>  <!--fomr-group-->   
-                            </div> <!--COL-LOg-8-->
-                            <div class="col-lg-4">
-                                <div class="card border border-secondary">
-                                    <div class="card-header bg-dark">
-                                        <strong class="card-title text-light">Información Productos</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-header bg-dark">
-                                            <strong class="card-title text-light">Categorías</strong>
-                                        </div>
-                                        <div class="card-text">
-                                            <?php 
-                                                include 'conexionGene.php';
-                                                $consulta = "SELECT * FROM categoria_productos";
-                                                $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                            ?>
-                                            <div  class="btn-group alignment" id="my_radiogroup">
-                                                <?php foreach($sql as $opciones): ?>
-                                                    <button class="btn btn-outline-success btn-sm mb-2" value="<?php echo $opciones['nombre']?>" selected="selected" name="<?php echo $opciones['nombre']?>"><?php echo $opciones['nombre']?></button>
-                                                                                                
-                                                <?php endforeach ?>
-                                                <script>
-                                                    $(".alignment .btn").click(function() {
-                                                      
-                                                        var datos = $(this).val();
-                                                            $.ajax({
-                                                            url: "get_var.php?var= '" + datos + "'",
-                                                                success: function( data ) {
-                                                                $('#productos').html(data);
-                                                                }
-                                                            })
-                                                        }); 
-                                                </script>
-                                            </div>
-                                            <br>           
-                                            <div class="card-header bg-dark">
-                                                <strong class="card-title text-light">Productos</strong>
-                                            </div>
-                                            <div class="card-text col-12" id="productos">
-                                                <div class="form-row">
-                                                    <div  class="btn-group alignments col-6" id="">
-                                                                            
-                                                    </div>
-                                                    <div  class="col-6" id="">
-                                                        <label>AQUI VAN LAS IMAGENES</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> <!--card-text-->
-                                    </div>  <!--card-body-->
-                                </div><!--card-border-->
-                            </div> <!--COL-LOg-4-->
-                        </div> <!--row-->
-                    </div><!--COL-LOg-12-->   
-                </div><!--orders-->
-            </div> <!--CONTainet-->
-        </div><!--CONTENT-->
-           
-            <div class="content">
-                <div class="container">
-                    
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card border border-secondary">
-                            <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Productos</strong>
-                            </div>
-                            
-                                <div>
-                                        <table class="table table-responsive">
+                                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="tabla">
                                             <thead class="thead-dark">
-                                                <tr>
-                                                    <th class="serial">#</th>
-                                                    <th>ID</th>
-                                                    <th>ID Factura</th>
-                                                    <th>Producto</th>
-                                                    <th>Proveedor</th>
+                                                <tr>    
                                                     <th>Cantidad</th>
-                                                    <th>Precio unitario</th>
-                                                    <th>Impuesto</th>
+                                                    <th>Precio_venta</th>
                                                     <th>Descuento</th>
-                                                    <th>Pago total</th>
-                                                    <th>Opciones</th>
+                                                    <th>Impuesto</th>
+                                                    <th>Fecha</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                               
+                                            <tbody id="cont_productos">
+                                            
                                             </tbody>
                                         </table>
-                                    </div>
-                            
-                        </div>
-                    </div><!-- /# column -->
-                </div>
-            
+                                                    </div>
+                         
+                                                    
+                                                </div><!--modal-content-->
+                                            </div><!--modal-dialog-->
+                                        </div> <!--modal-fade-->
             </div>
-        </div>
+            </div>
+        
+       </div>         <!--  /Traffic -->
+
+    <div class="clearfix"></div>
                 <!--  /Traffic -->
 
     <div class="clearfix"></div>

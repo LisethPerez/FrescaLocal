@@ -526,10 +526,12 @@ $('#realizar_pago').click(function(){
     //alert(JSON.stringify(venta));
     $.ajax({
         type:"POST",
-        url: "detalle_venta.php",
+        url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
         success: function(data) {
+            alert(data);
             id_factura = data;
+            
         }
     });
 });
@@ -538,7 +540,7 @@ $('#pagar').click(function(){
     $.ajax({
         type:"POST",
         url: "agregar_factura.php?var="+id_factura,
-        data:{tipo_pago: pago, cliente: cedula_cliente},
+        data:{tipo_pago: pago},
         success: function(data) {
             alert(data);
         }

@@ -70,7 +70,7 @@ display: block;
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>VENTAS</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="tables-basic.html">Lista ventas</a></li>
+                            <li><i class=""></i><a href="view_ventas.php">Lista ventas</a></li>
                     
                         </ul>
                     </li>
