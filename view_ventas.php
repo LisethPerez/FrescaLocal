@@ -136,7 +136,7 @@
         <div class="container">
                 <div class="clearfix"></div>
                     <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-10">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
                                 <strong class="card-title text-dark">Información Facturas</strong>
@@ -150,39 +150,21 @@
                                                
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <strong>Seleccione el atributo de búsqueda</strong>
+                                                    <strong>Ingrese número de factura</strong>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                    
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="nombre">
-                                                    <label class="form-check-label" for="inlineRadio1">Nombre</label>
+                                                    <input class="form-check-input" type="number" name="number" id="number" value="">
+                                        
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="documento">
-                                                    <label class="form-check-label" for="inlineRadio2">Documento</label>
+                                                    <button type="button" id="buscarFac" class="btn btn-primary btn-sm mb-2"> Buscar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>  <br>
-                                <div class="form-row">
-                                    <div id="esconder">
-                                            <form method="POST" id="formularioCliente" class="form-inline">
-                                                <div class="form-group mx-sm-3">       
-                                                    <label id="label1" for="staticEmail2"></label><br>
-                                                </div>
-                                                <div class="form-group mx-sm-3">    
-                                                    <input type="text" class="form-control" id="num" name="num" placeholder="">
-                                            </div>   
-                                                <br><br>
-                                                <div class="form-group mx-sm-3">   
-                                                    <button type="button" id="buscar3" class="btn btn-primary btn-sm mb-2"> Buscar</button>
-                                                    
-                                                </div>   
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div>
+                                
                                     <div class=""> 
                                     <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="tabla">
                                             <thead class="thead-dark">
@@ -198,30 +180,11 @@
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="conte_tabla">
-                                            <?php 
-                                                    include 'conexionBD.php';
-                                                    $consulta = "SELECT * from factura";
-                                                    $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                                    while($row = mysqli_fetch_object($sql)){
-                                                    ?>
-                                                    <tr>    
-                                                        <td><?php echo $row->id_factura;?></td>
-                                                        <td><?php echo $row->pago_total;?></td>
-                                                        <td><?php echo $row->noproductos;?></td>
-                                                        <td><?php echo $row->fecha;?></td>
-                                                        <td><?php echo $row->tipo_pago_id_tpago;?></td>
-                                                        <td><?php echo $row->empleado_id_empleado;?></td>
-                                                        <td><?php echo $row->cliente_id_cliente;?></td>
-                                                        <td><?php echo $row->sede_id_sede;?></td>
-                                                        <td> 
-                                                            <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos">
-                                                            <i class="fa fa-wrench" aria-hidden="true"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                <?php } 
-                                                ?>
-                                                
+                                            <tbody id="pro">
+                                            <?php
+                                                include 'ver_fact.php';
+                                            ?>
+                                            
                                             </tbody>
                                         </table>
                                 </div>
@@ -232,7 +195,7 @@
                     </div><!-- /# column -->
                 </div>
                 <div class="modal fade" id="productos" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
-                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel"><strong>Información venta</strong></h5>
@@ -245,10 +208,12 @@
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>Cantidad</th>
+                                                    <th>Producto</th>
                                                     <th>Precio_venta</th>
                                                     <th>Descuento</th>
                                                     <th>Impuesto</th>
                                                     <th>Fecha</th>
+                                                    <th>Empleado</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="cont_productos">

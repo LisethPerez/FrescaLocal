@@ -222,7 +222,23 @@ $('#ingresar_login').click(function () {
     }
 });
 
+var id_factu;
+$('.view_products').click(function () {
+    $tr=$(this).closest('tr');
+    var datos = $tr.children("td").map(function (){
+        return $(this).text();
+    });
+    id_factu = datos[0];
+    $.ajax({
+        url: "detalle_productos.php?var="+id_factu,
+        type: "POST",
+        success: function(data){
+            alert(JSON.parse(data));
+        }
 
+    });
+    
+ });
 
 //Agregar los datos de la fila seleccionada
 
@@ -323,19 +339,8 @@ $(document).ready(function(){
         }
     });
 
-});
 
-/*$('#producto').change(function () {    
-    var productos = $('#producto').next("ul").find("li.active").data("value");  
-    
-   $.ajax({
-        url:"get_image.php?var="+productos,
-        method:"POST",    
-        success:function(data){
-            alert(data);           
-        }
-    });
-});*/
+});
 
 
 
