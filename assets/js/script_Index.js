@@ -233,12 +233,160 @@ $('.view_products').click(function () {
         url: "detalle_productos.php?var="+id_factu,
         type: "POST",
         success: function(data){
-            alert(JSON.parse(data));
+            //alert(JSON.parse(data));
+            /*var produ = document.getElementById("cont_productos");
+            produ.innerHTML = "";*/
+            var datosPro = JSON.parse(data);
+            createRow2(datosPro);
+                
         }
-
-    });
-    
+    });    
  });
+
+ function createRow2(data) {                              //dynamically adding rows to the Table
+    //design this according to your requirement    
+    for(var i=0; i<data.length; i++){
+    var trElement = `<tr>
+    <td>`+data[i].cantidad+`</td>
+    <td>`+data[i].producto+`</td>
+    <td>`+data[i].precio_venta+`</td>
+    <td>`+data[i].precio_total+`</td>
+    <td>`+data[i].descuento+`</td>
+    <td>`+data[i].impuesto+`</td>
+    <td>`+data[i].fecha+`</td>  
+    <td>`+data[i].empleado+`</td>   
+    </tr>`;
+    $('#cont_productos').append(trElement);
+    
+    }  
+
+}
+
+var buscar_fac;
+$('#buscarFac').click(function(){
+    buscar_fac = $('#numberFac').val();
+
+    if(buscar_fac === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese número de búsqueda',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });  
+    }else{
+        $.ajax({
+            url: "buscar_fact.php?var="+buscar_fac,
+            method: "POST",
+            success: function(data){
+               if(data === "No se encuntran resultados con la búsqueda"){
+                Swal.fire({
+                    icon: 'error',
+                    text: data,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+               }else{
+                var contenidoFac = document.getElementById("pro");
+                contenidoFac.innerHTML = "";
+                var datosFac = JSON.parse(data);
+                createRow3(datosFac);
+                $('#numberFac').val('');
+               }
+            }
+        });
+    }
+});
+
+function createRow3(data) {                              //dynamically adding rows to the Table
+    //design this according to your requirement    
+    for(var i=0; i<data.length; i++){
+    var trElement = `<tr>
+    <td>`+data[i].id+`</td>
+    <td>`+data[i].total+`</td>
+    <td>`+data[i].productos+`</td>
+    <td>`+data[i].fecha+`</td>
+    <td>`+data[i].tipo+`</td>
+    <td>`+data[i].empleado+`</td>
+    <td>`+data[i].cliente+`</td>  
+    <td>`+data[i].sede+`</td>   
+    <td>`+data[i].opcion+`</td>  
+    </tr>`;
+    $('#pro').append(trElement);    
+    }  
+}
+
+var  buscar_fac2;
+$('#buscarFac2').click(function(){
+    buscar_fac2 = $('#numberFac').val();
+
+    if(buscar_fac === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese número de búsqueda',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });  
+    }else{
+        $.ajax({
+            url: "buscar_fact.php?var="+buscar_fac2,
+            method: "POST",
+            success: function(data){
+               if(data === "No se encuntran resultados con la búsqueda"){
+                Swal.fire({
+                    icon: 'error',
+                    text: data,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+               }else{
+                var contenidoFac = document.getElementById("pro2");
+                contenidoFac.innerHTML = "";
+                var datosFac = JSON.parse(data);
+                createRow3(datosFac);
+                $('#numberFac2').val('');
+               }
+            }
+        });
+    }
+});
+
+
+
+function createRow3(data) {                              //dynamically adding rows to the Table
+    //design this according to your requirement    
+    for(var i=0; i<data.length; i++){
+    var trElement = `<tr>
+    <td>`+data[i].id+`</td>
+    <td>`+data[i].total+`</td>
+    <td>`+data[i].productos+`</td>
+    <td>`+data[i].fecha+`</td>
+    <td>`+data[i].tipo+`</td>
+    <td>`+data[i].empleado+`</td>
+    <td>`+data[i].cliente+`</td>  
+    <td>`+data[i].sede+`</td>   
+    <td>`+data[i].opcion+`</td>  
+    </tr>`;
+    $('#pro2').append(trElement);
+    
+    }  
+
+}
 
 //Agregar los datos de la fila seleccionada
 
@@ -300,6 +448,7 @@ $(document).ready(function(){
     $('#efectivo').hide();
      //Autocompletar de productos
     $('#producto').typeahead({
+
         source: function(query,result){
             $.ajax({
                 url:"get_var.php",
@@ -534,7 +683,6 @@ $('#realizar_pago').click(function(){
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
         success: function(data) {
-            alert(data);
             id_factura = data;
             
         }
@@ -548,6 +696,13 @@ $('#pagar').click(function(){
         data:{tipo_pago: pago},
         success: function(data) {
             alert(data);
+            var contenidoVen = document.getElementById("cont_ventas");
+            contenidoVen.innerHTML = "";
+            $('#valor_ingre').val('');
+            $('#vueltas').val('');
+            $('#efectivo').hide();
+            $('#total').val('');
+
         }
     });
 });
@@ -556,11 +711,11 @@ $('#volver_stock').click(function(){
     //alert(JSON.stringify(venta));
     $.ajax({
         type:"POST",
-        url: "volverStock.php",
+        url: "volverStock.php?fac="+id_factura,
         data: {var: venta},
     
         success: function(data) {
-            //alert(data);
+
             if(data==="Adicción realizada"){
                 Swal.fire({
                     icon: 'success',
@@ -586,6 +741,9 @@ $('#volver_stock').click(function(){
                     }
                 });     
             }
+            var contenidoVen = document.getElementById("cont_ventas");
+                contenidoVen.innerHTML = "";
+              $('#total').val('');   
         }
     });
 });

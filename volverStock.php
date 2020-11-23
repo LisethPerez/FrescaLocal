@@ -4,10 +4,25 @@
 //$dato = $_GET['var'];
 session_start();
 
+$id_fact = $_GET['fac'];
 $id_Sede = $_SESSION['idSede'];
 $dato = $_POST['var'];
+$fecha = date('Y-m-d H:i:s');
 $datos = json_decode(json_encode($dato),true);
 
+include 'conexionBD.php';
+$consultaExi = "SELECT COUNT(*) contar, SUM(total) cant FROM detalle_factura WHERE factura_id_factura='{$id_fact}'";
+$sqlExi = mysqli_query($conn,$consultaExi) or die(mysqli_error($conn));
+if($num = $sqlExi->num_rows>0){
+    $resultExi = $sqlExi->fetch_assoc();
+
+    $cantidadProductos =  $resultExi['contar'];
+    $totalPro = $resultExi['cant'];
+
+    $consultaModi = "UPDATE factura SET pago_total={$totalPro}, noproductos={$cantidadProductos}, fecha='{$fecha}', facturapaga=0, anulacion=1 WHERE id_factura={$id_fact}";
+    $sqlMoodi = mysqli_query($conn,$consultaModi) or die(mysqli_error($conn));
+
+}
 
 foreach ($datos as $product) {
 
@@ -33,8 +48,6 @@ foreach ($datos as $product) {
 
         //echo $cantidad;
     }
-
-
 
     $consult1 = "UPDATE stock SET cantidad={$cantidad} WHERE producto_id_producto='{$id}' AND sede_id_sede='{$id_Sede}'";
     $sql2 = mysqli_query($conn,$consult1) or die(mysqli_error($conn));

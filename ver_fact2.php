@@ -4,7 +4,7 @@
 
     include 'conexionBD.php';
     //mysql_set_charset('utf8');
-    $consulta = "SELECT *, cliente.nombre AS nombreCliente, tipo_pago.nombre AS tipo, empleado.nombre AS nombreEmple from factura INNER JOIN cliente ON factura.cliente_id_cliente=cliente.id_cliente INNER JOIN tipo_pago ON factura.tipo_pago_id_tpago=tipo_pago.id_tpago INNER JOIN empleado ON factura.empleado_id_empleado=empleado.id_empleado INNER JOIN sede ON factura.sede_id_sede=sede.id_sede WHERE factura.anulacion=0";
+    $consulta = "SELECT *, cliente.nombre AS nombreCliente, tipo_pago.nombre AS tipo, empleado.nombre AS nombreEmple from factura INNER JOIN cliente ON factura.cliente_id_cliente=cliente.id_cliente INNER JOIN tipo_pago ON factura.tipo_pago_id_tpago=tipo_pago.id_tpago INNER JOIN empleado ON factura.empleado_id_empleado=empleado.id_empleado INNER JOIN sede ON factura.sede_id_sede=sede.id_sede WHERE factura.anulacion=1";
     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
 
         while($row = mysqli_fetch_assoc($sql)){
@@ -19,7 +19,7 @@
             <td><?php echo $row['nombreCliente'];?></td>
             <td><?php echo $row['nombre_sede'];?></td>
             <td> 
-                <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos">
+                <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos2">
                 <i class="fa fa-wrench" aria-hidden="true"></i></button>
             </td>
         </tr>

@@ -21,15 +21,16 @@ $sqlUser = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
 $resultadoUser = $sqlUser->fetch_object();
 $idEmple = $resultadoUser->id_empleado;
 
-$consultaFac = "INSERT INTO factura (pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,cliente_id_cliente,sede_id_sede) VALUES (0,0,'{$fecha}',0,1,'{$idEmple}','{$clienteId}','{$id_Sede}')";
+$consultaFac = "INSERT INTO factura (pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,cliente_id_cliente,sede_id_sede,anulacion) VALUES (0,0,'{$fecha}',0,1,'{$idEmple}','{$clienteId}','{$id_Sede}',0)";
 $sqlFact = mysqli_query($conn,$consultaFac) or die(mysqli_error($conn));
 
-$consultt = "SELECT * FROM factura";
+$consultt = "SELECT * FROM factura ORDER BY id_factura DESC LIMIT 1";
 $sqll = mysqli_query($conn,$consultt) or die(mysqli_error($conn));
 $fac = $sqll->fetch_object();
 $idFactu = $fac->id_factura;
-$consultaExi = "SELECT * FROM detalle_factura ORDER BY id_detallef DESC LIMIT 1";
-$sqlExi = mysqli_query($conn,$consultaExi) or die(mysqli_error($conn));
+
+/*$consultaExi = "SELECT * FROM detalle_factura ORDER BY id_detallef DESC LIMIT 1";
+$sqlExi = mysqli_query($conn,$consultaExi) or die(mysqli_error($conn));*/
 
 /*if($num = $sqlExi->num_rows>0){
     $resultExi = $sqlExi->fetch_object();

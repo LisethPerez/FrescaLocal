@@ -154,7 +154,7 @@
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                    
-                                                    <input class="form-check-input" type="number" name="number" id="number" value="">
+                                                    <input class="form-check-input" type="number" name="numberFac" id="numberFac" value="">
                                         
                                                 </div>
                                                 <div class="form-check form-check-inline">
@@ -166,7 +166,7 @@
                                 </div>  <br>
                                 
                                     <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="tabla">
+                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
@@ -210,6 +210,7 @@
                                                     <th>Cantidad</th>
                                                     <th>Producto</th>
                                                     <th>Precio_venta</th>
+                                                    <th>Total</th>
                                                     <th>Descuento</th>
                                                     <th>Impuesto</th>
                                                     <th>Fecha</th>
@@ -221,7 +222,10 @@
                                             </tbody>
                                         </table>
                                                     </div>
-                         
+                                                    <div class="modal-footer">
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                           
+                                                        </div>
                                                     
                                                 </div><!--modal-content-->
                                             </div><!--modal-dialog-->
