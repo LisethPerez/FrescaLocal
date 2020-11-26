@@ -168,6 +168,7 @@ display: block;
                                                         <label><a  id="obte" class="">Peso (KG)</a></label>
                                                         <input type="hidden" id="peso" name="peso">
                                                         <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" style="height:30px" required disabled>
+                                                       <!-- <input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>
                                             <div class="form-row">
@@ -290,7 +291,7 @@ display: block;
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Información cliente</strong></h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Ingreso de datos del cliente</strong></h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -305,7 +306,7 @@ display: block;
                                                                                 $consulta = "SELECT * FROM categoria_cliente";
                                                                                 $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                                                                             ?>
-                                                                            <select type="text" class="form-control" id="tipo_cliente" name="tipo_cliente" placeholder="Tipo cliente"  onkeypress="return onlyLetters(event)" style="width:160px;" required>
+                                                                            <select type="text" class="form-control" id="tipo_cliente" name="tipo_cliente" placeholder="Tipo cliente"  style="height:33px" onkeypress="return onlyLetters(event)" style="width:160px;" required>
                                                                             
                                                                             <?php 
                                                                                 while ($valores = mysqli_fetch_object($sql)) {
@@ -322,7 +323,7 @@ display: block;
                                                                 <div class="form-row">
                                                                     <div class="col-12">
                                                                         <label for="validationCustom01">Nombre</label>
-                                                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" onkeypress="return onlyLetters(event)"  required><br>
+                                                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" style="height:33px" onkeypress="return onlyLetters(event)"  required><br>
                                                                         <div class="invalid-feedback">
                                                                             Ingrese nombre
                                                                     </div>
@@ -331,61 +332,43 @@ display: block;
                                                                 <div class="form-row">
                                                                     <div class="col">
                                                                             <label for="validationCustom03">Documento</label>
-                                                                            <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento" onkeypress="return onlyNums(event)" max="10" required><br>
-                                                                            <div class="invalid-feedback">
-                                                                            Ingrese documento
-                                                                        </div>
+                                                                            <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento" style="height:33px" onkeypress="return onlyNums(event)" max="10" required><br>
+                                                                            
                                                                     </div>
                                                                     <div class="col">
                                                                         <label for="validationCustom03">Telefono</label>
-                                                                        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefono" max="10" onkeypress="return onlyNums(event)" required><br>
-                                                                        <div class="invalid-feedback">
-                                                                            Ingrese telefono
-                                                                        </div>
+                                                                        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefono" maxlength="10" style="height:33px" onkeypress="return onlyNums(event)" required><br>
+                                                                        
                                                                     </div>
                                                                     
                                                                 </div>
                                                                 <div class="form-row">
                                                                     <div class="col">
                                                                         <label for="validationCustom03">Dirección</label>
-                                                                        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required><br>
-                                                                        <div class="invalid-feedback">
-                                                                            Ingrese dirección
-                                                                        </div>
+                                                                        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" style="height:33px" required><br>
+                                                                        
                                                                     </div> 
                                                                     <div class="col">
                                                                             <label for="validationCustom03">Correo</label>
-                                                                            <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo"  required><br>
-                                                                            <div class="invalid-feedback">
-                                                                            Ingrese correo
-                                                                        </div>
+                                                                            <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo"  style="height:33px" required><br>
+                                                                           
                                                                     </div>    
                                                                  
                                                                 </div>
                                                                 <div class="form-row" id="info_insti">
                                                                     <div class="col">
                                                                         <label for="validationCustom03">Empresa</label>
-                                                                        <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa"  onkeypress="return onlyLetters(event)" required><br>
-                                                                        <div class="invalid-feedback">
-                                                                            Ingrese nombre empresa
-                                                                        </div>
+                                                                        <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa"  style="height:33px" onkeypress="return onlyLetters(event)" required><br>
+                                                                       
                                                                     </div>
                                                                     <div class="col">
                                                                             <label for="validationCustom03">Indentificación NIT</label>
-                                                                            <input type="number" class="form-control" id="nit" name="nit" placeholder="NIT" value="Mark" onkeypress="return onlyNums(event)" required><br>
-                                                                            <div class="invalid-feedback">
-                                                                            Ingrese identificación NIT
-                                                                            </div>
+                                                                            <input type="number" class="form-control" id="nit" name="nit" placeholder="NIT" value="Mark" style="height:33px; width:20px" onkeypress="return onlyNums(event)" required><br>
+                                                                            
                                                                     </div> 
-                                                                    <!--<div class="col">
-                                                                            <label for="validationCustom03">Tipo Cliente</label>
-                                                                            <select type="text" class="form-control" id="tipo_cliente" name="tipo_cliente" placeholder="Tipo cliente" value="Mark" onkeypress="return onlyLetters(event)" required>
-                                                                                <option value="1">Normal</option>
-                                                                                <option value="2">Institucional</option>
-                                                                            </select>
-                                                                    </div><br>-->
+                                                                    
                                                                 </div>
-                                                                <!--<button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>-->
+                                                               
                                                         
                                                     </div> <!--modal-body-->
                                                     <div class="modal-footer">

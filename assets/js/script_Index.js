@@ -65,6 +65,8 @@ $('#confi').click(function () {
         }
     });
 });
+
+//Buscar datos de clientes para su modificacion
 $('#buscar3').click(function () {
     $.ajax({
         type: "POST",
@@ -177,8 +179,8 @@ $('#registrar2').click(function () {
     }
 });
 
+//Método para el ingreso a la aplicación por medio del login
 $('#ingresar_login').click(function () {   
-
     var correo = $('#email').val();
     var password = $('#pass').val();
 
@@ -222,6 +224,7 @@ $('#ingresar_login').click(function () {
     }
 });
 
+//Obtener el id de la fatura de la tabla para ver los detalles 
 var id_factu;
 $('.view_products').click(function () {
     $tr=$(this).closest('tr');
@@ -234,11 +237,10 @@ $('.view_products').click(function () {
         type: "POST",
         success: function(data){
             //alert(JSON.parse(data));
-            /*var produ = document.getElementById("cont_productos");
-            produ.innerHTML = "";*/
+            var produ = document.getElementById("cont_productos");
+            produ.innerHTML = "";
             var datosPro = JSON.parse(data);
-            createRow2(datosPro);
-                
+            createRow2(datosPro);       
         }
     });    
  });
@@ -262,22 +264,11 @@ $('.view_products').click(function () {
 
 }
 
+//Buscar factura por el número de factura
 var buscar_fac;
 $('#buscarFac').click(function(){
     buscar_fac = $('#numberFac').val();
-
-    if(buscar_fac === ''){
-        Swal.fire({
-            icon: 'error',
-            text: 'Ingrese número de búsqueda',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });  
-    }else{
+  
         $.ajax({
             url: "buscar_fact.php?var="+buscar_fac,
             method: "POST",
@@ -301,8 +292,8 @@ $('#buscarFac').click(function(){
                 $('#numberFac').val('');
                }
             }
-        });
-    }
+    });  
+    
 });
 
 function createRow3(data) {                              //dynamically adding rows to the Table
@@ -323,6 +314,7 @@ function createRow3(data) {                              //dynamically adding ro
     }  
 }
 
+//Buscar factura anulada por número de factura
 var  buscar_fac2;
 $('#buscarFac2').click(function(){
     buscar_fac2 = $('#numberFac').val();
@@ -358,7 +350,7 @@ $('#buscarFac2').click(function(){
                 var contenidoFac = document.getElementById("pro2");
                 contenidoFac.innerHTML = "";
                 var datosFac = JSON.parse(data);
-                createRow3(datosFac);
+                createRow4(datosFac);
                 $('#numberFac2').val('');
                }
             }
@@ -368,7 +360,7 @@ $('#buscarFac2').click(function(){
 
 
 
-function createRow3(data) {                              //dynamically adding rows to the Table
+function createRow4(data) {                              //dynamically adding rows to the Table
     //design this according to your requirement    
     for(var i=0; i<data.length; i++){
     var trElement = `<tr>
@@ -388,8 +380,7 @@ function createRow3(data) {                              //dynamically adding ro
 
 }
 
-//Agregar los datos de la fila seleccionada
-
+//Agregar los datos de la fila seleccionada el formulario
 $('.editbtn').click(function () {
     $tr=$(this).closest('tr');
     var datos = $tr.children("td").map(function (){
@@ -406,6 +397,7 @@ $('.editbtn').click(function () {
  });
 var pago;
 
+//Esconder div de método de pago en efectivo
  $('.groupPago').click(function () {
     pago = $(this).val();
 
@@ -428,6 +420,7 @@ var pago;
  
  });
 
+ //Colocar signo de $ y comas 
  $('#valor_ingre').on('keyup', () => {
     const value = $('#valor_ingre').val();
     var chain = String(value.replace(/\D/g, ""));
@@ -440,7 +433,6 @@ var tipo;
 //Esconder formulario de busqueda
 $(document).ready(function(){
     //$('#menuToggle').trigger('click')
-    
     document.getElementById("menuToggle").click();
     //Esconder formulario de busqueda
     $('#esconder').hide();   
@@ -514,6 +506,7 @@ $('.form-check-inline' ).on( 'click', function() {
     
 });
 
+//Obtener peso de la bascula y ponerlo en el input
 $('#obte').click(function () {
     $.ajax({
         url: "lectura.php",
@@ -526,6 +519,7 @@ $('#obte').click(function () {
 var datos = [];
 var DataArray = [];
 var total=0;
+var cant;
 //var descuento = 0, impuesto = 0;
 //Enviar datos por con enter
 $('.selec').keypress(function (e) {
@@ -545,8 +539,10 @@ $('.selec').keypress(function (e) {
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
-                }
-            });     
+                } 
+            });  
+            $('#peso').val('');  
+            $('#pesooo').val(''); 
         }else if(tipo==="peso" && peso===''){
             Swal.fire({
                 icon: 'error',
@@ -557,9 +553,9 @@ $('.selec').keypress(function (e) {
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 }
-            });     
+            });    
+            $('#cantidad').val('');
         }else{
-
             if(tipo_cliente===0){
                 Swal.fire({
                     icon: 'error',
@@ -572,11 +568,17 @@ $('.selec').keypress(function (e) {
                     }
                 });     
             }else{ 
+                if(peso === ''){
+                    cant = cantidad;
+                }
+                if(cantidad === ''){
+                    cant = peso;
+                }
                 //Verificar la disponibilidad del producto seleccionado
                 $.ajax({
                     type: "POST",
                     url: "disponibilidad.php?var="+nombre_producto,
-                    data:{var2: cantidad},
+                    data:{var2: cant},
                     success: function(data) {
                       
                         if(data==="Hay disponibilidad"){
@@ -586,12 +588,14 @@ $('.selec').keypress(function (e) {
                                     url: "ingresar_tabla.php?var="+tipo_cliente,
                                     data: $("#venta").serialize(),
                                     success: function(data) {
+                                        
                                         DataArray = JSON.parse(data);  
                                                 
                                         createRow(DataArray);
                                         deleteRow(datos);  
                                         //alert(JSON.stringify(DataArray));
                                         //Recorrer el array temporal para llenar el nuevo JSON
+                                       
                                         $.each(DataArray, function(i, _data) {
                                             var codigo =  _data.codigo;
                                             var cantidad =  parseInt( _data.cantidad);
@@ -600,7 +604,16 @@ $('.selec').keypress(function (e) {
                                             var precio = parseFloat(_data.precio);
                                             var impuesto =  parseInt(_data.impuesto);
                                             var descuento = parseInt(_data.descuento);
-                                            
+
+                                            var total; 
+                                            if(isNaN(cantidad)){
+                                                total = Math.round(peso*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
+                                            }
+                                            if(isNaN(peso)){
+                                                total = Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
+                                            }
+
+                                    
                                             datos.push({
                                                 'codigo': codigo,
                                                 'cantidad': cantidad,
@@ -609,7 +622,7 @@ $('.selec').keypress(function (e) {
                                                 'precio' : precio,
                                                 'impuesto': impuesto,
                                                 'descuento': descuento,
-                                                'total' : Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)))
+                                                'total' : total
                                             })
                                     
                                         });
@@ -634,9 +647,9 @@ $('.selec').keypress(function (e) {
                                         } 
                                         total = 0;
                                         
-                                        
+                                         
                                     }   
-                                    
+                                   
                                 });
                                 //Sincronizar los nuevos productos con la eliminación y agregación
                                 venta = datos;
@@ -684,16 +697,19 @@ $('#realizar_pago').click(function(){
         data: {var: venta},  
         success: function(data) {
             id_factura = data;
-            
+           
+      
         }
     });
 });
 
+//Realizar modificaciones de la facrtura y hacer el pago de la compra 
 $('#pagar').click(function(){
+    alert(id_factura);
     $.ajax({
         type:"POST",
-        url: "agregar_factura.php?var="+id_factura,
-        data:{tipo_pago: pago},
+        url: "agregar_factura.php",
+        data:{tipo_pago: pago, id:  id_factura},
         success: function(data) {
             alert(data);
             var contenidoVen = document.getElementById("cont_ventas");
@@ -702,11 +718,13 @@ $('#pagar').click(function(){
             $('#vueltas').val('');
             $('#efectivo').hide();
             $('#total').val('');
+            window.location.href="index.php";
 
         }
     });
 });
 
+//Realizar descuento de la disponibilidad del producto (si se requiere)
 $('#volver_stock').click(function(){
     //alert(JSON.stringify(venta));
     $.ajax({
@@ -726,7 +744,8 @@ $('#volver_stock').click(function(){
                     hideClass: {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
-                });     
+                });   
+                window.location.href="index.php";  
 
             }
             if(data ==="No se realizaron cambios"){
@@ -748,7 +767,7 @@ $('#volver_stock').click(function(){
     });
 });
   
-
+//Descontar del inventario para pagos por las otras plataformas electrónicas
 $('#descontar').click(function(){
     //alert(JSON.stringify(venta));
     var codigo = $('#codigo_inve').val();
@@ -804,8 +823,7 @@ $('#descontar').click(function(){
 });
 
 //Eliminar registro del pedido y del array
-function deleteRow(data){
-    
+function deleteRow(data){  
     $('.eliRows').click(function () {
         $tr=$(this).closest('tr');
         var datos = $tr.children("td").map(function (){

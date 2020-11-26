@@ -24,7 +24,7 @@ if($numFilas = $sql->num_rows>0){
         if($diponibilidad == "1"){
             $cantidad_produ = $resultado->cantidad;
 
-            if($cantidad<=$cantidad_produ){
+            if($cantidad<=$cantidad_produ AND $cantidad_produ>0){
                 echo "Hay disponibilidad";
             }
             else{
