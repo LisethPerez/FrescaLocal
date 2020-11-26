@@ -13,7 +13,6 @@ $sqlExi = mysqli_query($conn,$consultaExi) or die(mysqli_error($conn));
 
 if($num = $sqlExi->num_rows>0){
     $resultExi = $sqlExi->fetch_assoc();
-    echo "Entro al if";
     //Cunsulta para obtener el id_pago de la base de datos dependiendo del tipo de pago seleccionado por el cliente
     $consultPago= "SELECT * FROM tipo_pago WHERE nombre='{$tipo_pago}'";
     $sqlPago = mysqli_query($conn,$consultPago) or die(mysqli_error($conn));
