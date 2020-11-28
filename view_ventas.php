@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="assets/fontawesome/css/all.css">
+    <script src="assets/js/jQuery.js"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" rel="stylesheet"/>
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -154,11 +156,11 @@
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                    
-                                                    <input class="form-check-input" type="number" name="numberFac" id="numberFac" value="">
+                                                    <input class="form-check-input" type="text" name="numberFac" id="numberFac" value="">
                                         
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <button type="button" id="buscarFac" class="btn btn-primary btn-sm mb-2"> Buscar</button>
+                                                    <!--<button type="button" id="buscarFac" class="btn btn-primary btn-sm mb-2"> Buscar</button>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +168,7 @@
                                 </div>  <br>
                                 
                                     <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="taable">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
@@ -223,7 +225,7 @@
                                         </table>
                                                     </div>
                                                     <div class="modal-footer">
-                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2 atras" data-dismiss="modal">ATRÁS</button>
                                                            
                                                         </div>
                                                     
@@ -264,9 +266,10 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/fontawesome/js/all.js"></script>
-<script src="assets/js/jQuery.js"></script>
+
 <script src="assets/js/sweetalert2.min.js"></script>
 <script src="assets/js/script_Index.js"></script>
+<script charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
 
 </body>

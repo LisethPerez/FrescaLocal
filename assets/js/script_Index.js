@@ -232,6 +232,7 @@ $('.view_products').click(function () {
         return $(this).text();
     });
     id_factu = datos[0];
+    alert(datos[0]);
     $.ajax({
         url: "detalle_productos.php?var="+id_factu,
         type: "POST",
@@ -244,6 +245,8 @@ $('.view_products').click(function () {
         }
     });    
  });
+
+
 
  function createRow2(data) {                              //dynamically adding rows to the Table
     //design this according to your requirement    
@@ -258,8 +261,7 @@ $('.view_products').click(function () {
     <td>`+data[i].fecha+`</td>  
     <td>`+data[i].empleado+`</td>   
     </tr>`;
-    $('#cont_productos').append(trElement);
-    
+    $('#cont_productos').append(trElement);  
     }  
 
 }
@@ -294,6 +296,11 @@ $('#buscarFac').click(function(){
             }
     });  
     
+});
+
+$('.atras').click(function(){  
+    var contenidoFac = document.getElementById("cont_productos");
+    contenidoFac.innerHTML = "";
 });
 
 function createRow3(data) {                              //dynamically adding rows to the Table
@@ -520,6 +527,7 @@ var datos = [];
 var DataArray = [];
 var total=0;
 var cant;
+var cont = 0;
 //var descuento = 0, impuesto = 0;
 //Enviar datos por con enter
 $('.selec').keypress(function (e) {
@@ -583,13 +591,15 @@ $('.selec').keypress(function (e) {
                       
                         if(data==="Hay disponibilidad"){
                             //Si se encuentra disponibilidad de agregar al JSON y la tabla
+                            cont = cont + 1;
                              $.ajax({
                                     type: "POST",
-                                    url: "ingresar_tabla.php?var="+tipo_cliente,
+                                    url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
                                     data: $("#venta").serialize(),
                                     success: function(data) {
                                         
                                         DataArray = JSON.parse(data);  
+                                       
                                                 
                                         createRow(DataArray);
                                         deleteRow(datos);  
@@ -597,6 +607,7 @@ $('.selec').keypress(function (e) {
                                         //Recorrer el array temporal para llenar el nuevo JSON
                                        
                                         $.each(DataArray, function(i, _data) {
+                                            var id = _data.id;
                                             var codigo =  _data.codigo;
                                             var cantidad =  parseInt( _data.cantidad);
                                             var producto =  _data.producto;
@@ -606,15 +617,16 @@ $('.selec').keypress(function (e) {
                                             var descuento = parseInt(_data.descuento);
 
                                             var total; 
+                                            
                                             if(isNaN(cantidad)){
                                                 total = Math.round(peso*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
                                             }
                                             if(isNaN(peso)){
                                                 total = Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
                                             }
-
-                                    
+                                            
                                             datos.push({
+                                                'id': id,
                                                 'codigo': codigo,
                                                 'cantidad': cantidad,
                                                 'producto': producto,
@@ -646,6 +658,7 @@ $('.selec').keypress(function (e) {
                                             $('#total').val("$" + newValue);
                                         } 
                                         total = 0;
+                                        //cont = 0;
                                         
                                          
                                     }   
@@ -690,8 +703,8 @@ $('#valor_ingre').keypress(function (e) {
 //Ingreso de JSON de los productos para descontarlos de stock y realizar la posterior venta
 var id_factura;
 $('#realizar_pago').click(function(){
-    //alert(JSON.stringify(venta));
-    $.ajax({
+    alert(JSON.stringify(venta));
+    /*$.ajax({
         type:"POST",
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
@@ -700,7 +713,7 @@ $('#realizar_pago').click(function(){
            
       
         }
-    });
+    });*/
 });
 
 //Realizar modificaciones de la facrtura y hacer el pago de la compra 
@@ -822,6 +835,21 @@ $('#descontar').click(function(){
     }
 });
 
+/*$(document).ready(function() {
+    $('#taable').DataTable();
+} );*/
+
+$("#numberFac").keyup(function(){
+    _this = this;
+    // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
+    $.each($("#taable tbody tr"), function() {
+        if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+           $(this).hide();
+        else
+           $(this).show();                
+    });
+}); 
+
 //Eliminar registro del pedido y del array
 function deleteRow(data){  
     $('.eliRows').click(function () {
@@ -831,7 +859,7 @@ function deleteRow(data){
         });
         var cod = datos[0];
         for(var i=0; i<data.length;i++) {
-            if(String(data[i].codigo)===cod){
+            if(String(data[i].id)===cod){
 
                 var cost = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
                 var nuevo = cost-data[i].total;
@@ -851,6 +879,7 @@ function createRow(data) {
                      
     for(var i=0; i<data.length; i++){
     var trElement = `<tr>
+    <td style="display:none">`+data[i].id+`</td>
     <td>`+data[i].codigo+`</td>
     <td>`+data[i].cantidad+`</td>
     <td>`+data[i].producto+`</td>

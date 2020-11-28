@@ -3,6 +3,7 @@ include 'conexionGene.php';
 
 
 $tipo = $_GET['var'];
+$cont = $_GET['var2'];
 $producto_1 = $_POST['producto'];
 $peso = $_POST['peso'];
 $codigo = $_POST['producto1'];
@@ -26,8 +27,8 @@ if($numFilas = $sql->num_rows>0){
     if($tipo=="2"){
         $precio = $result['precio_1'];
     }
-    
     $datos[] = array(
+        "id"=>$cont,
         "codigo"=>$result['ean'],
         "cantidad"=>$cantidad,
         "producto"=>$result['nombreEmple'],

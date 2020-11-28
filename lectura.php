@@ -1,4 +1,5 @@
 <?php
+
 $handle = fopen("COM4", "r");
 $file = fopen("datos.txt","w");
 $datos = array();
@@ -25,6 +26,5 @@ if(file_exists('datos.txt')){
     foreach($lineas as $linea){
         echo $linea;
     }
-
 }
 ?>

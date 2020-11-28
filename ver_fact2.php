@@ -21,6 +21,7 @@
             <td> 
                 <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos2">
                 <i class="fa fa-wrench" aria-hidden="true"></i></button>
+                <button class="btn btn-success btn-sm" id="imprimir"><i class="fa fa-print" aria-hidden="true"></i></button>
             </td>
         </tr>
         

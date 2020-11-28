@@ -8,7 +8,7 @@ $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 
 if($num = $sql->num_rows>0){
     $row = mysqli_fetch_assoc($sql);
-
+  
     $datos[] = array(
         "id"=>$row['id_factura'],
         "total"=>$row['pago_total'],
@@ -18,11 +18,13 @@ if($num = $sql->num_rows>0){
         "empleado"=>$row['nombreEmple'],
         "cliente"=>$row['nombreCliente'],
         "sede"=>$row['nombre_sede'],
-        "opcion"=>'<button class="btn btn-white view_products" id="detalles" style="background:#F0A744; color:#FFF" data-toggle="modal" data-target="#productos"><i class="fa fa-wrench" aria-hidden="true"></i></button>'
+        "opcion"=>'<button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" data-toggle="modal" data-target="#productos"><i class="fa fa-wrench" aria-hidden="true"></i></button> <button class="btn btn-success btn-sm impri"><i class="fa fa-print" aria-hidden="true"></button>'
     );
     
     echo json_encode($datos);
+
 }else{
     echo "No se encuntran resultados con la búsqueda";
 }
 ?> 
+

@@ -77,7 +77,7 @@ display: block;
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="forms-basic.html">Lista facturas</a></li>
+                            <li><i class=""></i><a href="view_facturas.php">Lista facturas</a></li>
                             
                         </ul>
                     </li>
@@ -168,7 +168,7 @@ display: block;
                                                         <label><a  id="obte" class="">Peso (KG)</a></label>
                                                         <input type="hidden" id="peso" name="peso">
                                                         <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" style="height:30px" required disabled>
-                                                       <!-- <input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
+                                                       <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>
                                             <div class="form-row">
@@ -186,6 +186,7 @@ display: block;
                                             <table class="table table-responsive">
                                                 <thead class="thead-dark">
                                                     <tr>
+                                                        <th style="display:none">ID</th>    
                                                         <th>Codigo</th>
                                                         <th>Cantidad</th>
                                                         <th>Producto</th>

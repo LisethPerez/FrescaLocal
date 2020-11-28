@@ -155,7 +155,7 @@
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                    
-                                                    <input class="form-check-input" type="number" name="numberFac" id="numberFac" value="">
+                                                    <input class="form-check-input" type="number" name="numberFac2" id="numberFac2" value="">
                                         
                                                 </div>
                                                 <div class="form-check form-check-inline">
