@@ -155,11 +155,11 @@
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                    
-                                                    <input class="form-check-input" type="number" name="numberFac2" id="numberFac2" value="">
+                                                    <input class="form-check-input" type="text" name="numberFac2" id="numberFac2" value="">
                                         
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <button type="button" id="buscarFac2" class="btn btn-primary btn-sm mb-2"> Buscar</button>
+                                                    <!--<button type="button" id="buscarFac2" class="btn btn-primary btn-sm mb-2"> Buscar</button>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -167,7 +167,7 @@
                                 </div>  <br>
                                 
                                     <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="taaable">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>

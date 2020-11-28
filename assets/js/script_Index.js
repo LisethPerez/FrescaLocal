@@ -850,6 +850,17 @@ $("#numberFac").keyup(function(){
     });
 }); 
 
+$("#numberFac2").keyup(function(){
+    _this = this;
+    // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
+    $.each($("#taaable tbody tr"), function() {
+        if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+           $(this).hide();
+        else
+           $(this).show();                
+    });
+}); 
+
 //Eliminar registro del pedido y del array
 function deleteRow(data){  
     $('.eliRows').click(function () {
