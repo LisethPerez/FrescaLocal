@@ -659,13 +659,13 @@ $('.selec').keypress(function (e) {
                                         } 
                                         total = 0;
                                         //cont = 0;
-                                        
-                                         
                                     }   
                                    
                                 });
                                 //Sincronizar los nuevos productos con la eliminación y agregación
                                 venta = datos;
+                                $('#pesooo').val('');
+                                $('#peso').val('');
 
                         //Mensaje de no existencia de disponibilidad del producto
                         }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
@@ -860,6 +860,26 @@ $("#numberFac2").keyup(function(){
            $(this).show();                
     });
 }); 
+
+$('.impri').click(function(){
+    $tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+    var idFac = datos[0];
+    $.ajax({
+        url:"generar_pdf.php",
+        data:{var: idFac},
+        method: "POST",
+        success: function(data){
+            alert(data);
+        },
+        error: function(result) {
+            alert('error');
+        }
+    });
+
+});
 
 //Eliminar registro del pedido y del array
 function deleteRow(data){  

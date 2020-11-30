@@ -138,7 +138,7 @@
         <div class="container">
                 <div class="clearfix"></div>
                     <div class="row">
-                    <div class="col-lg-10">
+                    <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
                                 <strong class="card-title text-dark">Información Facturas</strong>
