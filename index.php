@@ -165,9 +165,9 @@ display: block;
                                                     
                                                 </div>
                                                 <div class="col">
-                                                        <label><a  id="obte" class="">Peso (KG)</a></label>
+                                                        <label><a id="obte" class="">Peso (KG)</a></label>
                                                         <input type="hidden" id="peso" name="peso">
-                                                        <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" style="height:30px" required disabled>
+                                                        <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" style="height:30px" required>
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>

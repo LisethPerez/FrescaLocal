@@ -445,9 +445,11 @@ $(document).ready(function(){
     $('#esconder').hide();   
     //Esconder duv de metodo de pago efectivo
     $('#efectivo').hide();
+
+    $('#producto').focus();
+
      //Autocompletar de productos
     $('#producto').typeahead({
-
         source: function(query,result){
             $.ajax({
                 url:"get_var.php",
@@ -480,10 +482,16 @@ $(document).ready(function(){
                 success:function(data){ 
                      tipo = data;   
                      //alert(tipo);
+                     if(tipo==="cantidad"){
+                        $('#cantidad').focus();
+                    }
+                    if(tipo==="peso"){
+                        $('#pesooo').focus();
+                    }        
                 }
             });
-            return item;
             
+            return item;    
         }
     });
 
@@ -513,8 +521,12 @@ $('.form-check-inline' ).on( 'click', function() {
     
 });
 
+$('#pesooo').keypress(function (evt) {
+    evt.preventDefault();
+});
+
 //Obtener peso de la bascula y ponerlo en el input
-$('#obte').click(function () {
+/*$('#obte').click(function () {
     $.ajax({
         url: "lectura.php",
         success: function(data) {
@@ -522,7 +534,7 @@ $('#obte').click(function () {
             $('#peso').val(data);
         }
     }); 
-});
+});*/
 var datos = [];
 var DataArray = [];
 var total=0;
@@ -530,15 +542,28 @@ var cant;
 var cont = 0;
 //var descuento = 0, impuesto = 0;
 //Enviar datos por con enter
+
+$('#pesooo').focus(function(){
+    $.ajax({
+        url: "lectura.php",
+        success: function(data) {
+            $('#pesooo').val(data);
+            $('#peso').val(data);
+        }
+    });
+});
+  
+
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
     var cantidad = $('#cantidad').val();
     var peso = $('#peso').val();
     var codigo = $('#producto1').val();
-     
+
     if(e.which == 13) {
         
-        if(tipo==="cantidad" && cantidad===''){
+        if(tipo==="cantidad" && cantidad===''){  
+            $('#cantidad').focus();      
             Swal.fire({
                 icon: 'error',
                 text: 'Por favor ingrese la cantidad',
@@ -548,10 +573,11 @@ $('.selec').keypress(function (e) {
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 } 
-            });  
+            });     
             $('#peso').val('');  
             $('#pesooo').val(''); 
         }else if(tipo==="peso" && peso===''){
+            $('#pesooo').focus(); 
             Swal.fire({
                 icon: 'error',
                 text: 'Por favor ingrese el peso',
@@ -561,7 +587,7 @@ $('.selec').keypress(function (e) {
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 }
-            });    
+            });         
             $('#cantidad').val('');
         }else{
             if(tipo_cliente===0){
