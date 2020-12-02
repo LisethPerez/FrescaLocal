@@ -187,13 +187,14 @@ display: block;
                                                 <thead class="thead-dark">
                                                     <tr>
                                                         <th style="display:none">ID</th>    
-                                                        <th>Codigo</th>
+                                                        <th>Código</th>
                                                         <th>Cantidad</th>
                                                         <th>Producto</th>
                                                         <th>Peso</th>
                                                         <th>Precio</th>
-                                                        <th>Impuesto</th>
-                                                        <th>Descuento</th>
+                                                        <th>Total</th>
+                                                        <th>Imp</th>
+                                                        <th>Desc</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -203,6 +204,7 @@ display: block;
                                                 </tbody>
                                                 </table>
                                             </div>
+                                            <br>
                                             <div class="form-row">
                                                 <div class="col">
                                                 </div>

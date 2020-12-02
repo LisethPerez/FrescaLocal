@@ -34,6 +34,21 @@
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 
+<style>
+    .my-custom-scrollbar {
+    position: relative;
+    height: 380px;
+    overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+    thead tr th{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    }
+</style>
 </head>
 <body>
     <!-- Left Panel -->

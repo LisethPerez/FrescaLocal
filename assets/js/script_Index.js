@@ -441,8 +441,7 @@ var tipo;
 $(document).ready(function(){
     //$('#menuToggle').trigger('click')
     document.getElementById("menuToggle").click();
-    //Esconder formulario de busqueda
-    $('#esconder').hide();   
+    //Esconder formulario de busqueda 
     //Esconder duv de metodo de pago efectivo
     $('#efectivo').hide();
 
@@ -487,6 +486,7 @@ $(document).ready(function(){
                     }
                     if(tipo==="peso"){
                         $('#pesooo').focus();
+                        
                     }        
                 }
             });
@@ -500,10 +500,10 @@ $(document).ready(function(){
 
 
 
-var valor;
-var categorias;
+//var valor;
+//var categorias;
 //Capturar el valor del checkbox seleccionado
-$('.form-check-inline' ).on( 'click', function() {
+/*$('.form-check-inline' ).on( 'click', function() {
     if( $('#inlineRadio1').is(':checked') ){
         valor = $('#inlineRadio1').val();
         $('#label1').text("Ingrese nombre");
@@ -519,22 +519,37 @@ $('.form-check-inline' ).on( 'click', function() {
     }
 
     
-});
-
-$('#pesooo').keypress(function (evt) {
-    evt.preventDefault();
-});
-
-//Obtener peso de la bascula y ponerlo en el input
-/*$('#obte').click(function () {
-    $.ajax({
-        url: "lectura.php",
-        success: function(data) {
-            $('#pesooo').val(data);
-            $('#peso').val(data);
-        }
-    }); 
 });*/
+
+$('#pesooo').keydown(function (evt) {
+    evt.preventDefault();
+    try {                
+        if ((e.keyCode == 8 || e.keyCode == 46))
+            return false;
+        else
+            return true;               
+    }
+    catch (Exception)
+    {
+        return false;
+    }
+});
+
+
+$("#pesooo").keydown(function(event) {
+    //var keycode = event.keyCode;    
+    if (event.shiftKey) {
+        $.ajax({
+            url: "lectura.php",
+            success: function(data) {
+                $('#pesooo').val(data);
+                $('#peso').val(data);
+            }
+        });   
+    }
+
+});
+
 var datos = [];
 var DataArray = [];
 var total=0;
@@ -542,17 +557,6 @@ var cant;
 var cont = 0;
 //var descuento = 0, impuesto = 0;
 //Enviar datos por con enter
-
-$('#pesooo').focus(function(){
-    $.ajax({
-        url: "lectura.php",
-        success: function(data) {
-            $('#pesooo').val(data);
-            $('#peso').val(data);
-        }
-    });
-});
-  
 
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
@@ -641,15 +645,14 @@ $('.selec').keypress(function (e) {
                                             var precio = parseFloat(_data.precio);
                                             var impuesto =  parseInt(_data.impuesto);
                                             var descuento = parseInt(_data.descuento);
-
-                                            var total; 
+                                            var total = parseFloat(_data.total);
                                             
-                                            if(isNaN(cantidad)){
+                                            /*if(isNaN(cantidad)){
                                                 total = Math.round(peso*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
                                             }
                                             if(isNaN(peso)){
                                                 total = Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
-                                            }
+                                            }*/
                                             
                                             datos.push({
                                                 'id': id,
@@ -887,6 +890,17 @@ $("#numberFac2").keyup(function(){
     });
 }); 
 
+$("#num").keyup(function(){
+    _this = this;
+    // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
+    $.each($("#tabla tbody tr"), function() {
+        if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+           $(this).hide();
+        else
+           $(this).show();                
+    });
+}); 
+
 $('.impri').click(function(){
     $tr=$(this).closest('tr');
         var datos = $tr.children("td").map(function (){
@@ -942,6 +956,7 @@ function createRow(data) {
     <td>`+data[i].producto+`</td>
     <td>`+data[i].peso+`</td>
     <td>`+data[i].precio+`</td>
+    <td>`+data[i].total+`</td>
     <td>`+data[i].impuesto+`</td>
     <td>`+data[i].descuento+`</td>
     <td>`+data[i].opcion+`</td>  

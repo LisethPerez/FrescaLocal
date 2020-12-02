@@ -41,6 +41,11 @@
     .table-wrapper-scroll-y {
     display: block;
     }
+    thead tr th{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    }
 </style>
 </head>
 <body>
@@ -151,36 +156,17 @@
                                                
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <strong>Seleccione el atributo de búsqueda</strong>
+                                                    <strong>Ingresa patrón de búsqueda</strong>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                    
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="nombre">
-                                                    <label class="form-check-label" for="inlineRadio1">Nombre</label>
+                                                    <input type="text" class="form-control" id="num" name="num" placeholder="">
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="documento">
-                                                    <label class="form-check-label" for="inlineRadio2">Documento</label>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                     </div>  <br>
-                                    <div id="esconder">
-                                            <form method="POST" id="formularioCliente" class="form-inline">
-                                                <div class="form-group mx-sm-3">       
-                                                    <label id="label1" for="staticEmail2"></label><br>
-                                                </div>
-                                                <div class="form-group mx-sm-3">    
-                                                    <input type="text" class="form-control" id="num" name="num" placeholder="">
-                                            </div>   
-                                                <br><br>
-                                                <div class="form-group mx-sm-3">   
-                                                    <button type="button" id="buscar3" class="btn btn-primary btn-sm mb-2"> Buscar</button>
-                                                    
-                                                </div>   
-                                            </form>
-                                        </div>
                                     </div>
                                     <div>
                                     <div class=""> 
