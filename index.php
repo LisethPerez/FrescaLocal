@@ -234,11 +234,9 @@ display: block;
                                                     <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style="width:130px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; width:130px; height:50px""><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
+                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; width:130px; height:50px"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
                                                 </div>
-                                                <!--<div class="col">
-                                                <div id="resultado"class="col"></div>
-                                                </div>-->
+                                                
                                             </div><hr>
                                             <div class="modal fade" id="infoCliente" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
                                                 <div class="modal-dialog modal-lg" role="document">

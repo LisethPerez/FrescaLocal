@@ -733,17 +733,14 @@ $('#valor_ingre').keypress(function (e) {
 //Ingreso de JSON de los productos para descontarlos de stock y realizar la posterior venta
 var id_factura;
 $('#realizar_pago').click(function(){
-    alert(JSON.stringify(venta));
-    /*$.ajax({
+   $.ajax({
         type:"POST",
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
         success: function(data) {
             id_factura = data;
-           
-      
         }
-    });*/
+    });
 });
 
 //Realizar modificaciones de la facrtura y hacer el pago de la compra 
@@ -831,7 +828,6 @@ $('#descontar').click(function(){
             type:"POST",
             url: "volverStock2.php?var="+codigo,
             data: {var: venta},
-        
             success: function(data) {
                 //alert(data);
                 if(data==="Adicción realizada"){
