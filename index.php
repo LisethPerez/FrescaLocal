@@ -200,9 +200,8 @@ display: block;
                                                 </thead>
                                                 <tbody id="cont_ventas">
 
-                                               
                                                 </tbody>
-                                                </table>
+                                            </table>
                                             </div>
                                             <br>
                                             <div class="form-row">
@@ -229,13 +228,13 @@ display: block;
                                             <hr>
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente"><i class="fa fa-user"></i>&nbsp;Cliente</button>
+                                                    <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:130px; height:50px"><i class="fa fa-user"></i>&nbsp;Cliente</button>
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
+                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style="width:130px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
+                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; width:130px; height:50px""><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
                                                 </div>
                                                 <!--<div class="col">
                                                 <div id="resultado"class="col"></div>
@@ -364,10 +363,18 @@ display: block;
                                                                         <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa"  style="height:33px" onkeypress="return onlyLetters(event)" required><br>
                                                                        
                                                                     </div>
-                                                                    <div class="col">
-                                                                            <label for="validationCustom03">Indentificación NIT</label>
-                                                                            <input type="number" class="form-control" id="nit" name="nit" placeholder="NIT" value="Mark" style="height:33px; width:20px" onkeypress="return onlyNums(event)" required><br>
-                                                                            
+                                                                    <div class="col">       
+                                                                    <label for="validationCustom03">Indentificación NIT</label>
+                                                                        <div class="form-row">
+                                                                            <div class="col"> 
+                                                                                <input type="text" class="form-control" id="nit" name="nit" placeholder="NIT"  style="height:33px; width:142px" onkeypress="return onlyNums(event)" required>
+                                                                            </div>
+                                                                            <strong>-</strong>
+                                                                            <div class="col"> 
+                                                                               <input type="number" class="form-control" id="nit1" name="nit1" placeholder="NIT"  style="height:33px; width:65px" min="1" max="9" onkeypress="return onlyNums(event)" required><br>
+                                                                            </div>
+                                                                              
+                                                                            </div>      
                                                                     </div> 
                                                                     
                                                                 </div>
@@ -448,7 +455,7 @@ display: block;
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="mediumModalLabel"><strong>Decuento inventario</strong></h5>
+                                                            <h5 class="modal-title" id="mediumModalLabel"><strong>Descuento inventario</strong></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>

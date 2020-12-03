@@ -132,6 +132,7 @@ function clearCliente(){
     $("#correo").val('');
     $("#empresa").val('');
     $("#nit").val('');
+    $("#nit1").val('');
 }
 
 //Metodo para el ingreso de los datos del formulario de cliente 
@@ -144,6 +145,7 @@ $('#registrar2').click(function () {
     var correo = $('#correo').val();
     var empresa = $('#empresa').val();
     var nit = $('#nit').val(); 
+    var nit1 = $('#nit1').val(); 
   
     if(tipo_cle === '' || nombre===''||  documento===''|| telefono===''|| dirección===''|| correo==='' || empresa==='' || nit===''){
         Swal.fire({
@@ -200,8 +202,7 @@ $('#ingresar_login').click(function () {
         type: "POST",
         url: "login.php",
         data: $("#formulario_ingreso").serialize(),
-        success: function(data) {
-            
+        success: function(data) {  
             if(data === "Datos correctos"){
                 window.location.href="index.php";
             }
@@ -217,7 +218,7 @@ $('#ingresar_login').click(function () {
                     }
                 });  
                 $('#email').val('');
-                $('#password').val('');   
+                $('#pass').val('');   
             }
         }
     });
