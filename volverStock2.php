@@ -11,11 +11,15 @@ $datos = json_decode(json_encode($dato),true);
 $elementos = count($datos);
 $tota_pro = 0;
 
+
 foreach ($datos as $product) {
 
     $nombre_producto = $product['producto'];
     $cantidad_pro = $product['cantidad'];
+    $precio = $product['precio'];
     $peso = $product['peso'];
+    $impuesto = $product['impuesto'];
+    $descuento = $product['descuento'];
     $total = $product['total'];
 
    // print_r($product);
@@ -47,6 +51,15 @@ foreach ($datos as $product) {
 
     $tota_pro = $tota_pro + $total;
 
+    if($peso=='NaN'){
+        
+        $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantidad_pro}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
+    } 
+    if($cantidad_pro=='NaN'){
+        $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$peso}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
+    }
+
+    $sqlFact = mysqli_query($conn,$consult3) or die(mysqli_error($conn));
     
     /*if($sql2){
         $mensaje = "Adicción realizada";

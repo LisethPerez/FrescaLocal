@@ -1,6 +1,6 @@
 <?php
     session_start(); 
-    if (empty($_SESSION['username'])): header("Location: page-login.php");
+    if (empty($_SESSION['username'])): header("Location: login_page.php");
     else: 
 ?>
         
@@ -46,6 +46,11 @@ overflow: auto;
 }
 .table-wrapper-scroll-y {
 display: block;
+}
+::placeholder {
+  font-size: 60%;
+  margin: 25px 50px 75px;
+
 }
 </style>
 </head>
@@ -161,24 +166,23 @@ display: block;
                                             <div class="form-row">
                                                 <div class="col">
                                                     <label for="staticEmail2">Buscar producto</label>
-                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:30px" data-minChars="1">
+                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:35px; font-size:160%;" data-minChars="1">
                                                     
                                                 </div>
                                                 <div class="col">
                                                         <label><a id="obte" class="">Peso (KG)</a></label>
-                                                        <input type="hidden" id="peso" name="peso">
-                                                        <input type="text" class="form-control selec" id="pesooo" placeholder="Peso" style="height:30px" required>
+                                                        <input type="text" class="form-control selec" id="pesooo" name="peso" placeholder="Peso" style="height:35px; font-size:160%;" required>
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>
                                             <div class="form-row">
                                                 <div class="col">
                                                         <label for="staticEmail2">Buscar por código</label>
-                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:30px">
+                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:35px; font-size:160%;">
                                                 </div>
                                                 <div class="col">
                                                     <label for="validationCustom03">Cantidad</label>
-                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:30px" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
+                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:35px; font-size:160%;" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
                                         </form>                
                                                 </div>
                                             </div><hr>
@@ -433,7 +437,32 @@ display: block;
                                                                                 <input type="text" class="form-control" id="vueltas" name="vueltas" onkeypress="return onlyNums(event)" disabled style="height:120px; font-size:300%;"><br>        
                                                                             </div>
                                                                             </div>
-                                                                    </div>    
+                                                                    </div>   
+                                                                    <div id="debito">
+                                                                        <div class="form-row">
+                                                                            <div class="col">
+                                                                                <label for="validationCustom03">Total</label>
+                                                                                <input type="text" class="form-control" id="total_venDe" name="total_ven" onkeypress="return onlyNums(event)" style="height:100px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                            <div class="col">
+                                                                            <label for="validationCustom03">Número de aprobación</label>
+                                                                                <input type="text" class="form-control" id="id_factDe" name="id_fact" onkeypress="return onlyNums(event)" disabled style="height:100px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>  
+                                                                    <div id="credito">
+                                                                        <div class="form-row">
+                                                                            <div class="col">
+                                                                                <label for="validationCustom03">Total</label>
+                                                                                <input type="text" class="form-control" id="total_venCre" name="total_ven" onkeypress="return onlyNums(event)" style="height:110px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                            <div class="col">
+                                                                            <label for="validationCustom03">Número de aprobación</label>
+                                                                                <input type="text" class="form-control" id="id_factCre" name="id_fact" onkeypress="return onlyNums(event)" style="height:110px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>  
+                                                                     
                                                                     
                                                                     
                                                                    

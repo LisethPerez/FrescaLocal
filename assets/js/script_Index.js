@@ -412,20 +412,57 @@ var pago;
     if(pago === "Efectivo"){
         $('#efectivo').show();
     }
-    if(pago === "Tarjeta debito" || pago === "Tarjeta credito"){
+    if(pago === "Tarjeta debito"){
         $('#efectivo').hide();
+        $('#credito').hide();
         Swal.fire({
-            icon: 'info',
-            text: 'Realice la transeferencia en el datafono',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });     
+            title: '¿Se aprobó la transacción?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: ' #25A01B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡OK!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                $('#debito').show();
+                const value = $('#total').val();
+                var chain = String(value.replace(/\D/g, ""));
+                const newValue = new Intl.NumberFormat('en-US').format(chain);
+                $('#total_venDe').val("$ " + newValue);
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+              ) {
+                $('#debito').hide();
+              }
+          })
+        
     }
- 
+    if(pago === "Tarjeta credito"){
+        $('#efectivo').hide();
+        $('#debito').hide();
+        Swal.fire({
+            title: '¿Se realizó la transacción?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: ' #25A01B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡OK!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                $('#credito').show();
+                const value = $('#total').val();
+                var chain = String(value.replace(/\D/g, ""));
+                const newValue = new Intl.NumberFormat('en-US').format(chain);
+                $('#total_venCre').val("$ " + newValue);
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+              ) {
+                $('#credito').hide();   
+              }
+          })      
+    }
  });
 
  //Colocar signo de $ y comas 
@@ -436,6 +473,7 @@ var pago;
     $('#valor_ingre').val("$ " + newValue);
 
 });
+
 var nombre_producto;
 var tipo;
 //Esconder formulario de busqueda
@@ -445,6 +483,9 @@ $(document).ready(function(){
     //Esconder formulario de busqueda 
     //Esconder duv de metodo de pago efectivo
     $('#efectivo').hide();
+    $('#credito').hide();
+    $('#debito').hide();
+    $('#total').val(0);
 
     $('#producto').focus();
 
@@ -499,30 +540,8 @@ $(document).ready(function(){
 
 });
 
-
-
-//var valor;
-//var categorias;
-//Capturar el valor del checkbox seleccionado
-/*$('.form-check-inline' ).on( 'click', function() {
-    if( $('#inlineRadio1').is(':checked') ){
-        valor = $('#inlineRadio1').val();
-        $('#label1').text("Ingrese nombre");
-        $('#num').attr("placeholder", "Ingrese nombre");
-        $('#esconder').show();
-    } 
-    if ( $('#inlineRadio2').is(':checked') ){
-        valor = $('#inlineRadio2').val();
-        $('#label1').text("Ingrese documento");
-        //$('#num').val($('#inlineRadio2').val());
-        $('#num').attr("placeholder", "Ingrese documento");
-        $('#esconder').show();
-    }
-
-    
-});*/
-
-$('#pesooo').keydown(function (evt) {
+//Desabilitar editar y eliminación del datos dentro del input
+$('#pesooo').keypress(function (evt) {
     evt.preventDefault();
     try {                
         if ((e.keyCode == 8 || e.keyCode == 46))
@@ -537,19 +556,45 @@ $('#pesooo').keydown(function (evt) {
 });
 
 
-$("#pesooo").keydown(function(event) {
-    //var keycode = event.keyCode;    
-    if (event.shiftKey) {
-        $.ajax({
+$('#total_venCre').keypress(function (evt) {
+    evt.preventDefault();
+    try {                
+        if ((e.keyCode == 8 || e.keyCode == 46))
+            return false;
+        else
+            return true;               
+    }
+    catch (Exception)
+    {
+        return false;
+    }
+});
+
+$('#total_venDe').keypress(function (evt) {
+    evt.preventDefault();
+    try {                
+        if ((e.keyCode == 8 || e.keyCode == 46))
+            return false;
+        else
+            return true;               
+    }
+    catch (Exception)
+    {
+        return false;
+    }
+});
+
+//Capturar el peso de forma actomática cuando se situe el cursos dentro del input
+$("#pesooo").focus(function(e) {
+    $('#pesooo').val(340);
+    /*$.ajax({
             url: "lectura.php",
             success: function(data) {
                 $('#pesooo').val(data);
-                $('#peso').val(data);
             }
-        });   
-    }
+        });  */
+});   
 
-});
 
 var datos = [];
 var DataArray = [];
@@ -562,7 +607,7 @@ var cont = 0;
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
     var cantidad = $('#cantidad').val();
-    var peso = $('#peso').val();
+    var peso = $('#pesooo').val();
     var codigo = $('#producto1').val();
 
     if(e.which == 13) {
@@ -628,7 +673,7 @@ $('.selec').keypress(function (e) {
                                     url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
                                     data: $("#venta").serialize(),
                                     success: function(data) {
-                                        
+                                       // alert(data);
                                         DataArray = JSON.parse(data);  
                                        
                                                 
@@ -647,13 +692,6 @@ $('.selec').keypress(function (e) {
                                             var impuesto =  parseInt(_data.impuesto);
                                             var descuento = parseInt(_data.descuento);
                                             var total = parseFloat(_data.total);
-                                            
-                                            /*if(isNaN(cantidad)){
-                                                total = Math.round(peso*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
-                                            }
-                                            if(isNaN(peso)){
-                                                total = Math.round(cantidad*(precio+((impuesto*precio)/100)-((descuento*precio)/100)));
-                                            }*/
                                             
                                             datos.push({
                                                 'id': id,
@@ -732,36 +770,34 @@ $('#valor_ingre').keypress(function (e) {
 
 //Ingreso de JSON de los productos para descontarlos de stock y realizar la posterior venta
 var id_factura;
-$('#realizar_pago').click(function(){
-   $.ajax({
+
+//Realizar modificaciones de la facrtura y hacer el pago de la compra 
+$('#pagar').click(function(){
+    $.ajax({
         type:"POST",
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
         success: function(data) {
             id_factura = data;
+            alert(id_factura);
+                $.ajax({
+                type:"POST",
+                url: "agregar_factura.php",
+                data:{tipo_pago: pago, id:  id_factura},
+                success: function(data) {
+                    alert(data);
+                    var contenidoVen = document.getElementById("cont_ventas");
+                    contenidoVen.innerHTML = "";
+                    $('#valor_ingre').val('');
+                    $('#vueltas').val('');
+                    $('#efectivo').hide();
+                    $('#total').val('');
+                    window.location.href="index.php";       
+                }
+            });
         }
     });
-});
-
-//Realizar modificaciones de la facrtura y hacer el pago de la compra 
-$('#pagar').click(function(){
-    alert(id_factura);
-    $.ajax({
-        type:"POST",
-        url: "agregar_factura.php",
-        data:{tipo_pago: pago, id:  id_factura},
-        success: function(data) {
-            alert(data);
-            var contenidoVen = document.getElementById("cont_ventas");
-            contenidoVen.innerHTML = "";
-            $('#valor_ingre').val('');
-            $('#vueltas').val('');
-            $('#efectivo').hide();
-            $('#total').val('');
-            window.location.href="index.php";
-
-        }
-    });
+    
 });
 
 //Realizar descuento de la disponibilidad del producto (si se requiere)
@@ -769,42 +805,51 @@ $('#volver_stock').click(function(){
     //alert(JSON.stringify(venta));
     $.ajax({
         type:"POST",
-        url: "volverStock.php?fac="+id_factura,
-        data: {var: venta},
-    
+        url: "detalle_venta.php?cliente="+cedula_cliente,
+        data: {var: venta},  
         success: function(data) {
-
-            if(data==="Adicción realizada"){
-                Swal.fire({
-                    icon: 'success',
-                    text: 'Stock actualizado',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
+            id_factura = data;
+            $.ajax({
+                type:"POST",
+                url: "volverStock.php?fac="+id_factura,
+                data: {var: venta},
+            
+                success: function(data) {
+        
+                    if(data==="Adicción realizada"){
+                        Swal.fire({
+                            icon: 'success',
+                            text: 'Stock actualizado',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            }
+                        });   
+                        window.location.href="index.php";  
+        
                     }
-                });   
-                window.location.href="index.php";  
-
-            }
-            if(data ==="No se realizaron cambios"){
-                Swal.fire({
-                    icon: 'error',
-                    text: 'Cambio de stock incompleto',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
+                    if(data ==="No se realizaron cambios"){
+                        Swal.fire({
+                            icon: 'error',
+                            text: 'Cambio de stock incompleto',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            }
+                        });     
                     }
-                });     
-            }
-            var contenidoVen = document.getElementById("cont_ventas");
-                contenidoVen.innerHTML = "";
-              $('#total').val('');   
+                    var contenidoVen = document.getElementById("cont_ventas");
+                        contenidoVen.innerHTML = "";
+                      $('#total').val('');   
+                }
+            });
         }
     });
+   
 });
   
 //Descontar del inventario para pagos por las otras plataformas electrónicas

@@ -65,19 +65,15 @@ foreach ($datos as $product) {
         }
         if($cantidad_pro == 'NaN'){
             $cantidad = $cantidad - $peso;
-        }
-
-       
+        }    
     }
 
     //Modificar información del stock existente de los productos 
     $consult1 = "UPDATE stock SET cantidad={$cantidad} WHERE producto_id_producto='{$id}' AND sede_id_sede='{$id_Sede}'";
     $sql2 = mysqli_query($conn,$consult1) or die(mysqli_error($conn));
-
-    
+   
     //Validación de campos para la creación del detalle de factura según los productos ingresados por el empleado
         if($peso=='NaN'){
-        
             $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantidad_pro}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
         } 
         if($cantidad_pro=='NaN'){
