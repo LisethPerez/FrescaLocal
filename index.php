@@ -48,8 +48,7 @@ overflow: auto;
 display: block;
 }
 ::placeholder {
-  font-size: 60%;
-  margin: 25px 50px 75px;
+  font-size: 80%;
 
 }
 </style>
@@ -73,18 +72,19 @@ display: block;
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>VENTAS</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="view_ventas.php">Lista ventas</a></li>
-                    
+                            <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
+                            <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
+                            <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>FACTURACIÓN</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="view_facturas.php">Lista facturas</a></li>
-                            
-                        </ul>
+                    
+                    <hr>
+                    <li class="menu-title">Salir</li><!-- /.menu-title -->
+                    <li>
+                        <a href="salir.php" class="nav-link"> <i class="menu-icon fa fa-power-off"></i>Cerrar sessión</a>
+                        
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -98,27 +98,15 @@ display: block;
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
-        <header id="header" class="header">
+        <header id="header" class="header" style="background:#F0A744">
             <div class="top-left">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
-                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                <div class="navbar-header" style="background:#F0A744">
+                    <a class="navbar-brand" style="background:#F0A744" href="./"><img src="images/logoo1.png" alt="Logo"></a>
+                 
+                    <a id="menuToggle" class="menutoggle" style="background:#F0A744;"><i class="fa fa-bars" style=" color:#FFF"></i></a>
                 </div>
             </div>
-            <div class="top-right">
-                <div class="header-menu">
-                    <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
-                        </a>
-
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="salir.php"><i class="fa fa-power-off"></i>Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </header><!-- /header -->
         <!-- Header-->
 
@@ -166,23 +154,23 @@ display: block;
                                             <div class="form-row">
                                                 <div class="col">
                                                     <label for="staticEmail2">Buscar producto</label>
-                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:35px; font-size:160%;" data-minChars="1">
+                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;" data-minChars="1">
                                                     
                                                 </div>
                                                 <div class="col">
                                                         <label><a id="obte" class="">Peso (KG)</a></label>
-                                                        <input type="text" class="form-control selec" id="pesooo" name="peso" placeholder="Peso" style="height:35px; font-size:160%;" required>
+                                                        <input type="text" class="form-control selec" id="pesooo" name="peso" style="height:35px; font-size:160%;" required>
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>
                                             <div class="form-row">
                                                 <div class="col">
                                                         <label for="staticEmail2">Buscar por código</label>
-                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:35px; font-size:160%;">
+                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;">
                                                 </div>
                                                 <div class="col">
                                                     <label for="validationCustom03">Cantidad</label>
-                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:35px; font-size:160%;" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
+                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:35px; font-size:110%;" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
                                         </form>                
                                                 </div>
                                             </div><hr>
@@ -408,15 +396,30 @@ display: block;
                                                                     <strong class="card-title text-light">Información de pago</strong>
                                                                 </div>
                                                                 <div class="card-body">
-                                                                    <div class="form-row">
+                                                                <div class="form-row">
+                                                                    <div class="col">
+                                                                        <strong>TIPOS DE DOMICILIOS</strong>
+                                                                    </div>
+                                                                    
+                                                                </div><hr>
+                                                                <div class="form-row">
+                                                                    <div class="col">
+                                                                        <button type="button" class="btn btn-primary btn-sm mb-2 groupTipo" value="Presencial">Presencial</button>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <button type="button" class="btn btn-primary btn-sm mb-2 groupTipo" data-toggle="modal" data-target="#infoDomiciliario" value="Domicilios">Domicilios</button>
+                                                                    </div>
+                                                                </div><hr>
+                                                                    <div class="form-row pago">
                                                                         <div class="col">
                                                                             <strong> TIPOS DE PAGO</strong>
                                                                         </div>
                                                                     </div><hr>
-                                                                    <div class="form-row">
+                                            
+                                                                    <div class="form-row pago">
                                                                         <?php 
                                                                             include 'conexionBD.php';
-                                                                            $consulta = "SELECT * FROM tipo_pago";
+                                                                            $consulta = "SELECT * FROM tipo_pago WHERE nombre!='Web'";
                                                                             $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                                                                         ?>
                                                                        
@@ -446,7 +449,7 @@ display: block;
                                                                             </div>
                                                                             <div class="col">
                                                                             <label for="validationCustom03">Número de aprobación</label>
-                                                                                <input type="text" class="form-control" id="id_factDe" name="id_fact" onkeypress="return onlyNums(event)" disabled style="height:100px; font-size:300%;"><br>        
+                                                                                <input type="text" class="form-control" id="id_factDe" name="id_fact" onkeypress="return onlyNums(event)" style="height:100px; font-size:300%;"><br>        
                                                                             </div>
                                                                         </div>
                                                                     </div>  
@@ -478,6 +481,45 @@ display: block;
                                                 </div> <!--modal-dialog-->
                                             </div><!--modal-fade-->
 
+                                            <div class="modal fade" id="infoDomiciliario" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="mediumModalLabel"><strong>Información Domiciliario</strong></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                         </div>
+                                                        <div class="modal-body">
+                                                            <div class="card border border-secondary">
+                                                                <div class="card-header bg-dark">
+                                                                    <strong class="card-title text-light">Domiciliario</strong>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                <div class="form-row">
+                                                                    <div class="col">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <strong>Nombre empleado</strong>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                        
+                                                                            <input type="text" class="form-control" id="domi" name="domi" placeholder="Nombre empleado">
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div><hr>
+                                                                </div><!--card-body-->
+                                                            </div><!--card-border-->
+                                                        </div><!--model-body-->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="domiciliario" class="btn btn-success btn-sm mb-2" data-dismiss="modal">OK</button>
+                                                        
+                                                        </div>
+                                                    </div><!--modal-content-->
+                                                </div> <!--modal-dialog-->
+                                            </div><!--modal-fade-->
+
                                             <div class="modal fade" id="descuentoStock" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
@@ -495,7 +537,24 @@ display: block;
                                                                 <div class="card-body">
                                                                     <div class="form-row">
                                                                         <div class="col">
-                                                                            <strong> Ingrese código</strong><br>
+                                                                        <label for="validationCustom03">Tipo Cliente</label>
+                                                                            <?php 
+                                                                                include 'conexionBD.php';
+                                                                                $consulta = "SELECT * FROM tipo_pago";
+                                                                                $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
+                                                                            ?>
+                                                                            <select type="text" class="form-control" id="tipoPa" name="tipoPa" placeholder="Tipo pago"  style="height:33px" onkeypress="return onlyLetters(event)" style="width:160px;" required>
+                                                                            
+                                                                            <?php 
+                                                                                while ($valores = mysqli_fetch_object($sql)) {
+                                                                                    echo '<option value="'.$valores->id_tpago.'">'.$valores->nombre.'</option>';
+                                                                                }
+                                                                            ?>
+                                                                            
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <label> Ingrese código</label><br>
                                                                             <input type="text" class="form-control" id="codigo_inve" name="valor_ingre" onkeypress="return onlyNums(event)" style=""><br>        
                                                                         </div>
                                                                     </div>

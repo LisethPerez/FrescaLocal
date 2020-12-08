@@ -403,8 +403,27 @@ $('.editbtn').click(function () {
     $('#documento1').val(datos[6]);
     $('#nit1').val(datos[7]);
  });
-var pago;
 
+ var tipo_domi;
+$('.groupTipo').click(function(){
+    tipo_domi = $(this).val();
+    if(tipo_domi === "Presencial"){
+        $('.pago').show();
+    }else{
+        $('.pago').hide();
+    }
+    
+
+});
+
+var emple;
+$('#domiciliario').click(function(){
+    emple = $('#domi').val();
+    $('.pago').show();
+});
+
+var pago;
+var referencia;
 //Esconder div de método de pago en efectivo
  $('.groupPago').click(function () {
     pago = $(this).val();
@@ -429,13 +448,13 @@ var pago;
                 var chain = String(value.replace(/\D/g, ""));
                 const newValue = new Intl.NumberFormat('en-US').format(chain);
                 $('#total_venDe').val("$ " + newValue);
+
             } else if (
                 result.dismiss === Swal.DismissReason.cancel
               ) {
                 $('#debito').hide();
               }
           })
-        
     }
     if(pago === "Tarjeta credito"){
         $('#efectivo').hide();
@@ -454,14 +473,14 @@ var pago;
                 var chain = String(value.replace(/\D/g, ""));
                 const newValue = new Intl.NumberFormat('en-US').format(chain);
                 $('#total_venCre').val("$ " + newValue);
-
+ 
             } else if (
                 /* Read more about handling dismissals below */
                 result.dismiss === Swal.DismissReason.cancel
               ) {
                 $('#credito').hide();   
               }
-          })      
+          })    
     }
  });
 
@@ -486,6 +505,7 @@ $(document).ready(function(){
     $('#credito').hide();
     $('#debito').hide();
     $('#total').val(0);
+    $('.pago').hide();
 
     $('#producto').focus();
 
@@ -537,17 +557,50 @@ $(document).ready(function(){
         }
     });
 
+    $('#domi').typeahead({
+        source: function(query,result){
+            $.ajax({
+                url:"get_empleado.php",
+                method:"POST",
+                data:{query:query},
+                dataType:"json",
+                success:function(data){
+                    result($.map(data,function(item){
+                        return item;
+                    }));
+                    
+                }
+            });
+        },
+        updater : function(item) {
+            this.$element[0].value = item;
+            nombre_producto = item;
+            $.ajax({
+                url:"get_image.php?var="+item,
+                method:"POST",    
+                success:function(data){
+                    //alert(data);   
+                    $('#productos').html(data);        
+                }
+            });
+
+            return item;    
+        }
+    });
+
 
 });
 
 //Desabilitar editar y eliminación del datos dentro del input
+//keydown
 $('#pesooo').keypress(function (evt) {
     evt.preventDefault();
     try {                
         if ((e.keyCode == 8 || e.keyCode == 46))
             return false;
         else
-            return true;               
+            return true;  
+                   
     }
     catch (Exception)
     {
@@ -586,13 +639,13 @@ $('#total_venDe').keypress(function (evt) {
 
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
-    $('#pesooo').val(340);
+    $('#pesooo').val(1.23);
     /*$.ajax({
-            url: "lectura.php",
-            success: function(data) {
-                $('#pesooo').val(data);
-            }
-        });  */
+        url: "lectura.php",
+        success: function(data) {
+            $('#pesooo').val(data);
+        }
+    }); */ 
 });   
 
 
@@ -624,7 +677,7 @@ $('.selec').keypress(function (e) {
                     popup: 'animate__animated animate__fadeOutUp'
                 } 
             });     
-            $('#peso').val('');  
+            //$('#peso').val('');  
             $('#pesooo').val(''); 
         }else if(tipo==="peso" && peso===''){
             $('#pesooo').focus(); 
@@ -675,8 +728,7 @@ $('.selec').keypress(function (e) {
                                     success: function(data) {
                                        // alert(data);
                                         DataArray = JSON.parse(data);  
-                                       
-                                                
+                                         
                                         createRow(DataArray);
                                         deleteRow(datos);  
                                         //alert(JSON.stringify(DataArray));
@@ -709,7 +761,7 @@ $('.selec').keypress(function (e) {
                                         //Suma de los total por productos seleccionados
                                         $.each(datos, function(i, _data) {
                                             
-                                            total += _data.total;
+                                            total += parseFloat(_data.total);
                                         });
                                         
                                         $('#producto').val('');
@@ -718,7 +770,7 @@ $('.selec').keypress(function (e) {
                                         $('#producto1').val('');
                                         
                                         
-                                        const newValue = new Intl.NumberFormat('en-US').format(total.toString().replace(/\D/g, ""));
+                                        const newValue = new Intl.NumberFormat('en-US').format(total.toString());
                                         
                                         if(datos.length===0){
                                             $('#total').val('');
@@ -773,17 +825,23 @@ var id_factura;
 
 //Realizar modificaciones de la facrtura y hacer el pago de la compra 
 $('#pagar').click(function(){
+    if($('#id_factCre').val()===''){
+        referencia =  referencia = $('#id_factDe').val();
+        $('#id_factDe').val('');
+    }else{
+        referencia =  referencia = $('#id_factCre').val();
+        $('#id_factCre').val('')
+    }
     $.ajax({
         type:"POST",
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
         success: function(data) {
             id_factura = data;
-            alert(id_factura);
                 $.ajax({
                 type:"POST",
                 url: "agregar_factura.php",
-                data:{tipo_pago: pago, id:  id_factura},
+                data:{tipo_pago: pago, id:  id_factura, refe: referencia, var2: tipo_domi, var3: emple},
                 success: function(data) {
                     alert(data);
                     var contenidoVen = document.getElementById("cont_ventas");
@@ -792,13 +850,18 @@ $('#pagar').click(function(){
                     $('#vueltas').val('');
                     $('#efectivo').hide();
                     $('#total').val('');
-                    window.location.href="index.php";       
+                    window.location.href="index.php";      
                 }
             });
         }
     });
     
 });
+
+$('#prueba').click(function(){
+    pago = "Web";
+});
+
 
 //Realizar descuento de la disponibilidad del producto (si se requiere)
 $('#volver_stock').click(function(){
@@ -856,7 +919,9 @@ $('#volver_stock').click(function(){
 $('#descontar').click(function(){
     //alert(JSON.stringify(venta));
     var codigo = $('#codigo_inve').val();
-    if(codigo === ''){
+    var tipo_pa = $('#tipoPa option:selected').val();
+    alert(tipo_pa);
+    /*if(codigo === ''){
         Swal.fire({
             icon: 'error',
             text: 'Ingrese número de factura',
@@ -871,14 +936,14 @@ $('#descontar').click(function(){
     }else{
         $.ajax({
             type:"POST",
-            url: "volverStock2.php?var="+codigo,
-            data: {var: venta},
+            url: "volverStock2.php?codigo="+codigo,
+            data: {var: venta, var3: cedula_cliente, var4: tipo_pa},
             success: function(data) {
-                //alert(data);
-                if(data==="Adicción realizada"){
+                
+                if(data==="Cambios realizados"){
                     Swal.fire({
                         icon: 'success',
-                        text: 'Stock actualizado',
+                        text: data,
                         showClass: {
                             popup: 'animate__animated animate__fadeInDown'
                         },
@@ -887,32 +952,30 @@ $('#descontar').click(function(){
                         }
                     });   
                     $('#codigo_inve').val('');  
+                    window.location.href="index.php";  
 
                 }
                 if(data ==="No se realizaron cambios"){
                     Swal.fire({
                         icon: 'error',
-                        text: 'Cambio de stock incompleto',
+                        text: data,
                         showClass: {
                             popup: 'animate__animated animate__fadeInDown'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOutUp'
                         }
-                    });     
+                    });   
+                    $('#codigo_inve').val('');    
                 }
             }
         });
-    }
+    }*/
 });
 
-/*$(document).ready(function() {
-    $('#taable').DataTable();
-} );*/
-
+//Buscardor en tiempo real para la búsqueda de facturas
 $("#numberFac").keyup(function(){
     _this = this;
-    // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
     $.each($("#taable tbody tr"), function() {
         if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
            $(this).hide();
@@ -921,9 +984,9 @@ $("#numberFac").keyup(function(){
     });
 }); 
 
+//Buscardos en tiempo real para la búsqueda de facturas anuladas
 $("#numberFac2").keyup(function(){
     _this = this;
-    // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
     $.each($("#taaable tbody tr"), function() {
         if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
            $(this).hide();
@@ -932,6 +995,7 @@ $("#numberFac2").keyup(function(){
     });
 }); 
 
+//Buscador en tiempo real para la búsqueda de cliente
 $("#num").keyup(function(){
     _this = this;
     // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
@@ -943,6 +1007,7 @@ $("#num").keyup(function(){
     });
 }); 
 
+//Acción para la generación de facturas en formato pdf
 $('.impri').click(function(){
     $tr=$(this).closest('tr');
         var datos = $tr.children("td").map(function (){
@@ -951,14 +1016,13 @@ $('.impri').click(function(){
     var idFac = datos[0];
     $.ajax({
         url:"generar_pdf.php",
-        data:{var: idFac},
-        method: "POST",
-        success: function(data){
+        method: "POST"
+        /*success: function(data){
             alert(data);
         },
         error: function(result) {
             alert('error');
-        }
+        }*/
     });
 
 });
@@ -976,7 +1040,7 @@ function deleteRow(data){
 
                 var cost = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
                 var nuevo = cost-data[i].total;
-                nuevo = new Intl.NumberFormat('en-US').format(nuevo.toString().replace(/\D/g, ""));
+                nuevo = new Intl.NumberFormat('en-US').format(nuevo.toString());
                 $('#total').val("$"+nuevo);
                 data.splice(i, 1);    
             }

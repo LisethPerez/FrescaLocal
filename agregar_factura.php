@@ -5,6 +5,21 @@ $id_fact = $_POST['id'];
 $total = 0;
 $fecha = date('Y-m-d H:i:s');
 $tipo_pago = $_POST['tipo_pago'];
+$tipo_domi = $_POST['var2'];
+
+
+if($tipo_pago == "Efectivo"){
+    $referencia = 0;
+}else{
+    $referencia = $_POST['refe'];
+}
+
+if($tipo_domi=="Presencial"){
+    $empleado = 0;
+}else{
+    $empleado = $_POST['var3'];
+}
+
 
 
 //Consulta para obtener todos los productos asociados al identificador de la factura 
@@ -17,14 +32,25 @@ if($num = $sqlExi->num_rows>0){
     $consultPago= "SELECT * FROM tipo_pago WHERE nombre='{$tipo_pago}'";
     $sqlPago = mysqli_query($conn,$consultPago) or die(mysqli_error($conn));
     $resulPago = $sqlPago->fetch_object();
-    $pagoId = $resulPago->id_tpago;
+    $pagoId = $resulPago->id_tpago; //Validar el tipo de pago 
   
     //Obtener la cantidad de productos y el total 
     $cantidadProductos =  $resultExi['contar'];
     $totalPro = $resultExi['cant'];
 
+    if($tipo_domi=="Presencial"){
+        if($tipo_pago == "Efectivo"){
+            $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=1, tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
+        }else{
+            $consultaModi = "UPDATE factura SET referencia_pago='{$referencia}', pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=1, tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
+        }
+    }else if($tipo_domi=="Domicilios"){
+        $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
+    }
+    
+
     //Consulta para la modificación de los datos de la factura creda por defecto con anterioridad
-    $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=1, tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
+  
     $sqlMoodi = mysqli_query($conn,$consultaModi) or die(mysqli_error($conn));
     if($sqlMoodi){
         echo "Cambios de factura " .$id_fact. " realizado";

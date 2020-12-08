@@ -69,17 +69,11 @@
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>VENTAS</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="view_ventas.php">Lista venras</a></li>
-                           >
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>FACTURACIÓN</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="view_facturas.php">Lista facturas</a></li>
-                        
+                            <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
+                            <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
+                            <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
                         </ul>
                     </li>
                 </ul>

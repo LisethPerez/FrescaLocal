@@ -5,7 +5,7 @@ include 'conexionGene.php';
 $tipo = $_GET['var'];
 $cont = $_GET['var2'];
 $producto_1 = $_POST['producto'];
-$peso = $_POST['peso'];
+floatval($peso = $_POST['peso']);
 $codigo = $_POST['producto1'];
 $cantidad = $_POST['cantidad'];
 
@@ -32,10 +32,10 @@ if($numFilas = $sql->num_rows>0){
     }
 
     if(empty($peso)){
-        $total = $cantidad*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100));
+        $total = round($cantidad*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
     }
     if(empty($cantidad)){
-        $total = $peso*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100));
+        $total = round($peso*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
     }
     $datos[] = array(
         "id"=>$cont,

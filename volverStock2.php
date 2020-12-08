@@ -4,13 +4,29 @@
 //$dato = $_GET['var'];
 session_start();
 
-$codigo = $_GET['var'];
+$codigo = $_GET['codigo'];
+$pago = $_POST['var2'];
+$id_usuario = $_SESSION['idUser'];
 $id_Sede = $_SESSION['idSede'];
 $dato = $_POST['var'];
 $datos = json_decode(json_encode($dato),true);
 $elementos = count($datos);
 $tota_pro = 0;
+$fecha = date('Y-m-d H:i:s');
+$cedula = $_POST['var3'];
+$tipoPa = $_POST['var4'];
 
+include 'conexionBD.php';
+
+$consultCliente= "SELECT * FROM cliente WHERE documento='{$cedula}'";
+$sqlCliente = mysqli_query($conn,$consultCliente) or die(mysqli_error($conn));
+$resulCliente = $sqlCliente->fetch_object();
+$clienteId = $resulCliente->id_cliente;
+
+$consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$id_usuario}'";
+$sqlUser = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
+$resultadoUser = $sqlUser->fetch_object();
+$idEmple = $resultadoUser->id_empleado;
 
 foreach ($datos as $product) {
 
@@ -53,19 +69,13 @@ foreach ($datos as $product) {
 
     if($peso=='NaN'){
         
-        $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantidad_pro}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
+        $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantidad_pro}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$codigo}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
     } 
     if($cantidad_pro=='NaN'){
-        $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$peso}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
+        $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$peso}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$codigo}','{$result1->id_stock}','{$result->descuento_id_descuento}','{$result->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
     }
 
-    $sqlFact = mysqli_query($conn,$consult3) or die(mysqli_error($conn));
-    
-    /*if($sql2){
-        $mensaje = "Adicción realizada";
-    }else{
-        $mensaje =  "No se realizaron cambios";
-    }*/
+    $sqlFact = mysqli_query($conn,$consult3) or die(mysqli_error($conn));   
 }
 
     $consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$id_usuario}'";
@@ -73,9 +83,21 @@ foreach ($datos as $product) {
     $resultadoUser = $sqlUser->fetch_object();
     $idEmple = $resultadoUser->id_empleado;
 
-    $consultaFac = "INSERT INTO factura (factura_id_factura,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,cliente_id_cliente,sede_id_sede,anulacion) VALUES ($codigo,$tota_pro,'{$elementos}','{$fecha}',1,1,'{$idEmple}','{$clienteId}','{$id_Sede}',0)";
+    $consultPago = "SELECT * FROM tipo_pago WHERE nombre='{$pago}'";
+    $sqlPago = mysqli_query($conn,$consultPago) or die(mysqli_error($conn));
+    $resultadoPago = $sqlPago->fetch_object();
+    $idPago = $resultadoPago->id_tpago;
+
+
+    $consultaFac = "INSERT INTO factura (id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago) VALUES ('{$codigo}',$tota_pro,'{$elementos}','{$fecha}',1,'{$idPago}','{$idEmple}','{$clienteId}','{$id_Sede}',0,'NULL')";
     $sqlFact = mysqli_query($conn,$consultaFac) or die(mysqli_error($conn));
 
-echo $mensaje;
+    if($sqlFact){
+        echo "Cambios realizados";
+    }else {
+        echo "No se realizaron cambios";
+    }
+
+//echo $mensaje;
 
 ?>

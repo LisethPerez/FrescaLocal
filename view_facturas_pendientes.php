@@ -29,12 +29,11 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="assets/fontawesome/css/all.css">
-    <script src="assets/js/jQuery.js"></script>
-    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" rel="stylesheet"/>
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
 <style>
     .my-custom-scrollbar {
     position: relative;
@@ -50,7 +49,6 @@
     z-index: 10;
     }
 </style>
-
 </head>
 <body>
     <!-- Left Panel -->
@@ -144,13 +142,14 @@
                 </div>
             </div>
         </div>-->
+        <div class="clearfix"></div>
         <div class="container">
                 <div class="clearfix"></div>
                     <div class="row">
                     <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Facturas</strong>
+                                <strong class="card-title text-dark">Información Facturas Pendientes de Pago</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
@@ -165,11 +164,11 @@
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                    
-                                                    <input class="form-check-input" type="text" name="numberFac" id="numberFac" value="">
+                                                    <input class="form-check-input" type="text" name="numberFac2" id="numberFac2" value="">
                                         
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <!--<button type="button" id="buscarFac" class="btn btn-primary btn-sm mb-2"> Buscar</button>-->
+                                                    <!--<button type="button" id="buscarFac2" class="btn btn-primary btn-sm mb-2"> Buscar</button>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -177,7 +176,7 @@
                                 </div>  <br>
                                 
                                     <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="taable">
+                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
@@ -191,9 +190,9 @@
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="pro">
+                                            <tbody id="pro3">
                                             <?php
-                                                include 'ver_fact.php';
+                                                include 'ver_fact3.php';
                                             ?>
                                             
                                             </tbody>
@@ -205,7 +204,7 @@
                     
                     </div><!-- /# column -->
                 </div>
-                <div class="modal fade" id="productos" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -215,7 +214,7 @@
                                                             </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="tabla">
+                                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>Cantidad</th>
@@ -234,7 +233,7 @@
                                         </table>
                                                     </div>
                                                     <div class="modal-footer">
-                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2 atras" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
                                                            
                                                         </div>
                                                     
@@ -275,10 +274,9 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/fontawesome/js/all.js"></script>
-
+<script src="assets/js/jQuery.js"></script>
 <script src="assets/js/sweetalert2.min.js"></script>
 <script src="assets/js/script_Index.js"></script>
-<script charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
 
 </body>
