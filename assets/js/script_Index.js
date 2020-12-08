@@ -858,10 +858,6 @@ $('#pagar').click(function(){
     
 });
 
-$('#prueba').click(function(){
-    pago = "Web";
-});
-
 
 //Realizar descuento de la disponibilidad del producto (si se requiere)
 $('#volver_stock').click(function(){
