@@ -916,8 +916,7 @@ $('#descontar').click(function(){
     //alert(JSON.stringify(venta));
     var codigo = $('#codigo_inve').val();
     var tipo_pa = $('#tipoPa option:selected').val();
-    alert(tipo_pa);
-    /*if(codigo === ''){
+    if(codigo === ''){
         Swal.fire({
             icon: 'error',
             text: 'Ingrese número de factura',
@@ -966,7 +965,7 @@ $('#descontar').click(function(){
                 }
             }
         });
-    }*/
+    }
 });
 
 //Buscardor en tiempo real para la búsqueda de facturas

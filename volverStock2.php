@@ -14,7 +14,7 @@ $elementos = count($datos);
 $tota_pro = 0;
 $fecha = date('Y-m-d H:i:s');
 $cedula = $_POST['var3'];
-$tipoPa = $_POST['var4'];
+$idPago = $_POST['var4'];
 
 include 'conexionBD.php';
 
@@ -83,10 +83,10 @@ foreach ($datos as $product) {
     $resultadoUser = $sqlUser->fetch_object();
     $idEmple = $resultadoUser->id_empleado;
 
-    $consultPago = "SELECT * FROM tipo_pago WHERE nombre='{$pago}'";
+    /*$consultPago = "SELECT * FROM tipo_pago WHERE nombre='{$pago}'";
     $sqlPago = mysqli_query($conn,$consultPago) or die(mysqli_error($conn));
     $resultadoPago = $sqlPago->fetch_object();
-    $idPago = $resultadoPago->id_tpago;
+    $idPago = $resultadoPago->id_tpago;*/
 
 
     $consultaFac = "INSERT INTO factura (id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago) VALUES ('{$codigo}',$tota_pro,'{$elementos}','{$fecha}',1,'{$idPago}','{$idEmple}','{$clienteId}','{$id_Sede}',0,'NULL')";
