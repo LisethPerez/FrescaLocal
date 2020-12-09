@@ -419,7 +419,7 @@ display: block;
                                                                     <div class="form-row pago">
                                                                         <?php 
                                                                             include 'conexionBD.php';
-                                                                            $consulta = "SELECT * FROM tipo_pago WHERE nombre!='Web'";
+                                                                            $consulta = "SELECT * FROM tipo_pago";
                                                                             $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                                                                         ?>
                                                                        
@@ -537,24 +537,28 @@ display: block;
                                                                 <div class="card-body">
                                                                     <div class="form-row">
                                                                         <div class="col">
-                                                                        <label for="validationCustom03">Tipo Cliente</label>
-                                                                            <?php 
-                                                                                include 'conexionBD.php';
-                                                                                $consulta = "SELECT * FROM tipo_pago";
-                                                                                $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                                                            ?>
-                                                                            <select type="text" class="form-control" id="tipoPa" name="tipoPa" placeholder="Tipo pago"  style="height:33px" onkeypress="return onlyLetters(event)" style="width:160px;" required>
-                                                                            
-                                                                            <?php 
-                                                                                while ($valores = mysqli_fetch_object($sql)) {
-                                                                                    echo '<option value="'.$valores->id_tpago.'">'.$valores->nombre.'</option>';
-                                                                                }
-                                                                            ?>
-                                                                            
-                                                                            </select>
+                                                                            <strong>Total</strong><br>
+                                                                            <input type="text" class="form-control" id="total_web" name="total_web" onkeypress="return onlyNums(event)" style=""><br>     
                                                                         </div>
                                                                         <div class="col">
-                                                                            <label> Ingrese código</label><br>
+                                                                            <strong for="validationCustom03">Tipo Cliente</strong>
+                                                                                <?php 
+                                                                                    include 'conexionBD.php';
+                                                                                    $consulta = "SELECT * FROM tipo_pago";
+                                                                                    $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
+                                                                                ?>
+                                                                                <select type="text" class="form-control" id="tipoPa" name="tipoPa" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" style="width:160px;" required>
+                                                                                
+                                                                                <?php 
+                                                                                    while ($valores = mysqli_fetch_object($sql)) {
+                                                                                        echo '<option value="'.$valores->id_tpago.'">'.$valores->nombre.'</option>';
+                                                                                    }
+                                                                                ?>
+                                                                                
+                                                                                </select>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <strong> Ingrese código</strong><br>
                                                                             <input type="text" class="form-control" id="codigo_inve" name="valor_ingre" onkeypress="return onlyNums(event)" style=""><br>        
                                                                         </div>
                                                                     </div>

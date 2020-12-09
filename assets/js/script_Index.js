@@ -493,6 +493,28 @@ var referencia;
 
 });
 
+$('#prueba').click(function(){
+    const value = $('#total').val();
+    var chain = String(value.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    $('#total_web').val("$ " + newValue);
+});
+
+$('#total_web').keydown(function(e){
+    e.preventDefault();
+    try {                
+        if ((e.keyCode == 8 || e.keyCode == 46))
+            return false;
+        else
+            return true;  
+                   
+    }
+    catch (Exception)
+    {
+        return false;
+    }
+
+});
 var nombre_producto;
 var tipo;
 //Esconder formulario de busqueda
@@ -596,7 +618,7 @@ $(document).ready(function(){
 $('#pesooo').keypress(function (evt) {
     evt.preventDefault();
     try {                
-        if ((e.keyCode == 8 || e.keyCode == 46))
+        if ((evt.keyCode == 8 || evt.keyCode == 46))
             return false;
         else
             return true;  
@@ -934,7 +956,7 @@ $('#descontar').click(function(){
             url: "volverStock2.php?codigo="+codigo,
             data: {var: venta, var3: cedula_cliente, var4: tipo_pa},
             success: function(data) {
-                
+             
                 if(data==="Cambios realizados"){
                     Swal.fire({
                         icon: 'success',
