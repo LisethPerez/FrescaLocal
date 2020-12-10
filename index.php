@@ -159,7 +159,8 @@ display: block;
                                                 </div>
                                                 <div class="col">
                                                         <label><a id="obte" class="">Peso (KG)</a></label>
-                                                        <input type="text" class="form-control selec" id="pesooo" name="peso" style="height:35px; font-size:160%;" required>
+                                                        <input type="hidden" id="peso" name="peso"></input>
+                                                        <input type="text" class="form-control selec" id="pesooo" name="pesooo" style="height:35px; font-size:160%;" required>
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>
@@ -184,9 +185,9 @@ display: block;
                                                         <th>Producto</th>
                                                         <th>Peso</th>
                                                         <th>Precio</th>
-                                                        <th>Total</th>
                                                         <th>Imp</th>
                                                         <th>Desc</th>
+                                                        <th>Total</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -465,10 +466,24 @@ display: block;
                                                                             </div>
                                                                         </div>
                                                                     </div>  
-                                                                     
-                                                                    
-                                                                    
-                                                                   
+                                                                    <div id="links">
+                                                                        <div class="form-row">
+                                                                            <div class="col">
+                                                                                <label for="validationCustom03">Total</label>
+                                                                                <input type="text" class="form-control" id="total_venLink" name="total_ven" onkeypress="return onlyNums(event)" style="height:110px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                            <div class="col">
+                                                                            <label for="validationCustom03">Número de aprobación</label>
+                                                                                <input type="text" class="form-control" id="id_factLink" name="id_fact" onkeypress="return onlyNums(event)" style="height:110px; font-size:300%;"><br>        
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <form method="POST" action="generar_pdf.php">  
+                                                                            <input type="hidden" value="" id="ggg" name="var">
+                                                                            <input type="hidden" value="" id="g2" name="var2">
+                                                                
+                                                                            <button type="submit" style="display:none;" id="submitButton1"></button>
+                                                                    </form>
                                                                 </div><!--card-body-->
                                                             </div><!--card-border-->
                                                         </div><!--model-body-->

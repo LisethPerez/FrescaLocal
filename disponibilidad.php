@@ -1,7 +1,5 @@
 <?php
 
-
-
 include 'conexionGene.php';
 $producto = $_GET['var'];
 $cantidad = $_POST['var2'];

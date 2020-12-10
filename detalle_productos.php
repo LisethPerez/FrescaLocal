@@ -9,7 +9,6 @@ $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 
 if($num = $sql->num_rows>0){
    
-    
     while($row = mysqli_fetch_assoc($sql)){
 
         $idStock = $row['stock_id_stock'];

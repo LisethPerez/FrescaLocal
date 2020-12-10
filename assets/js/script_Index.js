@@ -13,6 +13,7 @@ function onlyLetters(e) {
 //Metodo para capturar el valor del boton de la calculadora
 $('.calcu').click(function () {
     var cant = $('#cantidad').val();
+    $('#cantidad').focus();
     $('#cantidad').val(cant + $(this).val());
 });
    
@@ -184,7 +185,7 @@ $('#registrar2').click(function () {
 //Método para el ingreso a la aplicación por medio del login
 $('#ingresar_login').click(function () {   
     var correo = $('#email').val();
-    var password = $('#pass').val();
+    var password = $('#password').val();
 
     if(correo==='' || password===''){
         Swal.fire({
@@ -218,7 +219,7 @@ $('#ingresar_login').click(function () {
                     }
                 });  
                 $('#email').val('');
-                $('#pass').val('');   
+                $('#password').val('');   
             }
         }
     });
@@ -430,10 +431,15 @@ var referencia;
 
     if(pago === "Efectivo"){
         $('#efectivo').show();
+        $('#credito').hide();
+        $('#debito').hide();
+
     }
     if(pago === "Tarjeta debito"){
         $('#efectivo').hide();
         $('#credito').hide();
+        $('#links').hide();
+
         Swal.fire({
             title: '¿Se aprobó la transacción?',
             icon: 'warning',
@@ -459,6 +465,7 @@ var referencia;
     if(pago === "Tarjeta credito"){
         $('#efectivo').hide();
         $('#debito').hide();
+        $('#links').hide();
         Swal.fire({
             title: '¿Se realizó la transacción?',
             icon: 'warning',
@@ -479,6 +486,33 @@ var referencia;
                 result.dismiss === Swal.DismissReason.cancel
               ) {
                 $('#credito').hide();   
+              }
+          })    
+    }
+    if(pago === "Link de pago"){
+        $('#efectivo').hide();
+        $('#debito').hide();
+        $('#credito').hide();
+        Swal.fire({
+            title: '¿Se realizó la transacción?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: ' #25A01B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡OK!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                $('#credito').show();
+                const value = $('#total').val();
+                var chain = String(value.replace(/\D/g, ""));
+                const newValue = new Intl.NumberFormat('en-US').format(chain);
+                $('#total_venCre').val("$ " + newValue);
+ 
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+              ) {
+                $('#links').hide();   
               }
           })    
     }
@@ -528,6 +562,7 @@ $(document).ready(function(){
     $('#debito').hide();
     $('#total').val(0);
     $('.pago').hide();
+    $('#links').hide();
 
     $('#producto').focus();
 
@@ -661,13 +696,13 @@ $('#total_venDe').keypress(function (evt) {
 
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
-    $('#pesooo').val(1.23);
-    /*$.ajax({
+    $.ajax({
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
+            $('#peso').val(data);
         }
-    }); */ 
+    }); 
 });   
 
 
@@ -682,7 +717,7 @@ var cont = 0;
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
     var cantidad = $('#cantidad').val();
-    var peso = $('#pesooo').val();
+    var peso = $('#peso').val();
     var codigo = $('#producto1').val();
 
     if(e.which == 13) {
@@ -699,7 +734,7 @@ $('.selec').keypress(function (e) {
                     popup: 'animate__animated animate__fadeOutUp'
                 } 
             });     
-            //$('#peso').val('');  
+            $('#peso').val('');  
             $('#pesooo').val(''); 
         }else if(tipo==="peso" && peso===''){
             $('#pesooo').focus(); 
@@ -733,8 +768,67 @@ $('.selec').keypress(function (e) {
                 if(cantidad === ''){
                     cant = peso;
                 }
-                //Verificar la disponibilidad del producto seleccionado
+                //Verificar la disponibilidad del producto seleccionado 
+                //Colocar luego el codigo comentado y el vectos de ventas 
+                //cont = cont + 1;
                 $.ajax({
+                    /*type: "POST",
+                    url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
+                    data: $("#venta").serialize(),
+                    success: function(data) {
+                        DataArray = JSON.parse(data);  
+                                        createRow(DataArray);
+                                        deleteRow(datos);  
+                                        //alert(JSON.stringify(DataArray));
+                                        //Recorrer el array temporal para llenar el nuevo JSON
+                                       
+                                        $.each(DataArray, function(i, _data) {
+                                            var id = _data.id;
+                                            var codigo =  _data.codigo;
+                                            var cantidad =  parseInt( _data.cantidad);
+                                            var producto =  _data.producto;
+                                            var peso =  parseFloat(_data.peso);
+                                            var precio = parseFloat(_data.precio);
+                                            var impuesto =  parseInt(_data.impuesto);
+                                            var descuento = parseInt(_data.descuento);
+                                            var total = parseFloat(_data.total);
+                                            
+                                            datos.push({
+                                                'id': id,
+                                                'codigo': codigo,
+                                                'cantidad': cantidad,
+                                                'producto': producto,
+                                                'peso': peso,
+                                                'precio' : precio,
+                                                'impuesto': impuesto,
+                                                'descuento': descuento,
+                                                'total' : total
+                                            })
+                                    
+                                        });
+                                        //Suma de los total por productos seleccionados
+                                        $.each(datos, function(i, _data) {
+                                            
+                                            total += parseFloat(_data.total);
+                                        });
+                                        
+                                        $('#producto').val('');
+                                        $('#cantidad').val('');
+                                        $('#peso').val('');
+                                        $('#producto1').val('');
+                                        
+                                        
+                                        const newValue = new Intl.NumberFormat('en-US').format(total.toString());
+                                        
+                                        if(datos.length===0){
+                                            $('#total').val('');
+                                        }else{
+                                            $('#total').val("$" + newValue);
+                                        } 
+                                        total = 0;
+                                   
+                    }*/
+                    
                     type: "POST",
                     url: "disponibilidad.php?var="+nombre_producto,
                     data:{var2: cant},
@@ -823,7 +917,12 @@ $('.selec').keypress(function (e) {
                             });    
                         }
                     }
+                    
                 });
+                venta = datos;
+                $('#pesooo').val('');
+                $('#peso').val('');
+               
             }       
         }//IF DE VALIDAR DATOS VACIOS
     }//IF DEL ENTER
@@ -860,25 +959,46 @@ $('#pagar').click(function(){
         data: {var: venta},  
         success: function(data) {
             id_factura = data;
+            $('#ggg').val(data);
+            var cost = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
+            $('#g2').val(cost);
                 $.ajax({
                 type:"POST",
                 url: "agregar_factura.php",
                 data:{tipo_pago: pago, id:  id_factura, refe: referencia, var2: tipo_domi, var3: emple},
+                //data:{tipo_pago: pago, id:  id_factura, refe: referencia},
                 success: function(data) {
-                    alert(data);
-                    var contenidoVen = document.getElementById("cont_ventas");
-                    contenidoVen.innerHTML = "";
-                    $('#valor_ingre').val('');
-                    $('#vueltas').val('');
-                    $('#efectivo').hide();
-                    $('#total').val('');
-                    window.location.href="index.php";      
+                    if(data==="No se hicieron cambios" || data==="No hay detalle de venta"){
+                        Swal.fire({
+                            icon: 'error',
+                            text: data,
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            }
+                        });     
+                    }else{
+                        document.getElementById("submitButton1").click();
+                        var myVar = setInterval(myTimer, 5000);
+                    }
                 }
             });
         }
     });
     
 });
+
+function myTimer() {
+    window.location.href="index.php";  
+    var contenidoVen = document.getElementById("cont_ventas");
+    contenidoVen.innerHTML = "";
+    $('#valor_ingre').val('');
+    $('#vueltas').val('');
+    $('#efectivo').hide();
+    $('#total').val('');
+  }
 
 
 //Realizar descuento de la disponibilidad del producto (si se requiere)
@@ -893,14 +1013,14 @@ $('#volver_stock').click(function(){
             $.ajax({
                 type:"POST",
                 url: "volverStock.php?fac="+id_factura,
-                data: {var: venta},
+                data: {var: venta, tipo_pago: pago},
             
                 success: function(data) {
-        
-                    if(data==="Adicción realizada"){
+                    alert(data);
+                    /*if(data==="Factura anulada"){
                         Swal.fire({
                             icon: 'success',
-                            text: 'Stock actualizado',
+                            text: data,
                             showClass: {
                                 popup: 'animate__animated animate__fadeInDown'
                             },
@@ -911,10 +1031,10 @@ $('#volver_stock').click(function(){
                         window.location.href="index.php";  
         
                     }
-                    if(data ==="No se realizaron cambios"){
+                    if(data ==="No se anulo la factura"){
                         Swal.fire({
                             icon: 'error',
-                            text: 'Cambio de stock incompleto',
+                            text: data,
                             showClass: {
                                 popup: 'animate__animated animate__fadeInDown'
                             },
@@ -922,7 +1042,7 @@ $('#volver_stock').click(function(){
                                 popup: 'animate__animated animate__fadeOutUp'
                             }
                         });     
-                    }
+                    }*/
                     var contenidoVen = document.getElementById("cont_ventas");
                         contenidoVen.innerHTML = "";
                       $('#total').val('');   
@@ -1024,25 +1144,28 @@ $("#num").keyup(function(){
     });
 }); 
 
+var idFac;
 //Acción para la generación de facturas en formato pdf
-$('.impri').click(function(){
-    $tr=$(this).closest('tr');
+
+/*$('.impri').click(function(){
+    /*$tr=$(this).closest('tr');
         var datos = $tr.children("td").map(function (){
             return $(this).text();
         });
-    var idFac = datos[0];
-    $.ajax({
-        url:"generar_pdf.php",
-        method: "POST"
-        /*success: function(data){
-            alert(data);
-        },
-        error: function(result) {
-            alert('error');
-        }*/
+    idFac = datos[0];*/
+    //var prueba = document.getElementById("gg").value;
+    //alert(prueba);
+    //var prueba = document.getElementById('submitButton').value();
+    //window.open("generar_pdf.php");
+    /*$.ajax({
+        url:"generar_pdf.php?var=4",
+        method: "GET",
+        success: function(data){
+            //alert(data);
+            window.open("generar_pdf.php");
+        }
     });
-
-});
+});*/
 
 //Eliminar registro del pedido y del array
 function deleteRow(data){  
@@ -1052,9 +1175,9 @@ function deleteRow(data){
             return $(this).text();
         });
         var cod = datos[0];
+     
         for(var i=0; i<data.length;i++) {
             if(String(data[i].id)===cod){
-
                 var cost = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
                 var nuevo = cost-data[i].total;
                 nuevo = new Intl.NumberFormat('en-US').format(nuevo.toString());
@@ -1079,10 +1202,11 @@ function createRow(data) {
     <td>`+data[i].producto+`</td>
     <td>`+data[i].peso+`</td>
     <td>`+data[i].precio+`</td>
-    <td>`+data[i].total+`</td>
     <td>`+data[i].impuesto+`</td>
     <td>`+data[i].descuento+`</td>
+    <td>`+data[i].total+`</td>
     <td>`+data[i].opcion+`</td>  
+    
     </tr>`;
     $('#cont_ventas').append(trElement);
     //trElement += "<td >" + data[i] + "</td>";

@@ -24,7 +24,8 @@ if(file_exists('datos.txt')){
     $content = trim(file_get_contents('datos.txt'), PHP_EOL);    
     $lineas = explode(PHP_EOL, $content);
     foreach($lineas as $linea){
-        echo $linea;
+        $cadena =str_replace(' ', '', $linea);
+        echo $cadena;
     }
 }
 ?>

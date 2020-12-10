@@ -56,9 +56,9 @@
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li>
+                    <li class="active">
                         <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
@@ -76,6 +76,13 @@
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
                         </ul>
                     </li>
+                    
+                    <hr>
+                    <li class="menu-title">Salir</li><!-- /.menu-title -->
+                    <li>
+                        <a href="salir.php" class="nav-link"> <i class="menu-icon fa fa-power-off"></i>Cerrar sessión</a>
+                        
+                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -88,33 +95,15 @@
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
-        <header id="header" class="header">
+        <header id="header" class="header" style="background:#F0A744">
             <div class="top-left">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
-                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                <div class="navbar-header" style="background:#F0A744">
+                    <a class="navbar-brand" style="background:#F0A744" href="./"><img src="images/logoo1.png" alt="Logo"></a>
+                 
+                    <a id="menuToggle" class="menutoggle" style="background:#F0A744;"><i class="fa fa-bars" style=" color:#FFF"></i></a>
                 </div>
             </div>
-            <div class="top-right">
-                <div class="header-menu">
-                    <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
-                        </a>
-
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </header><!-- /header -->
         <!-- Header-->
 

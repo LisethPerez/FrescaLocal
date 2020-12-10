@@ -24,11 +24,35 @@
                 <button class="btn btn-success btn-sm impri" id="imprimir"> <i class="fa fa-print" aria-hidden="true"></i></button>
             </td>
         </tr>
+        <form id="numberFact" method="POST" action="generar_pdf.php">  
+            <input type="hidden" value="4" id="gg" name="var">
+            <button type="submit" style="display:none;" id="submitButton">
+        </form>
         
   
-<?php    }
-
-                                                
-                                        
+<?php    }                                      
 ?>
                                                 
+<script>
+$('.impri').click(function(){
+    /*$tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+    idFac = datos[0];*/
+    alert("okey");
+    document.getElementById("submitButton").click();
+    
+    //var prueba = document.getElementById('submitButton').value();
+    //window.open("generar_pdf.php");
+    /*$.ajax({
+        url:"generar_pdf.php?var=4",
+        method: "GET",
+        success: function(data){
+            //alert(data);
+            window.open("generar_pdf.php");
+        }
+    });*/
+});
+
+</script>

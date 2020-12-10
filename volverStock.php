@@ -9,6 +9,7 @@ $id_Sede = $_SESSION['idSede'];
 $dato = $_POST['var'];
 $fecha = date('Y-m-d H:i:s');
 $datos = json_decode(json_encode($dato),true);
+$tipo_pago = $_POST['tipo_pago'];
 
 include 'conexionBD.php';
 $consultaExi = "SELECT COUNT(*) contar, SUM(total) cant FROM detalle_factura WHERE factura_id_factura='{$id_fact}'";
@@ -19,8 +20,14 @@ if($num = $sqlExi->num_rows>0){
     $cantidadProductos =  $resultExi['contar'];
     $totalPro = $resultExi['cant'];
 
-    $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=0, anulacion=1 WHERE id_factura={$id_fact}";
+    $consultPago= "SELECT * FROM tipo_pago WHERE nombre='{$tipo_pago}'";
+    $sqlPago = mysqli_query($conn,$consultPago) or die(mysqli_error($conn));
+    $resulPago = $sqlPago->fetch_object();
+    $pagoId = $resulPago->id_tpago;
+
+    $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=0, anulacion=1, tipo_pago_id_tpago='{$pagoId}' WHERE id_factura={$id_fact}";
     $sqlMoodi = mysqli_query($conn,$consultaModi) or die(mysqli_error($conn));
+
 
 }
 

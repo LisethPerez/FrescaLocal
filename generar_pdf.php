@@ -1,127 +1,127 @@
 <?php
 
-
+session_start();
 require('fpdf/fpdf.php');
+require 'conexionBD.php';
 
-$pdf = new FPDF($orientation='P',$unit='mm', array(45,350));
+$id_usuario = $_SESSION['idUser'];
+$idFac = $_POST['var'];
+$valorIngre = $_POST['var2'];
+//echo $idFac;
+// Tamaño tickt 80mm x 150 mm (largo aprox)
+
+$pdf = new FPDF($orientation='P',$unit='mm', array(80,350));
 $pdf->AddPage();
-$pdf->SetFont('Arial','B',8);    //Letra Arial, negrita (Bold), tam. 20
-$textypos = 5;
-$pdf->setY(2);
-$pdf->setX(2);
-$pdf->Cell(5,$textypos,"NOMBRE DE LA EMPRESA");
-$pdf->SetFont('Arial','',5);    //Letra Arial, negrita (Bold), tam. 20
-$textypos+=6;
-$pdf->setX(2);
-$pdf->Cell(5,$textypos,'-------------------------------------------------------------------');
-$textypos+=6;
-$pdf->setX(2);
-$pdf->Cell(5,$textypos,'CANT.  ARTICULO       PRECIO               TOTAL');
-
-$total =0;
-$off = $textypos+6;
-$producto = array(
-	"q"=>1,
-	"name"=>"Computadora Lenovo i5",
-	"price"=>100
-);
-$productos = array($producto, $producto, $producto, $producto, $producto );
-foreach($productos as $pro){
-$pdf->setX(2);
-$pdf->Cell(5,$off,$pro["q"]);
-$pdf->setX(6);
-$pdf->Cell(35,$off,  strtoupper(substr($pro["name"], 0,12)) );
-$pdf->setX(20);
-$pdf->Cell(11,$off,  "$".number_format($pro["price"],2,".",",") ,0,0,"R");
-$pdf->setX(32);
-$pdf->Cell(11,$off,  "$ ".number_format($pro["q"]*$pro["price"],2,".",",") ,0,0,"R");
-
-$total += $pro["q"]*$pro["price"];
-$off+=6;
-}
-$textypos=$off+6;
-
-$pdf->setX(2);
-$pdf->Cell(5,$textypos,"TOTAL: " );
-$pdf->setX(38);
-$pdf->Cell(5,$textypos,"$ ".number_format($total,2,".",","),0,0,"R");
-
-$pdf->setX(2);
-$pdf->Cell(5,$textypos+6,'GRACIAS POR TU COMPRA ');
-
-$pdf->output();
-//define('EURO',chr(128)); // Constante con el símbolo Euro.
-/*$pdf = new FPDF('P','mm',array(80,150)); // Tamaño tickt 80mm x 150 mm (largo aprox)
-$pdf->AddPage();
-$pdf->SetFont('Helvetica','',12);
-
-// CABECERA
-$pdf->SetFont('Helvetica','',12);
-$pdf->Cell(60,4,'Lacodigoteca.com',0,1,'C');
+$pdf->SetFont('Helvetica','',11);
+$pdf->Cell(60,4,'INVERSIONES AGROINDUSTRIALES',0,1,'C');
+$pdf->Cell(60,4,'COSECHA FRESCA SAS',0,1,'C');
 $pdf->SetFont('Helvetica','',8);
-$pdf->Cell(60,4,'C.I.F.: 01234567A',0,1,'C');
-$pdf->Cell(60,4,'C/ Arturo Soria, 1',0,1,'C');
-$pdf->Cell(60,4,'C.P.: 28028 Madrid (Madrid)',0,1,'C');
-$pdf->Cell(60,4,'999 888 777',0,1,'C');
-$pdf->Cell(60,4,'alfredo@lacodigoteca.com',0,1,'C');*/
- 
-/*// DATOS FACTURA        
-$pdf->Ln(5);
-$pdf->Cell(60,4,'Factura Simpl.: F2019-000001',0,1,'');
-$pdf->Cell(60,4,'Fecha: 28/10/2019',0,1,'');
-$pdf->Cell(60,4,'Metodo de pago: Tarjeta',0,1,'');
+$pdf->Cell(60,4,'NIT 901 274 543-1',0,1,'C');
+$pdf->Cell(60,4,'CALLE 109 # 18-8 58',0,1,'C');
+$pdf->Ln(2);
+$pdf->Cell(60,4,'RES N. 18764000999047 FECHA:2020/07/18',0,1,'C');
+$pdf->Cell(60,4,'DEL N. P20001 AL N. P50000',0,1,'C');
 
-// COLUMNAS
-$pdf->SetFont('Helvetica', 'B', 7);
-$pdf->Cell(30, 10, 'Articulo', 0);
-$pdf->Cell(5, 10, 'Ud',0,0,'R');
-$pdf->Cell(10, 10, 'Precio',0,0,'R');
-$pdf->Cell(15, 10, 'Total',0,0,'R');
+$consulEmple = "SELECT * FROM empleado WHERE user_id_user={$id_usuario}";
+$sqlEmple = mysqli_query($conn,$consulEmple) or die(mysqli_error($conn));
+$resulEmple = $sqlEmple->fetch_assoc();
+$nombreEmple = $resulEmple['nombre'];
+$idEmpleado = $resulEmple['id_empleado'];
+$str = utf8_decode($nombreEmple);
+
+
+/*$consultt = "SELECT * FROM factura WHERE empleado_id_empleado='{$idEmpleado}' ORDER BY id_factura DESC LIMIT 1 ";
+$sqll = mysqli_query($conn,$consultt) or die(mysqli_error($conn));
+$fac = $sqll->fetch_object();
+$idFactu = $fac->id_factura;
+$total = $fac->pago_total;*/
+
+$consultFact = "SELECT * FROM factura WHERE id_factura={$idFac}";
+$sqlFact = mysqli_query($conn,$consultFact) or die(mysqli_error($conn));
+$resulFact = $sqlFact->fetch_object();
+$fechaFac = $resulFact->fecha;
+$total = $resulFact->pago_total;
+$idCliente = $resulFact->cliente_id_cliente;
+
+
+$consulCliente = "SELECT * FROM cliente WHERE id_cliente={$idCliente}";
+$sqlCliente = mysqli_query($conn,$consulCliente) or die(mysqli_error($conn));
+$resulCliente = $sqlCliente->fetch_object();
+$nombreCliente = $resulCliente->nombre;
+$str1 = utf8_decode($nombreCliente);
+
+$pdf->Ln(5);
+$pdf->Cell(30,4,'FECHA: ',0,0);
+$pdf->Cell(30,4,$fechaFac,0,1,'L',0);
+$pdf->Cell(30,4,'FACTURA DE VENTA: ',0,0);
+$pdf->Cell(30,4,$idFac,0,1,'L',0);
+$pdf->Cell(30,4,'NIT:',0,0);
+$pdf->Cell(30,4,'123456779',0,1,'L',0);
+$pdf->Cell(30,4,'CLIENTE:',0,0);
+$pdf->Cell(30,4,$str1,0,1,'L',0);
+$pdf->Cell(30,4,'CAJERO:',0,0);
+$pdf->Cell(30,4,$str,0,1,'L',0);
+
+$pdf->SetFont('Arial','I', 7);
+$pdf->Cell(30, 10, 'Detalle', 0);
+$pdf->Cell(5, 10, 'Cantidad',0,0,'R');
+$pdf->Cell(10, 10, 'Valor',0,0,'R');
+$pdf->Cell(15, 10, 'Iva',0,0,'R');
 $pdf->Ln(8);
 $pdf->Cell(60,0,'','T');
 $pdf->Ln(0);
- 
-// PRODUCTOS
-$pdf->SetFont('Helvetica', '', 7);
-$pdf->MultiCell(30,4,'Manzana golden 1Kg',0,'L'); 
-$pdf->Cell(35, -5, '2',0,0,'R');
-$pdf->Cell(10, -5, number_format(round(3,2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Cell(15, -5, number_format(round(2*3,2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Ln(3);
-$pdf->MultiCell(30,4,'Malla naranjas 3Kg',0,'L'); 
-$pdf->Cell(35, -5, '1',0,0,'R');
-$pdf->Cell(10, -5, number_format(round(1.25,2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Cell(15, -5, number_format(round(1.25,2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Ln(3);
-$pdf->MultiCell(30,4,'Uvas',0,'L'); 
-$pdf->Cell(35, -5, '5',0,0,'R');
-$pdf->Cell(10, -5, number_format(round(1,2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Cell(15, -5, number_format(round(1*5,2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Ln(3);
 
-// SUMATORIO DE LOS PRODUCTOS Y EL IVA
-$pdf->Ln(6);
+
+$consult = "SELECT * FROM detalle_factura WHERE factura_id_factura={$idFac}";
+$sqlDeta = mysqli_query($conn,$consult) or die(mysqli_error($conn));
+
+if($num = $sqlDeta->num_rows>0){
+
+require 'conexionGene.php';
+    while($row = mysqli_fetch_assoc($sqlDeta)){
+    $idDescuento = $row['descuento_id_descuento'];
+        $idImpuesto =  $row['impuesto_id_impuestos'];
+        $idProducto =  $row['stock_id_stock'];
+
+        
+
+        $consulDescu = "SELECT * FROM descuento WHERE id_descuento={$idDescuento}";
+        $sqlDescu = mysqli_query($conn,$consulDescu) or die(mysqli_error($conn));
+        $resulDescu = $sqlDescu->fetch_assoc();
+        $nombreDescu = $resulDescu['valor_descuento'];
+
+        $consulImpuesto = "SELECT * FROM impuestos WHERE id_impuestos={$idImpuesto}";
+        $sqlImpuesto = mysqli_query($conn,$consulImpuesto) or die(mysqli_error($conn));
+        $resulImpuesto = $sqlImpuesto->fetch_assoc();
+        $nombreImpuesto = $resulImpuesto['valor_impuesto'];
+
+        $consulProducto = "SELECT * FROM producto WHERE id_producto={$idProducto}";
+        $sqlProducto = mysqli_query($conn,$consulProducto) or die(mysqli_error($conn));
+        $resulProducto = $sqlProducto->fetch_assoc();
+        $nombreProducto = $resulProducto['nombre'];
+
+
+        $pdf->Cell(30, 10,$nombreProducto,0,0,'L',0);
+        $pdf->Cell(5, 10,$row['cantidad'],0,0,'L',0);
+        $pdf->Cell(10, 10,$row['total'],0,0,'C',0);
+        $pdf->Cell(15, 10,$nombreImpuesto,0,1,'C',0);
+
+    }
+
+$vueltas=$valorIngre-$total;
+
 $pdf->Cell(60,0,'','T');
-$pdf->Ln(2);    
-$pdf->Cell(25, 10, 'TOTAL SIN I.V.A.', 0);    
-$pdf->Cell(20, 10, '', 0);
-$pdf->Cell(15, 10, number_format(round((round(12.25,2)/1.21),2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Ln(3);    
-$pdf->Cell(25, 10, 'I.V.A. 21%', 0);    
-$pdf->Cell(20, 10, '', 0);
-$pdf->Cell(15, 10, number_format(round((round(12.25,2)),2)-round((round(2*3,2)/1.21),2), 2, ',', ' ').EURO,0,0,'R');
-$pdf->Ln(3);    
-$pdf->Cell(25, 10, 'TOTAL', 0);    
-$pdf->Cell(20, 10, '', 0);
-$pdf->Cell(15, 10, number_format(round(12.25,2), 2, ',', ' ').EURO,0,0,'R');
- 
-// PIE DE PAGINA
-$pdf->Ln(10);
-$pdf->Cell(60,0,'EL PERIODO DE DEVOLUCIONES',0,1,'C');
-$pdf->Ln(3);
-$pdf->Cell(60,0,'CADUCA EL DIA  01/11/2019',0,1,'C');*/
- 
-//$pdf->Output('D','ReporteIPS.pdf','UTF-8');
+$pdf->Ln(2);   
+$pdf->Cell(30,4,'TOTAL A PAGAR: ',0,0);
+$pdf->Cell(30,4,$total,0,1,'L',0);
+$pdf->Cell(30,4,'RECIBIDO: ',0,0);
+$pdf->Cell(30,4,$valorIngre,0,1,'L',0);
+$pdf->Cell(30,4,'CAMBIO: ',0,0);
+$pdf->Cell(30,4,$vueltas,0,1,'L',0);
+}
+
+header('Content-type: application/pdf');
+$pdf->Output('D','Factura.pdf','UTF-8');
 
 //echo $pdf;
 ?>
