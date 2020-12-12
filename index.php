@@ -77,6 +77,7 @@ display: block;
                             <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
                             <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
+                            <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>
                         </ul>
                     </li>
                     
@@ -217,7 +218,6 @@ display: block;
                                                 </div>
                                             </div>
                                             
-                                            
                                             <hr>
                                             <div class="form-row">
                                                 <div class="col">
@@ -265,7 +265,6 @@ display: block;
                                                                     <hr>
                                                                     <div class="form-row">
                                                                         <div class="col" id="resultado">
-                                                                        
                                                                         </div>
                                                                     </div>
                                                                    

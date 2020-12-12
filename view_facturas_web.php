@@ -56,6 +56,7 @@
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
+            
         <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
@@ -139,7 +140,7 @@
                     <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Facturas Pendientes de Pago</strong>
+                                <strong class="card-title text-dark">Información Facturas Anuladas</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
@@ -166,7 +167,7 @@
                                 </div>  <br>
                                 
                                     <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="">
+                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="taaable">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
@@ -180,9 +181,9 @@
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="pro3">
+                                            <tbody id="pro4">
                                             <?php
-                                                include 'ver_fact3.php';
+                                                include 'ver_fact4.php';
                                             ?>
                                             
                                             </tbody>

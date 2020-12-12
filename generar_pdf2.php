@@ -6,7 +6,6 @@ require 'conexionBD.php';
 
 $id_usuario = $_SESSION['idUser'];
 $idFac = $_POST['var'];
-$valorIngre = $_POST['var2'];
 //echo $idFac;
 // Tamaño tickt 80mm x 150 mm (largo aprox)
 
@@ -22,7 +21,7 @@ $pdf->Ln(2);
 $pdf->Cell(60,4,'RES N. 18764000999047 FECHA:2020/07/18',0,1,'C');
 $pdf->Cell(60,4,'DEL N. P20001 AL N. P50000',0,1,'C');
 
-$consulEmple = "SELECT * FROM empleado WHERE user_id_user={$id_usuario}";
+/*$consulEmple = "SELECT * FROM empleado WHERE user_id_user={$id_usuario}";
 $sqlEmple = mysqli_query($conn,$consulEmple) or die(mysqli_error($conn));
 $resulEmple = $sqlEmple->fetch_assoc();
 $nombreEmple = $resulEmple['nombre'];
@@ -30,25 +29,22 @@ $idEmpleado = $resulEmple['id_empleado'];
 $str = utf8_decode($nombreEmple);
 
 
-/*$consultt = "SELECT * FROM factura WHERE empleado_id_empleado='{$idEmpleado}' ORDER BY id_factura DESC LIMIT 1 ";
+$consultt = "SELECT * FROM factura WHERE empleado_id_empleado='{$idEmpleado}' ORDER BY id_factura DESC LIMIT 1 ";
 $sqll = mysqli_query($conn,$consultt) or die(mysqli_error($conn));
 $fac = $sqll->fetch_object();
 $idFactu = $fac->id_factura;
 $total = $fac->pago_total;*/
 
-$consultFact = "SELECT * FROM factura WHERE id_factura={$idFac}";
+$consultFact = "SELECT *, empleado.nombre AS nombreEmple, cliente.nombre AS nombreCliente FROM factura INNER JOIN empleado ON empleado.id_empleado=factura.empleado_id_empleado INNER JOIN cliente ON cliente.id_cliente=factura.cliente_id_cliente WHERE id_factura={$idFac}";
 $sqlFact = mysqli_query($conn,$consultFact) or die(mysqli_error($conn));
-$resulFact = $sqlFact->fetch_object();
-$fechaFac = $resulFact->fecha;
-$total = $resulFact->pago_total;
-$idCliente = $resulFact->cliente_id_cliente;
+$resulFact = $sqlFact->fetch_assoc();
+$fechaFac = $resulFact['fecha'];
+$total = $resulFact['pago_total'];
+$idCliente = $resulFact['nombreCliente'];
+$idEmple = $resulFact['nombreEmple'];
 
-
-$consulCliente = "SELECT * FROM cliente WHERE id_cliente={$idCliente}";
-$sqlCliente = mysqli_query($conn,$consulCliente) or die(mysqli_error($conn));
-$resulCliente = $sqlCliente->fetch_object();
-$nombreCliente = $resulCliente->nombre;
-$str1 = utf8_decode($nombreCliente);
+$str1 = utf8_decode($idEmple);
+$str = utf8_decode($idCliente);
 
 $pdf->Ln(5);
 $pdf->Cell(30,4,'FECHA: ',0,0);
@@ -58,9 +54,9 @@ $pdf->Cell(30,4,$idFac,0,1,'L',0);
 $pdf->Cell(30,4,'NIT:',0,0);
 $pdf->Cell(30,4,'123456779',0,1,'L',0);
 $pdf->Cell(30,4,'CLIENTE:',0,0);
-$pdf->Cell(30,4,$str1,0,1,'L',0);
-$pdf->Cell(30,4,'CAJERO:',0,0);
 $pdf->Cell(30,4,$str,0,1,'L',0);
+$pdf->Cell(30,4,'CAJERO:',0,0);
+$pdf->Cell(30,4,$str1,0,1,'L',0);
 
 $pdf->SetFont('Arial','I', 7);
 $pdf->Cell(30, 10, 'Detalle', 0);
@@ -82,6 +78,8 @@ if($num = $sqlDeta->num_rows>0){
         $idDescuento = $row['descuento_id_descuento'];
         $idImpuesto =  $row['impuesto_id_impuestos'];
         $idStock =  $row['stock_id_stock'];
+
+        require 'conexionBD.php';
 
         $consulStock = "SELECT * FROM stock WHERE id_stock={$idStock}";
         $sqlStock = mysqli_query($conn,$consulStock) or die(mysqli_error($conn));
@@ -113,16 +111,16 @@ if($num = $sqlDeta->num_rows>0){
 
     }
 
-$vueltas=$valorIngre-$total;
+//$vueltas=$valorIngre-$total;
 
 $pdf->Cell(60,0,'','T');
 $pdf->Ln(2);   
-$pdf->Cell(30,4,'TOTAL A PAGAR: ',0,0);
+$pdf->Cell(30,4,'TOTAL PAGADO: ',0,0);
 $pdf->Cell(30,4,$total,0,1,'L',0);
-$pdf->Cell(30,4,'RECIBIDO: ',0,0);
+/*$pdf->Cell(30,4,'RECIBIDO: ',0,0);
 $pdf->Cell(30,4,$valorIngre,0,1,'L',0);
 $pdf->Cell(30,4,'CAMBIO: ',0,0);
-$pdf->Cell(30,4,$vueltas,0,1,'L',0);
+$pdf->Cell(30,4,$vueltas,0,1,'L',0);*/
 }
 
 header('Content-type: application/pdf');

@@ -960,8 +960,15 @@ $('#pagar').click(function(){
         success: function(data) {
             id_factura = data;
             $('#ggg').val(data);
+
             var cost = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
-            $('#g2').val(cost);
+            var total = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
+            if(pago==="Efectivo"){
+                $('#g2').val(cost);
+            }else{
+                $('#g2').val(total);
+            }
+            
                 $.ajax({
                 type:"POST",
                 url: "agregar_factura.php",
