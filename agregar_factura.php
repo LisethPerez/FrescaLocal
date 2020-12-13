@@ -6,15 +6,12 @@ $total = 0;
 $fecha = date('Y-m-d H:i:s');
 $tipo_pago = $_POST['tipo_pago'];
 $tipo_domi = $_POST['var2'];
-if($tipo_pago == "Efectivo"){
-    $referencia = 0;
-}else{
+
+if($tipo_pago != "Efectivo"){
     $referencia = $_POST['refe'];
 }
 
-if($tipo_domi=="Presencial"){
-    $empleado = 0;
-}else{
+if($tipo_domi!="Presencial"){
     $empleado = $_POST['var3'];
 }
 
@@ -29,7 +26,12 @@ if($num = $sqlExi->num_rows>0){
     $consultPago= "SELECT * FROM tipo_pago WHERE nombre='{$tipo_pago}'";
     $sqlPago = mysqli_query($conn,$consultPago) or die(mysqli_error($conn));
     $resulPago = $sqlPago->fetch_object();
-    $pagoId = $resulPago->id_tpago; //Validar el tipo de pago 
+    $pagoId = $resulPago->id_tpago; 
+
+    $consultEmple= "SELECT * FROM empleado WHERE nombre='{$empleado}'";
+    $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
+    $resulEmple = $sqlEmple->fetch_object();
+    $EmpleId = $resulEmple->id_empleado; 
   
     //Obtener la cantidad de productos y el total 
     $cantidadProductos =  $resultExi['contar'];
@@ -42,7 +44,7 @@ if($num = $sqlExi->num_rows>0){
             $consultaModi = "UPDATE factura SET referencia_pago='{$referencia}', pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=1, tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
         }
     }else if($tipo_domi=="Domicilios"){
-        $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
+        $consultaModi = "UPDATE factura SET empleado_id_domiciliario='{$EmpleId}', pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
     }
 
     

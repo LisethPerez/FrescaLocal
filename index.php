@@ -552,7 +552,7 @@ display: block;
                                                                     <div class="form-row">
                                                                         <div class="col">
                                                                             <strong>Total</strong><br>
-                                                                            <input type="text" class="form-control" id="total_web" name="total_web" onkeypress="return onlyNums(event)" style=""><br>     
+                                                                            <input type="text" class="form-control" id="total_web" name="total_web" onkeypress="return onlyNums(event)" style="width:150px;"><br>     
                                                                         </div>
                                                                         <div class="col">
                                                                             <strong for="validationCustom03">Tipo Cliente</strong>
@@ -561,7 +561,7 @@ display: block;
                                                                                     $consulta = "SELECT * FROM tipo_pago";
                                                                                     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                                                                                 ?>
-                                                                                <select type="text" class="form-control" id="tipoPa" name="tipoPa" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" style="width:160px;" required>
+                                                                                <select type="text" class="form-control" id="tipoPa" name="tipoPa" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" style="width:130px;" required>
                                                                                 
                                                                                 <?php 
                                                                                     while ($valores = mysqli_fetch_object($sql)) {
@@ -572,8 +572,15 @@ display: block;
                                                                                 </select>
                                                                         </div>
                                                                         <div class="col">
+                                                                            <strong for="validationCustom03">¿Factura paga?</strong>
+                                                                            <select type="text" class="form-control" id="paga" name="paga" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" style="width:130px;" required>
+                                                                                <option value="1">Sí</option>
+                                                                                <option value="0">No</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col">
                                                                             <strong> Ingrese código</strong><br>
-                                                                            <input type="text" class="form-control" id="codigo_inve" name="valor_ingre" onkeypress="return onlyNums(event)" style=""><br>        
+                                                                            <input type="text" class="form-control" id="codigo_inve" name="valor_ingre" onkeypress="return onlyNums(event)" style="width:200px;"><br>        
                                                                         </div>
                                                                     </div>
                                                                     

@@ -56,6 +56,7 @@
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
+            
         <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
@@ -139,7 +140,7 @@
                     <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Facturas Pendientes de Pago</strong>
+                                <strong class="card-title text-dark">Información Facturas de Domiciliarios Pendientes</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
@@ -165,8 +166,8 @@
                                     </div>
                                 </div>  <br>
                                 
-                                    <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="">
+                                    <div class="form-row table-wrapper-scroll-y my-custom-scrollbar"> 
+                                    <table class="table table-responsive" id="taaable">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
@@ -174,9 +175,12 @@
                                                     <th>#Productos</th>
                                                     <th>Fecha</th>
                                                     <th>Tipo_pago</th>
-                                                    <th>Empleado</th>
+                                                    <th>Cajero</th>
+                                                    <th>Domiciliario</th>
                                                     <th>Cliente</th>
                                                     <th>Sede</th>
+                                                    <th style="display:none">Paga</th>
+                                                    <th style="display:none">Ref</th>
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
@@ -194,7 +198,30 @@
                     
                     </div><!-- /# column -->
                 </div>
-                <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal fade" id="ModificacionEstado" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Modificación de estado</strong></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form>
+
+                                                        </form>
+                                                    
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                           
+                                                        </div>
+                                                    
+                                                </div><!--modal-content-->
+                                            </div><!--modal-dialog-->
+                                        </div> <!--modal-fade-->
+                                        <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

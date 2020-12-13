@@ -269,125 +269,20 @@ $('.view_products').click(function () {
 }
 
 //Buscar factura por el número de factura
-var buscar_fac;
-$('#buscarFac').click(function(){
-    buscar_fac = $('#numberFac').val();
-  
-        $.ajax({
-            url: "buscar_fact.php?var="+buscar_fac,
-            method: "POST",
-            success: function(data){
-               if(data === "No se encuntran resultados con la búsqueda"){
-                Swal.fire({
-                    icon: 'error',
-                    text: data,
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                });
-               }else{
-                var contenidoFac = document.getElementById("pro");
-                contenidoFac.innerHTML = "";
-                var datosFac = JSON.parse(data);
-                createRow3(datosFac);
-                $('#numberFac').val('');
-               }
-            }
-    });  
-    
-});
+
 
 $('.atras').click(function(){  
     var contenidoFac = document.getElementById("cont_productos");
     contenidoFac.innerHTML = "";
 });
 
-function createRow3(data) {                              //dynamically adding rows to the Table
-    //design this according to your requirement    
-    for(var i=0; i<data.length; i++){
-    var trElement = `<tr>
-    <td>`+data[i].id+`</td>
-    <td>`+data[i].total+`</td>
-    <td>`+data[i].productos+`</td>
-    <td>`+data[i].fecha+`</td>
-    <td>`+data[i].tipo+`</td>
-    <td>`+data[i].empleado+`</td>
-    <td>`+data[i].cliente+`</td>  
-    <td>`+data[i].sede+`</td>   
-    <td>`+data[i].opcion+`</td>  
-    </tr>`;
-    $('#pro').append(trElement);    
-    }  
-}
-
-//Buscar factura anulada por número de factura
-var  buscar_fac2;
-$('#buscarFac2').click(function(){
-    buscar_fac2 = $('#numberFac').val();
-
-    if(buscar_fac === ''){
-        Swal.fire({
-            icon: 'error',
-            text: 'Ingrese número de búsqueda',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });  
-    }else{
-        $.ajax({
-            url: "buscar_fact.php?var="+buscar_fac2,
-            method: "POST",
-            success: function(data){
-               if(data === "No se encuntran resultados con la búsqueda"){
-                Swal.fire({
-                    icon: 'error',
-                    text: data,
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                });
-               }else{
-                var contenidoFac = document.getElementById("pro2");
-                contenidoFac.innerHTML = "";
-                var datosFac = JSON.parse(data);
-                createRow4(datosFac);
-                $('#numberFac2').val('');
-               }
-            }
-        });
-    }
+$('.editarDomi').click(function(){
+    $tr=$(this).closest('tr');
+    var datos = $tr.children("td").map(function (){
+        return $(this).text();
+    });
+    alert(datos[9] + " - " + datos[10]);
 });
-
-
-
-function createRow4(data) {                              //dynamically adding rows to the Table
-    //design this according to your requirement    
-    for(var i=0; i<data.length; i++){
-    var trElement = `<tr>
-    <td>`+data[i].id+`</td>
-    <td>`+data[i].total+`</td>
-    <td>`+data[i].productos+`</td>
-    <td>`+data[i].fecha+`</td>
-    <td>`+data[i].tipo+`</td>
-    <td>`+data[i].empleado+`</td>
-    <td>`+data[i].cliente+`</td>  
-    <td>`+data[i].sede+`</td>   
-    <td>`+data[i].opcion+`</td>  
-    </tr>`;
-    $('#pro2').append(trElement);
-    
-    }  
-
-}
 
 //Agregar los datos de la fila seleccionada el formulario
 $('.editbtn').click(function () {
@@ -421,6 +316,7 @@ var emple;
 $('#domiciliario').click(function(){
     emple = $('#domi').val();
     $('.pago').show();
+    
 });
 
 var pago;
@@ -428,94 +324,103 @@ var referencia;
 //Esconder div de método de pago en efectivo
  $('.groupPago').click(function () {
     pago = $(this).val();
+    if(tipo_domi === "Presencial"){
+        if(pago === "Efectivo"){
+            $('#efectivo').show();
+            $('#credito').hide();
+            $('#debito').hide();
+    
+        }
+        if(pago === "Tarjeta debito"){
+            $('#efectivo').hide();
+            $('#credito').hide();
+            $('#links').hide();
+    
+            Swal.fire({
+                title: '¿Se aprobó la transacción?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: ' #25A01B',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡OK!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#debito').show();
+                    const value = $('#total').val();
+                    var chain = String(value.replace(/\D/g, ""));
+                    const newValue = new Intl.NumberFormat('en-US').format(chain);
+                    $('#total_venDe').val("$ " + newValue);
+    
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    $('#debito').hide();
+                  }
+              })
+        }
+        if(pago === "Tarjeta credito"){
+            $('#efectivo').hide();
+            $('#debito').hide();
+            $('#links').hide();
+            Swal.fire({
+                title: '¿Se realizó la transacción?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: ' #25A01B',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡OK!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#credito').show();
+                    const value = $('#total').val();
+                    var chain = String(value.replace(/\D/g, ""));
+                    const newValue = new Intl.NumberFormat('en-US').format(chain);
+                    $('#total_venCre').val("$ " + newValue);
+     
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    $('#credito').hide();   
+                  }
+              })    
+        }
+        if(pago === "Link de pago"){
+            $('#efectivo').hide();
+            $('#debito').hide();
+            $('#credito').hide();
+            Swal.fire({
+                title: '¿Se realizó la transacción?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: ' #25A01B',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡OK!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#credito').show();
+                    const value = $('#total').val();
+                    var chain = String(value.replace(/\D/g, ""));
+                    const newValue = new Intl.NumberFormat('en-US').format(chain);
+                    $('#total_venCre').val("$ " + newValue);
+     
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    $('#links').hide();   
+                  }
+              })    
+        }
 
-    if(pago === "Efectivo"){
-        $('#efectivo').show();
-        $('#credito').hide();
-        $('#debito').hide();
-
-    }
-    if(pago === "Tarjeta debito"){
+    }else if(tipo_domi === "Domicilios"){
         $('#efectivo').hide();
         $('#credito').hide();
+        $('#debito').hide();
         $('#links').hide();
 
-        Swal.fire({
-            title: '¿Se aprobó la transacción?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: ' #25A01B',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡OK!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $('#debito').show();
-                const value = $('#total').val();
-                var chain = String(value.replace(/\D/g, ""));
-                const newValue = new Intl.NumberFormat('en-US').format(chain);
-                $('#total_venDe').val("$ " + newValue);
-
-            } else if (
-                result.dismiss === Swal.DismissReason.cancel
-              ) {
-                $('#debito').hide();
-              }
-          })
     }
-    if(pago === "Tarjeta credito"){
-        $('#efectivo').hide();
-        $('#debito').hide();
-        $('#links').hide();
-        Swal.fire({
-            title: '¿Se realizó la transacción?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: ' #25A01B',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡OK!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $('#credito').show();
-                const value = $('#total').val();
-                var chain = String(value.replace(/\D/g, ""));
-                const newValue = new Intl.NumberFormat('en-US').format(chain);
-                $('#total_venCre').val("$ " + newValue);
- 
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-              ) {
-                $('#credito').hide();   
-              }
-          })    
-    }
-    if(pago === "Link de pago"){
-        $('#efectivo').hide();
-        $('#debito').hide();
-        $('#credito').hide();
-        Swal.fire({
-            title: '¿Se realizó la transacción?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: ' #25A01B',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡OK!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $('#credito').show();
-                const value = $('#total').val();
-                var chain = String(value.replace(/\D/g, ""));
-                const newValue = new Intl.NumberFormat('en-US').format(chain);
-                $('#total_venCre').val("$ " + newValue);
- 
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-              ) {
-                $('#links').hide();   
-              }
-          })    
-    }
+    
  });
 
  //Colocar signo de $ y comas 
@@ -1065,6 +970,7 @@ $('#descontar').click(function(){
     //alert(JSON.stringify(venta));
     var codigo = $('#codigo_inve').val();
     var tipo_pa = $('#tipoPa option:selected').val();
+    var paga = $('#paga option:selected').val();
     if(codigo === ''){
         Swal.fire({
             icon: 'error',
@@ -1081,7 +987,7 @@ $('#descontar').click(function(){
         $.ajax({
             type:"POST",
             url: "volverStock2.php?codigo="+codigo,
-            data: {var: venta, var3: cedula_cliente, var4: tipo_pa},
+            data: {var: venta, var3: cedula_cliente, var4: tipo_pa, var5: paga},
             success: function(data) {
              
                 if(data==="Cambios realizados"){
