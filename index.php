@@ -13,11 +13,11 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Cosecha Fresca</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+    <!--<link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">-->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -99,12 +99,35 @@ display: block;
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
-        <header id="header" class="header" style="background:#F0A744">
-            <div class="top-left">
+        <header id="header" class="header">
+           <!-- <div class="top-left">
                 <div class="navbar-header" style="background:#F0A744">
                     <a class="navbar-brand" style="background:#F0A744" href="./"><img src="images/logoo1.png" alt="Logo"></a>
                  
                     <a id="menuToggle" class="menutoggle" style="background:#F0A744;"><i class="fa fa-bars" style=" color:#FFF"></i></a>
+                    
+                </div>
+            </div>-->
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img src="images/logoCo1.png" alt="Logo"><img src="images/texto.png" alt="Logo"></a>
+                 
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                    
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="header-left">
+                   
+                    <br>
+                        <label>Bienvenido: <?php echo $_SESSION['nombreEmple']?></label>
+                    </div>
+                    <div class="user-area dropdown float-right">
+                    <a href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            <img class="" src="images/controler2.jpg" style="width: 110px; height: 50px;">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -160,7 +183,7 @@ display: block;
                                                 </div>
                                                 <div class="col">
                                                         <label><a id="obte" class="">Peso (KG)</a></label>
-                                                        <input type="hidden" id="peso" name="peso"></input>
+                                                        <input type="hidden" id="peso2" name="peso2"></input>
                                                         <input type="text" class="form-control selec" id="pesooo" name="pesooo" style="height:35px; font-size:160%;" required>
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
@@ -555,7 +578,7 @@ display: block;
                                                                             <input type="text" class="form-control" id="total_web" name="total_web" onkeypress="return onlyNums(event)" style="width:150px;"><br>     
                                                                         </div>
                                                                         <div class="col">
-                                                                            <strong for="validationCustom03">Tipo Cliente</strong>
+                                                                            <strong for="validationCustom03">Tipo Pago</strong>
                                                                                 <?php 
                                                                                     include 'conexionBD.php';
                                                                                     $consulta = "SELECT * FROM tipo_pago";
@@ -682,10 +705,12 @@ display: block;
         <div class="footer-inner bg-white">
             <div class="row">
                 <div class="col-sm-6">
-                    Copyright &copy; 2018 Ela Admin
+                   <!-- Copyright &copy; 2018 Ela Admin-->
+                    Copyright &copy; 2020 Controler
                 </div>
                 <div class="col-sm-6 text-right">
-                    Designed by <a href="https://colorlib.com">Colorlib</a>
+                   <!-- Designed by <a href="https://colorlib.com">Colorlib</a>-->
+                    Designed by <a href="https://controler.com.co/">Controler</a>
                 </div>
             </div>
         </div>

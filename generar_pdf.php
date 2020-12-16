@@ -83,6 +83,7 @@ if($num = $sqlDeta->num_rows>0){
         $idImpuesto =  $row['impuesto_id_impuestos'];
         $idStock =  $row['stock_id_stock'];
 
+        require 'conexionBD.php';
         $consulStock = "SELECT * FROM stock WHERE id_stock={$idStock}";
         $sqlStock = mysqli_query($conn,$consulStock) or die(mysqli_error($conn));
         $resulStock = $sqlStock->fetch_assoc();

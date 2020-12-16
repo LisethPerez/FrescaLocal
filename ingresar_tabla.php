@@ -5,9 +5,10 @@ include 'conexionGene.php';
 $tipo = $_GET['var'];
 $cont = $_GET['var2'];
 $producto_1 = $_POST['producto'];
-floatval($peso = $_POST['peso']);
+$peso = $_POST['peso2'];
 $codigo = $_POST['producto1'];
 $cantidad = $_POST['cantidad'];
+
 
 $total = 0;
 

@@ -9,10 +9,19 @@ $tipo_domi = $_POST['var2'];
 
 if($tipo_pago != "Efectivo"){
     $referencia = $_POST['refe'];
+}else{
+    $referencia = 0;
 }
 
 if($tipo_domi!="Presencial"){
     $empleado = $_POST['var3'];
+    
+    $consultEmple= "SELECT * FROM empleado WHERE nombre='{$empleado}'";
+    $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
+    $resulEmple = $sqlEmple->fetch_object();
+    $EmpleId = $resulEmple->id_empleado; 
+}else{
+    $empleado = 0;
 }
 
 
@@ -28,10 +37,7 @@ if($num = $sqlExi->num_rows>0){
     $resulPago = $sqlPago->fetch_object();
     $pagoId = $resulPago->id_tpago; 
 
-    $consultEmple= "SELECT * FROM empleado WHERE nombre='{$empleado}'";
-    $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
-    $resulEmple = $sqlEmple->fetch_object();
-    $EmpleId = $resulEmple->id_empleado; 
+    
   
     //Obtener la cantidad de productos y el total 
     $cantidadProductos =  $resultExi['contar'];

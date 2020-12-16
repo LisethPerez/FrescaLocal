@@ -281,7 +281,37 @@ $('.editarDomi').click(function(){
     var datos = $tr.children("td").map(function (){
         return $(this).text();
     });
-    alert(datos[9] + " - " + datos[10]);
+    var id= datos[0];
+    var total = datos[1];
+    var tipo = datos[4];
+    var sipaga = datos[9];
+    var referencia_pago = datos[10];
+
+    var chain = String(total.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    total = "$ " + newValue;
+
+    $.ajax({
+        url: "modificar_factura.php",
+        type: "POST",
+        data:{var: id, var2: sipaga, var3: referencia_pago, var4: tipo, var5: total},
+        success: function(data){
+            var contenido = document.getElementById("cambiosFact");
+            contenido.innerHTML = "";
+            $('#cambiosFact').html(data);
+           
+            //alert(data);
+              
+        }
+    });
+});
+
+$('#modificar').click(function(){
+    var paga = $('#pagaa option:selected').text();
+    var tipo = $('#tipoo option:selected').text();
+
+    alert(paga + "-" + tipo);
+
 });
 
 //Agregar los datos de la fila seleccionada el formulario
@@ -601,13 +631,19 @@ $('#total_venDe').keypress(function (evt) {
 
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
-    $.ajax({
+    $('#pesooo').val(0.93);
+    
+    $('#peso2').val(0.93);
+
+   /* $.ajax({
+        
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
             $('#peso').val(data);
+            $('#peso2').val(data);
         }
-    }); 
+    }); */
 });   
 
 
@@ -622,7 +658,7 @@ var cont = 0;
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
     var cantidad = $('#cantidad').val();
-    var peso = $('#peso').val();
+    var peso = $('#peso2').val();
     var codigo = $('#producto1').val();
 
     if(e.which == 13) {
@@ -677,63 +713,6 @@ $('.selec').keypress(function (e) {
                 //Colocar luego el codigo comentado y el vectos de ventas 
                 //cont = cont + 1;
                 $.ajax({
-                    /*type: "POST",
-                    url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
-                    data: $("#venta").serialize(),
-                    success: function(data) {
-                        DataArray = JSON.parse(data);  
-                                        createRow(DataArray);
-                                        deleteRow(datos);  
-                                        //alert(JSON.stringify(DataArray));
-                                        //Recorrer el array temporal para llenar el nuevo JSON
-                                       
-                                        $.each(DataArray, function(i, _data) {
-                                            var id = _data.id;
-                                            var codigo =  _data.codigo;
-                                            var cantidad =  parseInt( _data.cantidad);
-                                            var producto =  _data.producto;
-                                            var peso =  parseFloat(_data.peso);
-                                            var precio = parseFloat(_data.precio);
-                                            var impuesto =  parseInt(_data.impuesto);
-                                            var descuento = parseInt(_data.descuento);
-                                            var total = parseFloat(_data.total);
-                                            
-                                            datos.push({
-                                                'id': id,
-                                                'codigo': codigo,
-                                                'cantidad': cantidad,
-                                                'producto': producto,
-                                                'peso': peso,
-                                                'precio' : precio,
-                                                'impuesto': impuesto,
-                                                'descuento': descuento,
-                                                'total' : total
-                                            })
-                                    
-                                        });
-                                        //Suma de los total por productos seleccionados
-                                        $.each(datos, function(i, _data) {
-                                            
-                                            total += parseFloat(_data.total);
-                                        });
-                                        
-                                        $('#producto').val('');
-                                        $('#cantidad').val('');
-                                        $('#peso').val('');
-                                        $('#producto1').val('');
-                                        
-                                        
-                                        const newValue = new Intl.NumberFormat('en-US').format(total.toString());
-                                        
-                                        if(datos.length===0){
-                                            $('#total').val('');
-                                        }else{
-                                            $('#total').val("$" + newValue);
-                                        } 
-                                        total = 0;
-                                   
-                    }*/
-                    
                     type: "POST",
                     url: "disponibilidad.php?var="+nombre_producto,
                     data:{var2: cant},
@@ -747,8 +726,9 @@ $('.selec').keypress(function (e) {
                                     url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
                                     data: $("#venta").serialize(),
                                     success: function(data) {
-                                       // alert(data);
+                                       
                                         DataArray = JSON.parse(data);  
+                                    
                                          
                                         createRow(DataArray);
                                         deleteRow(datos);  
@@ -788,6 +768,7 @@ $('.selec').keypress(function (e) {
                                         $('#producto').val('');
                                         $('#cantidad').val('');
                                         $('#peso').val('');
+                                        $('#peso2').val('');
                                         $('#producto1').val('');
                                         
                                         
@@ -806,7 +787,7 @@ $('.selec').keypress(function (e) {
                                 //Sincronizar los nuevos productos con la eliminación y agregación
                                 venta = datos;
                                 $('#pesooo').val('');
-                                $('#peso').val('');
+                                $('#peso2').val('');
 
                         //Mensaje de no existencia de disponibilidad del producto
                         }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
@@ -864,12 +845,22 @@ $('#pagar').click(function(){
         data: {var: venta},  
         success: function(data) {
             id_factura = data;
+            if(data){
+                alert("Detalle guardado");
+            }else{
+                alert("Ha ocurrido algún problema");
+            }
             $('#ggg').val(data);
-
+            
             var cost = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
             var total = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
-            if(pago==="Efectivo"){
-                $('#g2').val(cost);
+
+            if(tipo_domi ==="Presencial"){
+                if(pago==="Efectivo"){
+                    $('#g2').val(cost);
+                }else{
+                    $('#g2').val(total);
+                }
             }else{
                 $('#g2').val(total);
             }
@@ -893,7 +884,7 @@ $('#pagar').click(function(){
                         });     
                     }else{
                         document.getElementById("submitButton1").click();
-                        var myVar = setInterval(myTimer, 5000);
+                        var myVar = setInterval(myTimer, 7000);
                     }
                 }
             });
@@ -1015,7 +1006,7 @@ $('#descontar').click(function(){
                         hideClass: {
                             popup: 'animate__animated animate__fadeOutUp'
                         }
-                    });   
+                    });  
                     $('#codigo_inve').val('');    
                 }
             }

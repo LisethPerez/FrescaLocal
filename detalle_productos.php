@@ -4,7 +4,7 @@ $id = $_GET['var'];
 
 include 'conexionBD.php';
 //$consult = "SELECT *, empleado.nombre AS nombreEmple FROM detalle_factura  INNER JOIN stock ON detalle_factura.stock_id_stock=stock.id_stock INNER JOIN empleado ON detalle_factura.empleado_id_empleado=empleado.nombre WHERE factura_id_factura={$id}";
-$consult = "SELECT *, empleado.nombre AS nombreEmple, detalle_factura.cantidad AS cantidadd FROM detalle_factura INNER JOIN empleado ON detalle_factura.empleado_id_empleado=empleado.id_empleado INNER JOIN stock ON detalle_factura.stock_id_stock=stock.id_stock WHERE detalle_factura.factura_id_factura={$id}";
+$consult = "SELECT *, empleado.nombre AS nombreEmple, detalle_factura.cantidad AS cantidadd, detalle_factura.total AS total FROM detalle_factura INNER JOIN empleado ON detalle_factura.empleado_id_empleado=empleado.id_empleado INNER JOIN stock ON detalle_factura.stock_id_stock=stock.id_stock WHERE detalle_factura.factura_id_factura={$id}";
 $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 
 if($num = $sql->num_rows>0){
