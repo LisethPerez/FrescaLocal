@@ -22,9 +22,18 @@ if($number = $sql->num_rows>0){
         $consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$_SESSION['idUser']}'";
         $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
         $resultEmple = $sqlEmple->fetch_object();
+
+        
+        $consultSede = "SELECT * FROM sede WHERE id_sede='{$_SESSION['idSede']}'";
+        $sqlSede = mysqli_query($conn,$consultSede) or die(mysqli_error($conn));
+        $resultSede = $sqlSede->fetch_object();
+        
         
         
         $_SESSION['nombreEmple'] = $resultEmple->nombre; 
+        $_SESSION['nombreSede'] = $resultSede->nombre_sede; 
+
+        
         //return header("Location: index.php");
         echo "Datos correctos";
      

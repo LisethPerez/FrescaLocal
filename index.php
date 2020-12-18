@@ -80,6 +80,13 @@ display: block;
                             <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>
                         </ul>
                     </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>CAJA</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class=""></i><a href="caja.php">Cierre caja</a></li>
+                            
+                        </ul>
+                    </li>
                     
                     <hr>
                     <li class="menu-title">Salir</li><!-- /.menu-title -->
@@ -196,8 +203,9 @@ display: block;
                                                 <div class="col">
                                                     <label for="validationCustom03">Cantidad</label>
                                                     <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:35px; font-size:110%;" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
-                                        </form>                
+                                                       
                                                 </div>
+                                                </form> 
                                             </div><hr>
                                             <div class="form-row table-wrapper-scroll-y my-custom-scrollbar" >
                                             <table class="table table-responsive">

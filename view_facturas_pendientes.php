@@ -195,7 +195,7 @@
                                                 <tr>    
                                                     <th>ID</th>
                                                     <th>Total</th>
-                                                    <th>#Productos</th>
+                                                    <th>#</th>
                                                     <th>Fecha</th>
                                                     <th>Tipo_pago</th>
                                                     <th>Cajero</th>
@@ -238,13 +238,15 @@
                                                             <div class="card-body">
                                                                 <div id="cambiosFact">
                                                                 </div>
+                                                                <div id="cambios">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     
                                                     </div>
                                                     <div class="modal-footer">
                                                             <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
-                                                            <button type="button" id="modificar" class="btn btn-success btn-sm mb-2" data-dismiss="modal">MODIFICAR</button>
+                                                            <button type="button" id="modificar" class="btn btn-success btn-sm mb-2">MODIFICAR</button>
                                                            
                                                         </div>
                                                     

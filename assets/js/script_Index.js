@@ -276,43 +276,111 @@ $('.atras').click(function(){
     contenidoFac.innerHTML = "";
 });
 
+var tipo_;
+var id_;
 $('.editarDomi').click(function(){
     $tr=$(this).closest('tr');
     var datos = $tr.children("td").map(function (){
         return $(this).text();
     });
-    var id= datos[0];
+    id_= datos[0];
     var total = datos[1];
-    var tipo = datos[4];
+    tipo_ = datos[4];
     var sipaga = datos[9];
-    var referencia_pago = datos[10];
+    referencia_pago = datos[10];
 
     var chain = String(total.replace(/\D/g, ""));
     const newValue = new Intl.NumberFormat('en-US').format(chain);
     total = "$ " + newValue;
 
     $.ajax({
-        url: "modificar_factura.php",
+        url: "detalle_factura.php",
         type: "POST",
-        data:{var: id, var2: sipaga, var3: referencia_pago, var4: tipo, var5: total},
+        data:{var: id_, var2: sipaga, var3: referencia_pago, var4: tipo_, var5: total},
         success: function(data){
             var contenido = document.getElementById("cambiosFact");
             contenido.innerHTML = "";
             $('#cambiosFact').html(data);
-           
-            //alert(data);
-              
+            
+         //alert(data);           
+        }
+    });
+
+});
+
+
+$('.presen').click(function(){
+    var presen= $(this).val();
+    $.ajax({
+        url: "ventas_presenciales.php",
+        type: "POST",
+        data:{var: presen},
+        success: function(data){
+            alert(data);
         }
     });
 });
 
-$('#modificar').click(function(){
-    var paga = $('#pagaa option:selected').text();
-    var tipo = $('#tipoo option:selected').text();
+/*$('#tipoo').on('focus', function () { 
+    previous = this.value;
+}).change(function() {
 
-    alert(paga + "-" + tipo);
+    alert(previous);
+    previous = this.value;
+
+});*/
+/*$('#tipoo').change(function(){
+    alert("Se ha hecho un cambio");
+    /*var selectedValue = $(this).attr("selectedIndex");
+    alert(selectedValue);*/
+    /*if(selectedValue!=="Efectivo"){
+        $('#depe').hide();
+    }else{
+        $('#depe').html("Efectivo");
+    }
+
+});*/
+
+$('#modificar').click(function(){
+    var paga = $('#pagaa option:selected').val();
+    var tipo = $('#tipoo option:selected').val();
+    var refe = $('#ref').val();
+
+    $.ajax({
+        url: "modificar_factura.php",
+        type: "POST",
+        data:{var: paga, var2: tipo, var3: refe, var4: id_},
+        success: function(data){
+           if(data==="Modificación de estado de la factura correcta"){
+            Swal.fire({
+                icon: 'success',
+                text: 'Datos erroneos',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });  
+            window.location.href="view_facturas_pendientes.php"; 
+           }else{
+            Swal.fire({
+                icon: 'error',
+                text: 'Ha ocurrido un error',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }); 
+           }
+        }
+    });
 
 });
+
+
 
 //Agregar los datos de la fila seleccionada el formulario
 $('.editbtn').click(function () {
