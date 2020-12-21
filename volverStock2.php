@@ -15,6 +15,7 @@ $fecha = date('Y-m-d H:i:s');
 $cedula = $_POST['var3'];
 $idPago = $_POST['var4'];
 $paga = $_POST['var5'];
+$web = $_POST['var6'];
 
 include 'conexionBD.php';
 
@@ -29,7 +30,7 @@ $resultadoUser = $sqlUser->fetch_object();
 $idEmple = $resultadoUser->id_empleado;
 
 //Creación de la factura con la mayoria de campos por defecto
-$consultaFac = "INSERT INTO factura (id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,empleado_id_domiciliario,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago) VALUES ('{$codigo}',0,0,'{$fecha}','{$paga}','{$idPago}','{$idEmple}',0,'{$clienteId}','{$id_Sede}',0,'NULL')";
+$consultaFac = "INSERT INTO factura (id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,empleado_id_domiciliario,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago,tipo_web) VALUES ('{$codigo}',0,0,'{$fecha}','{$paga}','{$idPago}','{$idEmple}',0,'{$clienteId}','{$id_Sede}',0,'NULL','{$web}')";
 $sqlFact = mysqli_query($conn,$consultaFac) or die(mysqli_error($conn));
 
 //Obtención del id de la factura generada anteriormente para la asignación de los productos del dettalle

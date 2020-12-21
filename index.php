@@ -583,7 +583,7 @@ display: block;
                                                                     <div class="form-row">
                                                                         <div class="col">
                                                                             <strong>Total</strong><br>
-                                                                            <input type="text" class="form-control" id="total_web" name="total_web" onkeypress="return onlyNums(event)" style="width:150px;"><br>     
+                                                                            <input type="text" class="form-control" id="total_web" name="total_web" onkeypress="return onlyNums(event)" ><br>     
                                                                         </div>
                                                                         <div class="col">
                                                                             <strong for="validationCustom03">Tipo Pago</strong>
@@ -592,7 +592,7 @@ display: block;
                                                                                     $consulta = "SELECT * FROM tipo_pago";
                                                                                     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                                                                                 ?>
-                                                                                <select type="text" class="form-control" id="tipoPa" name="tipoPa" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" style="width:130px;" required>
+                                                                                <select type="text" class="form-control" id="tipoPa" name="tipoPa" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" required>
                                                                                 
                                                                                 <?php 
                                                                                     while ($valores = mysqli_fetch_object($sql)) {
@@ -604,14 +604,25 @@ display: block;
                                                                         </div>
                                                                         <div class="col">
                                                                             <strong for="validationCustom03">¿Factura paga?</strong>
-                                                                            <select type="text" class="form-control" id="paga" name="paga" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" style="width:130px;" required>
+                                                                            <select type="text" class="form-control" id="paga" name="paga" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)" required>
                                                                                 <option value="1">Sí</option>
                                                                                 <option value="0">No</option>
                                                                             </select>
                                                                         </div>
                                                                         <div class="col">
+                                                                            <strong for="validationCustom03">Tipo Web</strong>
+                                                                            <select type="text" class="form-control" id="tipo_web" name="tipo_web" placeholder="Tipo pago"  onkeypress="return onlyLetters(event)"  required>
+                                                                                <option value="0">Aplicación</option>
+                                                                                <option value="1">Pagina Web</option>
+                                                                                <option value="2">Mercado en casa</option>
+                                                                            </select>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="col">
                                                                             <strong> Ingrese código</strong><br>
-                                                                            <input type="text" class="form-control" id="codigo_inve" name="valor_ingre" onkeypress="return onlyNums(event)" style="width:200px;"><br>        
+                                                                            <input type="text" class="form-control" id="codigo_inve" name="valor_ingre" onkeypress="return onlyNums(event)" style="width:300px;"><br>        
                                                                         </div>
                                                                     </div>
                                                                     

@@ -173,7 +173,7 @@ display: block;
                 <div class="orders">
                     <div class="col-lg-12">
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <div class="card bg-flat-color-8 border border-secondary" >
                            
@@ -193,7 +193,7 @@ display: block;
                                                 <div class="col">
                                                         <label><a id="obte" class="">Fecha</a></label>
                                                         
-                                                        <input type="text" class="form-control" id="fecha" name="fecha" style="" disabled>
+                                                        <input type="text" class="form-control" id="fechaAc" name="fechaAc" value="<?php echo $_SESSION['fecha'];?>"style="" disabled>
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                                 <div class="col">
@@ -218,11 +218,11 @@ display: block;
                                             <div class="form-row">
                                                 <div class="col"></div>
                                                 <div class="col">
-                                                    <button class="btn btn-success btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#ventasPre" style="width:170px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Ventas presenciales</button>
+                                                    <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#ventasPre" style="width:170px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Ventas presenciales</button>
                                                 </div>
                                                 <div class="col"></div>
                                                 <div class="col">
-                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#ventasWeb" style="width:170px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Ventas electrónicas</button> 
+                                                    <button class="btn btn-primary btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#ventasWeb" style="width:170px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Ventas electrónicas</button> 
                                                 </div>
                                                 <div class="col"></div>
                                                 
@@ -231,18 +231,29 @@ display: block;
                                                 <div class="col">
                                                     <label>Total ventas en efectivo</label>
                                                     <input type="hidden" id="totalEfec" name="totalEfec">
-                                                    <input type="text" class="form-control selec" id="totalEfe" name="totalEfe" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
+                                                    <input type="text" class="form-control" id="totalEfe" name="totalEfe" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
                                                 </div>
                                                 <div class="col">
                                                     <label>Total ventas electrónicas</label>
-                                                    <input type="hidden" id="totalEfec" name="totalEfec">
-                                                    <input type="text" class="form-control selec" id="totalEfe" name="totalEfe" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
+                                                    <input type="hidden" id="totalEle" name="totalEle">
+                                                    <input type="text" class="form-control" id="totalElec" name="totalElec" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
                                                 </div>
+
+                                    
                                                 <div class="col">
                                                     <label>Dinero total en caja</label>
-                                                    <input type="hidden" id="dinerCaja" name="dinerCaja">
-                                                    <input type="text" class="form-control selec" id="dineCaja" name="dineCaja" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
+                                                   
+                                                    <input type="text" class="form-control" id="dineCaja" name="dineCaja" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
                                                 </div>
+                                                
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col"></div>
+                                                <div class="col">
+                                                <br>
+                                                    <button class="btn btn-success btn-sm mb-2" id="cerrar" type="button" style="width:170px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Cerrar caja</button>
+                                                </div>
+                                                <div class="col"></div>
                                             </div>
                                             <div class="modal fade" id="ventasPre" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
                                                 <div class="modal-dialog modal-lg" role="document">
@@ -301,18 +312,18 @@ display: block;
                                                                 <div class="card-body">
                                                                     <div class="form-row">
                                                                         <div class="col">
-                                                                            <button type="button" id="presenciales" class="btn btn-success btn-sm mb-2" >Presenciales</button>
+                                                                            <button type="button" id="presenciales" value="aplicacion" class="btn btn-success btn-sm mb-2 webb" >Aplicación</button>
                                                                         </div>
                                                                         <div class="col">
-                                                                            <button type="button" id="presenciales" class="btn btn-success btn-sm mb-2" >Presenciales</button>
+                                                                            <button type="button" id="presenciales" value="paginaWeb" class="btn btn-success btn-sm mb-2 webb" >Página web</button>
                                                                         </div>
                                                                         <div class="col">
-                                                                            <button type="button" id="domiciliario" class="btn btn-success btn-sm mb-2" >Mercado en casa</button>
+                                                                            <button type="button" id="domiciliario" value="mercado" class="btn btn-success btn-sm mb-2 webb" >Mercado en casa</button>
                                                                         </div>
                                                                     </div>
                                                                     <hr>
                                                                     <div class="form-row">
-                                                                        <div class="col" id="resultado">
+                                                                        <div class="col" id="ventas_web">
                                                                         </div>
                                                                     </div>
                                                                    
@@ -320,7 +331,9 @@ display: block;
                                                             </div><!--card-border-->
                                                         </div><!--model-body-->
                                                         <div class="modal-footer">
-                                                            <button type="button" id="confi" class="btn btn-success btn-sm mb-2" data-dismiss="modal">Confirmar</button>
+                                                            <button type="button" id="" class="btn btn-success btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                           
+                                                            <button type="button" id="confi" class="btn btn-success btn-sm mb-2">CONFIRMAR</button>
                                                            
                                                         </div>
                                                     </div><!--modal-content-->
@@ -332,76 +345,7 @@ display: block;
                                     </div> <!--card bg-->
                                 </div>  <!--fomr-group-->   
                             </div> <!--COL-LOg-8-->
-                            <div class="col-lg-4">
-                                <div class="card border border-secondary">
-                                    <div class="card-header bg-dark">
-                                        <strong class="card-title text-light">Información Productos</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <!--<div class="card-header bg-dark">
-                                            <strong class="card-title text-light">Categorías</strong>
-                                        </div>-->
-                                        <div class="card-text">
-                                        <!--<strong>CATEGORÍAS</strong>
-                                        <br>
-                                            <?php 
-                                                include 'conexionGene.php';
-                                                $consulta = "SELECT * FROM categoria_productos";
-                                                $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-                                            ?>
-                                            <div class="btn-group alignment col">
-                                                <?php foreach($sql as $opciones): ?>
-                                                    <button type="button" class="btn btn-outline-success btn-sm mb-2 groupBotones" value="<?php echo $opciones['nombre']?>" selected="selected" name="<?php echo $opciones['nombre']?>"><?php echo $opciones['nombre']?></button>
-                                                                                                
-                                                <?php endforeach ?>
-                                               
-                                            </div>
-                                            <hr width="100%" />
-                                            <br>   -->        
-                                            <!--<div class="card-header bg-dark">
-                                                <strong class="card-title text-light">Productos</strong>
-                                            </div>-->
-                                            <strong>PRODUCTOS</strong><br>
-                                            <div class="card-text col-12" >
-                                                <div class="form-row" id="productos">
-                                                    
-                                                    
-                                                </div>
-            
-                                            </div>
-                                        </div> <!--card-text-->
-                                    </div>  <!--card-body-->
-                                </div><!--card-border-->
-                                <div class="card border border-secondary">
-                                   
-                                    <div class="card-body">
-                                        <table class="table table-sm table-borderless">
-                                        <tbody>
-                                                                <tr>
-                                                                    <td><button type="button"  id="sele1" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="1">1</button></td>
-                                                                    <td><button type="button"  id="sele2" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="2">2</button></td>
-                                                                    <td> <button type="button" id="sele3" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="3">3</button></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><button type="button" id="sele4" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124% ;color:#FFF;" value="4">4</button></td>
-                                                                    <td><button type="button" id="sele5" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="5">5</button></td>
-                                                                    <td><button type="button" id="sele6" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="6">6</button></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><button type="button" id="sele7" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="7">7</button></td>
-                                                                    <td><button type="button" id="sele8" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="8">8</button></td>
-                                                                    <td> <button type="button" id="sele9" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;"  value="9">9</button></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><button type="button" id="sele0" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="0">0</button></td>
-                                                                    <td><button type="button" id="sele00" class="btn btn-white btn-sm calcu" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;" value="00">00</button></td>
-                                                                    <td> <button type="button" id="seleEli" class="btn btn-white btn-sm" style="width:75px; background:#F0A744; font-size:124%; color:#FFF;">&larr;</button></td>
-                                                                </tr>
-                                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> <!--COL-LOg-4-->
+                            
                         </div> <!--row-->
                     </div><!--COL-LOg-12-->   
                 </div><!--orders-->

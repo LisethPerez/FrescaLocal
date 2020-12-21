@@ -3,6 +3,7 @@ session_start();
 include 'conexionGene.php';
 $usuario = $_POST['email'];
 $contra = $_POST['pass'];
+$fecha = $fecha = date('d-m-Y');
 
 //Consulta a la base de datos
 $consult = "SELECT * FROM users WHERE email='{$usuario}'";
@@ -17,6 +18,7 @@ if($number = $sql->num_rows>0){
         $_SESSION['username'] = $usuario;       
         $_SESSION['idUser'] = $result->id; 
         $_SESSION['idSede'] = $result->sede_id_sede; 
+        $_SESSION['fecha'] = $fecha;
 
         include "conexionBD.php";
         $consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$_SESSION['idUser']}'";

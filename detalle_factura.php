@@ -84,4 +84,12 @@ $('#tipoo').change(function(){
     }
 
 });
+
+$('#valor_ingresado').on('keyup', () => {
+    const value = $('#valor_ingresado').val();
+    var chain = String(value.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    $('#valor_ingresado').val("$ " + newValue);
+    
+});
 </script>

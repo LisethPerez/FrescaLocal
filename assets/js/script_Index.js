@@ -316,9 +316,59 @@ $('.presen').click(function(){
         type: "POST",
         data:{var: presen},
         success: function(data){
-            alert(data);
+            //alert(data);
+            $('#ventas_pre').html(data);
         }
     });
+});
+
+$('.webb').click(function(){
+    var web= $(this).val();
+    $.ajax({
+        url: "ventas_web.php",
+        type: "POST",
+        data:{var: web},
+        success: function(data){
+            //alert(data);
+            $('#ventas_web').html(data);
+        }
+    });
+});
+
+var totalCaja = 0;
+var tota;
+$('#baseMo').keyup(function (e) {
+  
+    var myVar = setInterval(myTimer2, 1000);
+  
+});    
+
+function myTimer2() {
+    var totalBase = parseInt($('#baseMo').val().replace(/[^a-zA-Z0-9]/g, '')); 
+    $('#dineCaja').val(totalBase+tota);
+   
+
+    var total2 = $('#dineCaja').val();
+    var chain = String(total2.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    $('#dineCaja').val("$ " + newValue);
+}
+
+$('#cerrar').click(function(){
+    var base = $('#baseMo').val();
+    var ingresosEfe = $('#totalEfe').val();
+    var ingresosEle = $('#totalElec').val();
+
+    $.ajax({
+        url: "cerrar_caja.php",
+        type: "POST",
+        data:{var: base, var2:ingresosEfe, var3:ingresosEle},
+        success: function(data){
+            alert(data);
+          
+        }
+    })
+;
 });
 
 /*$('#tipoo').on('focus', function () { 
@@ -344,13 +394,21 @@ $('.presen').click(function(){
 $('#modificar').click(function(){
     var paga = $('#pagaa option:selected').val();
     var tipo = $('#tipoo option:selected').val();
-    var refe = $('#ref').val();
+    var tipo2 = $('#tipoo option:selected').text();
+   
+
+    if(tipo2==="Efectivo"){
+        refe = 0;
+    }else{
+        var refe = $('#ref').val();
+    }
 
     $.ajax({
         url: "modificar_factura.php",
         type: "POST",
         data:{var: paga, var2: tipo, var3: refe, var4: id_},
         success: function(data){
+         
            if(data==="Modificación de estado de la factura correcta"){
             Swal.fire({
                 icon: 'success',
@@ -530,6 +588,15 @@ var referencia;
 
 });
 
+
+$('#baseMo').on('keyup', () => {
+    const value = $('#baseMo').val();
+    var chain = String(value.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    $('#baseMo').val("$ " + newValue);
+
+});
+
 $('#prueba').click(function(){
     const value = $('#total').val();
     var chain = String(value.replace(/\D/g, ""));
@@ -648,6 +715,32 @@ $(document).ready(function(){
         }
     });
 
+    $.ajax({
+        url: "ventas_efe.php",
+        type: "POST",
+        success: function(data){
+            //alert(data);
+            $('#totalEfec').val(data);
+            tota = parseInt(data);
+            var chain = String(data.replace(/\D/g, ""));
+            const newValue = new Intl.NumberFormat('en-US').format(chain);
+            $('#totalEfe').val("$ " + newValue);          
+        }
+    }); 
+    $.ajax({
+        url: "ventas_ele.php",
+        type: "POST",
+        success: function(data){
+            //alert(data);
+            $('#totalEle').val(data);
+            //tota = parseInt(data);
+            var chain = String(data.replace(/\D/g, ""));
+            const newValue = new Intl.NumberFormat('en-US').format(chain);
+            $('#totalElec').val("$ " + newValue);          
+        }
+    }); 
+    /*var f = new Date();
+    $('#fechaAc').val(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());*/
 
 });
 
@@ -699,19 +792,18 @@ $('#total_venDe').keypress(function (evt) {
 
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
-    $('#pesooo').val(0.93);
+    /*$('#pesooo').val(0.93);
     
-    $('#peso2').val(0.93);
+    $('#peso2').val(0.93);*/
 
-   /* $.ajax({
+    $.ajax({
         
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
-            $('#peso').val(data);
             $('#peso2').val(data);
         }
-    }); */
+    }); 
 });   
 
 
@@ -873,9 +965,9 @@ $('.selec').keypress(function (e) {
                     }
                     
                 });
-                venta = datos;
+                /*venta = datos;
                 $('#pesooo').val('');
-                $('#peso').val('');
+                $('#peso').val('');*/
                
             }       
         }//IF DE VALIDAR DATOS VACIOS
@@ -952,7 +1044,7 @@ $('#pagar').click(function(){
                         });     
                     }else{
                         document.getElementById("submitButton1").click();
-                        var myVar = setInterval(myTimer, 7000);
+                        var myVar = setInterval(myTimer, 10000);
                     }
                 }
             });
@@ -1030,6 +1122,7 @@ $('#descontar').click(function(){
     var codigo = $('#codigo_inve').val();
     var tipo_pa = $('#tipoPa option:selected').val();
     var paga = $('#paga option:selected').val();
+    var tipo_web = $('#tipo_web option:selected').text();
     if(codigo === ''){
         Swal.fire({
             icon: 'error',
@@ -1046,7 +1139,7 @@ $('#descontar').click(function(){
         $.ajax({
             type:"POST",
             url: "volverStock2.php?codigo="+codigo,
-            data: {var: venta, var3: cedula_cliente, var4: tipo_pa, var5: paga},
+            data: {var: venta, var3: cedula_cliente, var4: tipo_pa, var5: paga, var6: tipo_web},
             success: function(data) {
              
                 if(data==="Cambios realizados"){

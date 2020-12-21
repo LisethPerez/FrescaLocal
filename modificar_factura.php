@@ -8,6 +8,7 @@ include 'conexionBD.php';
 if($tipoPa=="Efectivo"){
     $ModiFac = "UPDATE factura SET facturapaga='{$sipaga}', tipo_pago_id_tpago='{$tipoPa}' WHERE id_factura='{$idFac}'";
 }else{
+   
     $ModiFac = "UPDATE factura SET referencia_pago='{$referencia}',facturapaga='{$sipaga}', tipo_pago_id_tpago='{$tipoPa}' WHERE id_factura='{$idFac}'";
 }
 

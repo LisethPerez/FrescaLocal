@@ -4,8 +4,6 @@ session_start();
 $tipo = $_POST['var'];
 $idSede = $_SESSION['idSede'];
 $idUser = $_SESSION['idUser'];
-$fecha = date("Y-m-d") . " 00:00:00";
-$diaSiguiente = date("Y-m-d", strtotime("+1 day", strtotime($fecha))) . " 00:00:00";
 
 include 'conexionBD.php';
 
@@ -13,15 +11,22 @@ $consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$_SESSION['idUser']
 $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
 $resultEmple = $sqlEmple->fetch_object();
 $idEmpleado = $resultEmple->id_empleado; 
+$fecha = date("Y-m-d") . " 00:00:00";
+$diaSiguiente = date("Y-m-d", strtotime("+1 day", strtotime($fecha))) . " 00:00:00";
 
 
-if($tipo=="presenciales"){
-    $consult ="SELECT * FROM factura WHERE id_factura_web=0 AND facturapaga=1 AND empleado_id_empleado='{$idEmpleado}' AND empleado_id_domiciliario=0 AND anulacion=0 AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
+if($tipo=="aplicacion"){
+    $consult ="SELECT * FROM factura WHERE id_factura_web!=0 AND facturapaga=1 AND empleado_id_empleado='{$idEmpleado}' AND anulacion=0 AND tipo_web='Aplicación' AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
 }
 
-if($tipo=="domicilio"){
-    $consult ="SELECT * FROM factura WHERE id_factura_web=0 AND facturapaga=1 AND empleado_id_empleado='{$idEmpleado}' AND empleado_id_domiciliario!=0 AND anulacion=0 AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
+if($tipo=="paginaWeb"){
+    $consult ="SELECT * FROM factura WHERE id_factura_web!=0 AND facturapaga=1 AND empleado_id_empleado='{$idEmpleado}' AND anulacion=0 AND tipo_web='Pagina Web' AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
 }
+
+if($tipo=="mercado"){
+    $consult ="SELECT * FROM factura WHERE id_factura_web!=0 AND facturapaga=1 AND empleado_id_empleado='{$idEmpleado}' AND anulacion=0 AND tipo_web='Mercado en casa' AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
+}
+
 
 $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 
