@@ -163,7 +163,7 @@
                     <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Facturas Anuladas</strong>
+                                <strong class="card-title text-dark">Información Facturas Web</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">

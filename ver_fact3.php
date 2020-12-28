@@ -32,10 +32,14 @@
             <td> 
                 <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos2">
                 <i class="fa fa-list" aria-hidden="true"></i></button>
-                <button class="btn btn-success btn-sm impri" id="imprimir"><i class="fa fa-print" aria-hidden="true"></i></button>
+                <!--<button class="btn btn-success btn-sm impri" id="imprimir"><i class="fa fa-print" aria-hidden="true"></i></button>-->
                 <button class="btn btn-primary btn-sm editarDomi" id="editar" data-toggle="modal" data-target="#ModificacionEstado"><i class="fa fa-wrench" aria-hidden="true"></i></button>
             </td>
         </tr>
+        <form id="numberFact" method="POST" action="generar_pdf2.php">  
+            <input type="hidden" value="" id="id_Factu" name="var">
+            <button type="submit" style="display:none;" id="submitButton">
+        </form>
         
   
 <?php    }

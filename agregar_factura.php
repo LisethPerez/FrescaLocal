@@ -3,7 +3,7 @@ include 'conexionBD.php';
 
 $id_fact = $_POST['id'];
 $total = 0;
-$fecha = date('Y-m-d H:i:s');
+$fecha = date('Y/m/d H:i:s');
 $tipo_pago = $_POST['tipo_pago'];
 $tipo_domi = $_POST['var2'];
 

@@ -35,15 +35,6 @@
                                                 
 <script>
 var idFac;
-$('.impri').click(function(){
-    $tr=$(this).closest('tr');
-        var datos = $tr.children("td").map(function (){
-            return $(this).text();
-        });
-    idFac = datos[0];
-    $('#id_Factu').val(idFac);
-    document.getElementById("submitButton").click();
-    
-});
+
 
 </script>

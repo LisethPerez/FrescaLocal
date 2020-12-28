@@ -9,17 +9,28 @@ $idFac = $_POST['var'];
 //echo $idFac;
 // Tamaño tickt 80mm x 150 mm (largo aprox)
 
-$pdf = new FPDF($orientation='P',$unit='mm', array(80,350));
+$consultTama = "SELECT COUNT(*) cantidad FROM detalle_factura WHERE factura_id_factura={$idFac}";
+$sqlTama = mysqli_query($conn,$consultTama) or die(mysqli_error($conn));
+$resulTama = $sqlTama->fetch_assoc();
+$tama = $resulTama['cantidad'];
+$nuevo = $tama*8;
+
+$x=120;
+$pdf = new FPDF($orientation='P',$unit='mm', array(80,$x+$nuevo));
+
 $pdf->AddPage();
+$pdf->Image('./images/logoCo1.png',20,3,40);
+$pdf->Ln(10);  
 $pdf->SetFont('Helvetica','',11);
 $pdf->Cell(60,4,'INVERSIONES AGROINDUSTRIALES',0,1,'C');
 $pdf->Cell(60,4,'COSECHA FRESCA SAS',0,1,'C');
 $pdf->SetFont('Helvetica','',8);
-$pdf->Cell(60,4,'NIT 901 274 543-1',0,1,'C');
-$pdf->Cell(60,4,'CALLE 109 # 18-8 58',0,1,'C');
+$pdf->Cell(60,4,'NIT 901.274.543-1',0,1,'C');
+$pdf->Cell(60,4,'CRA 5 # 71-45 LOCAL 103',0,1,'C');
 $pdf->Ln(2);
 $pdf->Cell(60,4,'RES N. 18764000999047 FECHA:2020/07/18',0,1,'C');
-$pdf->Cell(60,4,'DEL N. P20001 AL N. P50000',0,1,'C');
+$pdf->Cell(60,4,'DEL N. P00001 AL N. P50000',0,1,'C');
+
 
 /*$consulEmple = "SELECT * FROM empleado WHERE user_id_user={$id_usuario}";
 $sqlEmple = mysqli_query($conn,$consulEmple) or die(mysqli_error($conn));
@@ -46,30 +57,36 @@ $idEmple = $resulFact['nombreEmple'];
 $str1 = utf8_decode($idEmple);
 $str = utf8_decode($idCliente);
 
+$pdf->SetMargins(2, 0 , 0);
 $pdf->Ln(5);
-$pdf->Cell(30,4,'FECHA: ',0,0);
-$pdf->Cell(30,4,$fechaFac,0,1,'L',0);
-$pdf->Cell(30,4,'FACTURA DE VENTA: ',0,0);
-$pdf->Cell(30,4,$idFac,0,1,'L',0);
-$pdf->Cell(30,4,'NIT:',0,0);
-$pdf->Cell(30,4,'123456779',0,1,'L',0);
-$pdf->Cell(30,4,'CLIENTE:',0,0);
-$pdf->Cell(30,4,$str,0,1,'L',0);
-$pdf->Cell(30,4,'CAJERO:',0,0);
-$pdf->Cell(30,4,$str1,0,1,'L',0);
+$pdf->Cell(14,3,'FECHA: ',0,0);
+$pdf->Cell(30,3,$fechaFac,0,1,'L',0);
+$pdf->Cell(30,3,'FACTURA DE VENTA: ',0,0);
+$pdf->Cell(30,3,$idFac,0,1,'L',0);
+$pdf->Cell(14,3,'NIT:',0,0);
+$pdf->Cell(30,3,'123456779',0,1,'L',0);
+$pdf->Cell(14,3,'CLIENTE:',0,0);
+$pdf->Cell(30,3,$str1,0,1,'L',0);
+$pdf->Cell(14,3,'CAJERO:',0,0);
+$pdf->Cell(30,3,$str,0,1,'L',0);
 
-$pdf->SetFont('Arial','I', 7);
-$pdf->Cell(30, 10, 'Detalle', 0);
-$pdf->Cell(5, 10, 'Cantidad',0,0,'R');
-$pdf->Cell(10, 10, 'Valor',0,0,'R');
-$pdf->Cell(15, 10, 'Iva',0,0,'R');
+$pdf->SetFont('Helvetica','B', 7);
+$pdf->Cell(52, 10, 'DETALLE',0,0,'C');
+$pdf->Cell(9, 10, 'CANT.',0,0,'C');
+$pdf->Cell(10, 10, 'VALOR',0,0,'C');
+$pdf->Cell(5, 10, 'IVA',0,0,'L');
 $pdf->Ln(8);
-$pdf->Cell(60,0,'','T');
+$pdf->Cell(75,0,'','T');
 $pdf->Ln(0);
+
 
 
 $consult = "SELECT * FROM detalle_factura WHERE factura_id_factura={$idFac}";
 $sqlDeta = mysqli_query($conn,$consult) or die(mysqli_error($conn));
+
+$valor0 = 0; $baseIva0 = 0; $iva0=0; $valor_0 = 0; $baseIva_0 = 0; $iva_0=0;
+$valor5 = 0; $baseIva5 = 0; $iva5=0; $valor_5 = 0; $baseIva_5 = 0; $iva_5=0; 
+$valor19 = 0; $baseIva19 = 0; $iva19=0; $valor_19 = 0; $baseIva_19 = 0; $iva_19=0;
 
 if($num = $sqlDeta->num_rows>0){
 
@@ -78,6 +95,9 @@ if($num = $sqlDeta->num_rows>0){
         $idDescuento = $row['descuento_id_descuento'];
         $idImpuesto =  $row['impuesto_id_impuestos'];
         $idStock =  $row['stock_id_stock'];
+        $precio = $row['precio_venta'];
+        $cantidad = $row['cantidad'];
+        $total2 = $row['total'];
 
         require 'conexionBD.php';
 
@@ -91,12 +111,14 @@ if($num = $sqlDeta->num_rows>0){
         $consulDescu = "SELECT * FROM descuento WHERE id_descuento={$idDescuento}";
         $sqlDescu = mysqli_query($conn,$consulDescu) or die(mysqli_error($conn));
         $resulDescu = $sqlDescu->fetch_assoc();
-        $nombreDescu = $resulDescu['valor_descuento'];
+        $nombreDescu = intval($resulDescu['valor_descuento']);
+        $descu = $nombreDescu/100;
 
         $consulImpuesto = "SELECT * FROM impuestos WHERE id_impuestos={$idImpuesto}";
         $sqlImpuesto = mysqli_query($conn,$consulImpuesto) or die(mysqli_error($conn));
         $resulImpuesto = $sqlImpuesto->fetch_assoc();
-        $nombreImpuesto = $resulImpuesto['valor_impuesto'];
+        $nombreImpuesto = intval($resulImpuesto['valor_impuesto']);
+        $porcentaje = $nombreImpuesto/100;
 
         $consulProducto = "SELECT * FROM producto WHERE id_producto={$idProducto}";
         $sqlProducto = mysqli_query($conn,$consulProducto) or die(mysqli_error($conn));
@@ -104,23 +126,68 @@ if($num = $sqlDeta->num_rows>0){
         $nombreProducto = $resulProducto['nombre'];
 
 
-        $pdf->Cell(30, 10,$nombreProducto,0,0,'L',0);
-        $pdf->Cell(5, 10,$row['cantidad'],0,0,'L',0);
-        $pdf->Cell(10, 10,$row['total'],0,0,'C',0);
-        $pdf->Cell(15, 10,$nombreImpuesto,0,1,'C',0);
+        $pdf->SetFont('Helvetica','', 6);
+        $pdf->Cell(52, 5,$nombreProducto,0,0,'L',0);
+        $pdf->Cell(9, 5,$row['cantidad'],0,0,'C',0);
+        $pdf->Cell(10, 5,number_format($row['total']),0,0,'C',0);
+        $pdf->Cell(5, 5,$nombreImpuesto,0,1,'C',0);
 
+        
+        if($nombreImpuesto==0){    
+            $iva_0 = ($precio * $porcentaje * $cantidad);
+            $baseIva_0 = ($precio * $cantidad);
+            $valor_0 =  ($baseIva_0 + $iva_0);
+        }
+        if($nombreImpuesto==5){
+            $iva_5 = ($precio * $porcentaje * $cantidad);
+            $baseIva_5 = ($precio * $cantidad);
+            $valor_5 =  ($baseIva_5 + $iva_5);
+
+        }
+        if($nombreImpuesto==19){
+            $iva_19 = ($precio * $porcentaje * $cantidad);
+            $des = $precio * $descu;
+            $baseIva_19 = ($precio - $des) * $cantidad ;
+            $valor_19 =  ($baseIva_19 + $iva_19);
+           
+        }
+    
+    $iva0 = $iva_0 + $iva0; $baseIva0 = $baseIva_0 + $baseIva0; $valor0 = $valor_0 + $valor0;
+    $iva5 = $iva_5 + $iva5; $baseIva5 = $baseIva_5 + $baseIva5; $valor5 = $valor_5 + $valor5;
+    $iva19 = $iva_19 + $iva19; $baseIva19 = $baseIva_19 + $baseIva19; $valor19 = $valor_19 + $valor19;  
     }
 
+    $pdf->Cell(75,0,'','T');
+    $pdf->Ln(3);  
+    $pdf->Cell(15, 3, '%',0,0,'C');
+    $pdf->Cell(18, 3, 'VALOR',0,0,'C');
+    $pdf->Cell(12, 3, 'IMPOCON',0,0,'C');
+    $pdf->Cell(18, 3, 'BASE IVA',0,0,'C');
+    $pdf->Cell(12, 3, 'IVA',0,1,'C');
+    $pdf->Cell(15, 3, '(00)%',0,0,'C');
+    $pdf->Cell(18, 3, number_format($valor0),0,0,'C');
+    $pdf->Cell(12, 3, '0',0,0,'C');
+    $pdf->Cell(18, 3, number_format($baseIva0),0,0,'C');
+    $pdf->Cell(12, 3, number_format($iva0),0,1,'C');
+    $pdf->Cell(15, 3, '(0.5)%',0,0,'C');
+    $pdf->Cell(18, 3, number_format($valor5),0,0,'C');
+    $pdf->Cell(12, 3, '0',0,0,'C');
+    $pdf->Cell(18, 3, number_format($baseIva5),0,0,'C');
+    $pdf->Cell(12, 3, number_format($iva5),0,1,'C');
+    $pdf->Cell(15, 3, '(0.19)%',0,0,'C');
+    $pdf->Cell(18, 3, number_format($valor19),0,0,'C');
+    $pdf->Cell(12, 3, '0',0,0,'C');
+    $pdf->Cell(18, 3, number_format($baseIva19),0,0,'C');
+    $pdf->Cell(12, 3, number_format($iva19),0,1,'C');
+    $pdf->Ln(2);  
+    $pdf->Cell(75,0,'','T');
 //$vueltas=$valorIngre-$total;
 
-$pdf->Cell(60,0,'','T');
 $pdf->Ln(2);   
-$pdf->Cell(30,4,'TOTAL PAGADO: ',0,0);
-$pdf->Cell(30,4,$total,0,1,'L',0);
-/*$pdf->Cell(30,4,'RECIBIDO: ',0,0);
-$pdf->Cell(30,4,$valorIngre,0,1,'L',0);
-$pdf->Cell(30,4,'CAMBIO: ',0,0);
-$pdf->Cell(30,4,$vueltas,0,1,'L',0);*/
+$pdf->SetFont('Arial','B', 6.5);
+$pdf->Cell(25,2,'TOTAL A PAGAR: ',0,0,'R');
+$pdf->Cell(25,2,number_format($total),0,1,'L',0);
+
 }
 
 header('Content-type: application/pdf');

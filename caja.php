@@ -234,7 +234,12 @@ display: block;
                                                     <input type="text" class="form-control" id="totalEfe" name="totalEfe" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
                                                 </div>
                                                 <div class="col">
-                                                    <label>Total ventas electrónicas</label>
+                                                    <label>Total ventas de pago electrónico</label>
+                                                    <input type="hidden" id="totalTar" name="totalTar">
+                                                    <input type="text" class="form-control" id="totalTarj" name="totalTarj" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
+                                                </div>
+                                                <div class="col">
+                                                    <label>Total ventas WEB</label>
                                                     <input type="hidden" id="totalEle" name="totalEle">
                                                     <input type="text" class="form-control" id="totalElec" name="totalElec" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
                                                 </div>

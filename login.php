@@ -3,7 +3,7 @@ session_start();
 include 'conexionGene.php';
 $usuario = $_POST['email'];
 $contra = $_POST['pass'];
-$fecha = $fecha = date('d-m-Y');
+$fecha = $fecha = date('d/m/Y');
 
 //Consulta a la base de datos
 $consult = "SELECT * FROM users WHERE email='{$usuario}'";

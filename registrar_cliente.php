@@ -10,14 +10,29 @@ session_start();
     $correo = $_POST['correo'];
     $empresa = $_POST['empresa'];
     $categoria_id_cliente = $_GET['var'];
-    $fecha = date('Y-m-d');
+    $fecha = date('Y/m/d');
     $nit = $_POST['nit'];
     $nit1 = $_POST['nit1'];
 
-    //require 'conexionGene.php';
-
-
-    //echo "El nombre es: " .$nombre. ", el documento es: " .$documento;
+    if(empty($empresa)){
+        $empresa = '-';
+    }
+    if(empty($direccion)){
+        $direccion = '-';
+    }
+    if(empty($correo)){
+        $correo = '-';
+    }
+    //---------------------------------
+    if(empty($telefono)){
+        $telefono = 0;
+    }
+    if(empty($nit)){
+        $nit = 0;
+    }
+    if(empty($nit1)){
+        $nit1 = 0;
+    }
 
     require 'conexionBD.php';
     $consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$id_usuario}'";

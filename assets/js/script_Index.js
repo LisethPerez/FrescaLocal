@@ -25,9 +25,35 @@ $('#seleEli').click(function () {
     $('#cantidad').val(cadena);
      
 });
-
+$('#cedula').keydown(function(f){
+    if(f.shiftKey==1){
+        $.ajax({
+            type: "POST",
+            url: "encontrar_cedula.php",
+            data: $('#formulario').serialize(),
+            success: function(data) {
+                
+                $('#resultado').html(data);
+                
+                if (data === "No existe ese registro"){
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'No existen registros con la búsqueda',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });     
+                    $('#ingresar').prop('disabled', false);
+                }
+            }
+        });
+    }
+});
 //Buscar cedula para la existencia del cliente
-$('#buscar1').click(function () {
+/*$('#buscar1').click(function () {
     $.ajax({
         type: "POST",
         url: "encontrar_cedula.php",
@@ -52,7 +78,7 @@ $('#buscar1').click(function () {
         }
     });
      
-});
+});*/
 var cedula_cliente;
 var tipo_cliente=0;
 $('#confi').click(function () {
@@ -148,10 +174,10 @@ $('#registrar2').click(function () {
     var nit = $('#nit').val(); 
     var nit1 = $('#nit1').val(); 
   
-    if(tipo_cle === '' || nombre===''||  documento===''|| telefono===''|| dirección===''|| correo==='' || empresa==='' || nit===''){
+    if(tipo_cle === '' || nombre===''||  documento===''){
         Swal.fire({
             icon: 'error',
-            text: 'Por favor ingrese los datos',
+            text: 'Por favor ingrese los datos marcados con *',
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
@@ -234,7 +260,7 @@ $('.view_products').click(function () {
         return $(this).text();
     });
     id_factu = datos[0];
-    alert(datos[0]);
+    //alert(datos[0]);
     $.ajax({
         url: "detalle_productos.php?var="+id_factu,
         type: "POST",
@@ -398,43 +424,57 @@ $('#modificar').click(function(){
    
 
     if(tipo2==="Efectivo"){
-        refe = 0;
+        refe = $('#valor_ingresado').val();
+
     }else{
-        var refe = $('#ref').val();
+         refe = $('#ref').val();
     }
 
-    $.ajax({
-        url: "modificar_factura.php",
-        type: "POST",
-        data:{var: paga, var2: tipo, var3: refe, var4: id_},
-        success: function(data){
-         
-           if(data==="Modificación de estado de la factura correcta"){
-            Swal.fire({
-                icon: 'success',
-                text: 'Datos erroneos',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            });  
-            window.location.href="view_facturas_pendientes.php"; 
-           }else{
-            Swal.fire({
-                icon: 'error',
-                text: 'Ha ocurrido un error',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            }); 
-           }
-        }
-    });
+    if(refe === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese dato',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });
+    }else{
+        $.ajax({
+            url: "modificar_factura.php",
+            type: "POST",
+            data:{var: paga, var2: tipo, var3: refe, var4: id_},
+            success: function(data){
+             
+               if(data==="Modificación de estado de la factura correcta"){
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Datos erroneos',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });  
+                window.location.href="view_facturas_pendientes.php"; 
+               }else{
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Ha ocurrido un error',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                }); 
+               }
+            }
+        });
+    }
 
 });
 
@@ -479,6 +519,9 @@ var pago;
 var referencia;
 //Esconder div de método de pago en efectivo
  $('.groupPago').click(function () {
+    $('.groupPago').removeClass("btn-success");
+    $(this).addClass("btn-success");
+
     pago = $(this).val();
     if(tipo_domi === "Presencial"){
         if(pago === "Efectivo"){
@@ -672,10 +715,12 @@ $(document).ready(function(){
                      //alert(tipo);
                      if(tipo==="cantidad"){
                         $('#cantidad').focus();
+                        $("#pesooo").val('');
                     }
                     if(tipo==="peso"){
                         $('#pesooo').focus();
-                        
+                        $("#cantidad").val('');
+                       
                     }        
                 }
             });
@@ -728,6 +773,18 @@ $(document).ready(function(){
         }
     }); 
     $.ajax({
+        url: "ventas_tarjetas.php",
+        type: "POST",
+        success: function(data){
+            //alert(data);
+            $('#totalTar').val(data);
+            //tota = parseInt(data);
+            var chain = String(data.replace(/\D/g, ""));
+            const newValue = new Intl.NumberFormat('en-US').format(chain);
+            $('#totalTarj').val("$ " + newValue);         
+        }
+    }); 
+    $.ajax({
         url: "ventas_ele.php",
         type: "POST",
         success: function(data){
@@ -744,6 +801,46 @@ $(document).ready(function(){
 
 });
 
+
+$('#producto1').keydown(function (f) {
+    tipo = "";
+    var produ = $('#producto1').val();
+    
+    if(f.shiftKey==1){
+        //alert(produ);
+        $("#pesooo").val('');
+        $("#peso2").val('');
+        
+        $.ajax({
+            type: "POST",
+            url: "encontrar_ean.php?var="+produ,
+            success: function(data) {
+                alert(data);
+                nombre_producto = data;
+            }
+        });
+
+        $.ajax({
+            url:"ocultar2.php?var="+produ,
+            method:"POST", 
+            success:function(data){
+                 tipo = data;   
+                 $("#pesooo").val('');
+                 $("#peso2").val('');      
+                 if(tipo==="cantidad"){
+                    $('#cantidad').focus();
+                    $("#pesooo").val('');
+                }
+                if(tipo==="peso"){
+                    $('#pesooo').focus();
+                    $("#cantidad").val('');
+                    
+                }      
+            }
+        }); 
+       
+    }
+});
 //Desabilitar editar y eliminación del datos dentro del input
 //keydown
 $('#pesooo').keypress(function (evt) {
@@ -792,18 +889,17 @@ $('#total_venDe').keypress(function (evt) {
 
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
-    /*$('#pesooo').val(0.93);
-    
-    $('#peso2').val(0.93);*/
+    $('#pesooo').val(0.93);    
+    $('#peso2').val(0.93);
 
-    $.ajax({
+    /*$.ajax({
         
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
             $('#peso2').val(data);
         }
-    }); 
+    }); */
 });   
 
 
@@ -835,7 +931,7 @@ $('.selec').keypress(function (e) {
                     popup: 'animate__animated animate__fadeOutUp'
                 } 
             });     
-            $('#peso').val('');  
+            $('#peso2').val('');  
             $('#pesooo').val(''); 
         }else if(tipo==="peso" && peso===''){
             $('#pesooo').focus(); 
@@ -863,12 +959,24 @@ $('.selec').keypress(function (e) {
                     }
                 });     
             }else{ 
+
+                if(tipo==="cantidad"){
+                    $('#peso').val('');
+                    $('#pesooo').val('');
+                    $('#cantidad').focus();
+                }else{
+                    $('#cantidad').val('');
+                    //$('#pesooo').focus();
+                }
+
                 if(peso === ''){
                     cant = cantidad;
                 }
                 if(cantidad === ''){
                     cant = peso;
                 }
+
+                
                 //Verificar la disponibilidad del producto seleccionado 
                 //Colocar luego el codigo comentado y el vectos de ventas 
                 //cont = cont + 1;
@@ -948,6 +1056,7 @@ $('.selec').keypress(function (e) {
                                 venta = datos;
                                 $('#pesooo').val('');
                                 $('#peso2').val('');
+                                $('#producto').focus();
 
                         //Mensaje de no existencia de disponibilidad del producto
                         }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
@@ -1054,6 +1163,7 @@ $('#pagar').click(function(){
 });
 
 function myTimer() {
+    //window.print();
     window.location.href="index.php";  
     var contenidoVen = document.getElementById("cont_ventas");
     contenidoVen.innerHTML = "";
@@ -1292,3 +1402,14 @@ function createRow(data) {
         }
     });
 });*/
+var idFacc;
+$('.impri').click(function(){
+    $tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+    idFacc = datos[0];
+    $('#id_Factu').val(idFacc);
+    document.getElementById("submitButton").click();
+    
+});

@@ -323,7 +323,7 @@ display: block;
                                                         <form class="needs-validation" method="POST" id="form_cliente" novalidate>
                                                             <div class="form-row">
                                                             <div class="col">
-                                                                            <label for="validationCustom03">Tipo Cliente</label>
+                                                                            <label for="validationCustom03">Tipo Cliente<strong style="color:#F71627">*</strong></label>
                                                                             <?php 
                                                                                 include 'conexionBD.php';
                                                                                 $consulta = "SELECT * FROM categoria_cliente";
@@ -345,7 +345,7 @@ display: block;
                                                             <hr>
                                                                 <div class="form-row">
                                                                     <div class="col-12">
-                                                                        <label for="validationCustom01">Nombre</label>
+                                                                        <label for="validationCustom01">Nombre<strong style="color:#F71627">*</strong></label>
                                                                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" style="height:33px" onkeypress="return onlyLetters(event)"  required><br>
                                                                         <div class="invalid-feedback">
                                                                             Ingrese nombre
@@ -354,7 +354,7 @@ display: block;
                                                                 </div>
                                                                 <div class="form-row">
                                                                     <div class="col">
-                                                                            <label for="validationCustom03">Documento</label>
+                                                                            <label for="validationCustom03">Documento<strong style="color:#F71627">*</strong></label>
                                                                             <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento" style="height:33px" onkeypress="return onlyNums(event)" max="10" required><br>
                                                                             
                                                                     </div>

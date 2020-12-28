@@ -60,22 +60,22 @@ if($num = $sql->num_rows>0){
     echo '<div class="col">';
     echo '<label>Efectivo</label>';
     echo '<input type="hidden" id="pagosEfec" name="pagosEfec" value="'.$totalEfectivo.'">';
-    echo '<input type="text" class="form-control" id="pagosEfe" name="pagosEfe" value="'.$totalEfectivo.'" onkeypress="return onlyNums(event)" disabled>';
+    echo '<input type="text" class="form-control" id="pagosEfe" style="font-size:150%;" name="pagosEfe" value="$'.number_format($totalEfectivo).'" onkeypress="return onlyNums(event)" disabled>';
     echo '</div>';
     echo '<div class="col">';
     echo '<label>Tarjeta crédito</label>';
     echo '<input type="hidden" id="pagosCred" name="pagosCred" value="'.$totalCre.'">';
-    echo '<input type="text" class="form-control" id="pagosCre" name="pagosCre" value="'.$totalCre.'" onkeypress="return onlyNums(event)" disabled>';
+    echo '<input type="text" class="form-control" id="pagosCre" style="font-size:150%;" name="pagosCre" value="$'.number_format($totalCre).'" onkeypress="return onlyNums(event)" disabled>';
     echo '</div>';
     echo '<div class="col">';
     echo '<label>Tarjeta débito</label>';
     echo '<input type="hidden" id="pagosDeb" name="pagosDeb" value="'.$totalDe.'">';
-    echo '<input type="text" class="form-control" id="pagosDe" name="pagosCre" value="'.$totalDe.'" onkeypress="return onlyNums(event)" disabled>';
+    echo '<input type="text" class="form-control" id="pagosDe" style="font-size:150%;" name="pagosCre" value="$'.number_format($totalDe).'" onkeypress="return onlyNums(event)" disabled>';
     echo '</div>';
     echo '<div class="col">';
     echo '<label>Links de pago</label>';
     echo '<input type="hidden" id="pagosLinks" name="pagosLinks" value="'.$totalLinks.'">';
-    echo '<input type="text" class="form-control" id="pagosLink" name="pagosLink" value="'.$totalLinks.'" onkeypress="return onlyNums(event)" disabled>';
+    echo '<input type="text" class="form-control" id="pagosLink" style="font-size:150%;" name="pagosLink" value="$'.number_format($totalLinks).'" onkeypress="return onlyNums(event)" disabled>';
     echo '</div>';
     echo '</div>';
     
