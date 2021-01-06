@@ -19,7 +19,7 @@ $resultPago = $sqlPago->fetch_assoc();
 $idEfec = $resultPago['id_tpago'];
 
 
-$consult ="SELECT SUM(pago_total) total FROM factura WHERE id_factura_web=0 AND facturapaga=1 AND anulacion=0 AND tipo_pago_id_tpago='{$idEfec}' AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
+$consult ="SELECT SUM(pago_total) total FROM factura WHERE id_factura_web=0 AND facturapaga=1 AND anulacion=0 AND tipo_pago_id_tpago='{$idEfec}' AND empleado_id_empleado='{$idEmpleado}' AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
 $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 $result = $sql->fetch_assoc();
 $total = $result['total'];

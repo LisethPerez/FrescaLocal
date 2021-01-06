@@ -181,7 +181,8 @@ display: block;
                                             <strong class="card-title text-light">Información venta</strong>
                                         </div>
                                         <div class="card-body">
-                                        <form id="venta" method="POST">   
+                                        <form id="venta" method="POST"> 
+                                            
                                             <div class="form-row">
                                                 <div class="col">
                                                     <label for="staticEmail2">Buscar producto</label>
@@ -249,19 +250,6 @@ display: block;
                                                 </div>
                                             </div>
                                             
-                                            <hr>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:130px; height:50px"><i class="fa fa-user"></i>&nbsp;Cliente</button>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style="width:130px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
-                                                </div>
-                                                <div class="col">
-                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; width:130px; height:50px"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
-                                                </div>
-                                                
-                                            </div><hr>
                                             <div class="modal fade" id="infoCliente" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
@@ -643,6 +631,12 @@ display: block;
                                 </div>  <!--fomr-group-->   
                             </div> <!--COL-LOg-8-->
                             <div class="col-lg-4">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:338px; height:50px"><i class="fa fa-user"></i>&nbsp;CLIENTE</button>
+                                    </div>  
+                                </div>
+                            
                                 <div class="card border border-secondary">
                                     <div class="card-header bg-dark">
                                         <strong class="card-title text-light">Información Productos</strong>
@@ -682,6 +676,7 @@ display: block;
                                         </div> <!--card-text-->
                                     </div>  <!--card-body-->
                                 </div><!--card-border-->
+                                
                                 <div class="card border border-secondary">
                                    
                                     <div class="card-body">
@@ -710,7 +705,18 @@ display: block;
                                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> 
+                                <div class="form-row">
+                                                
+                                                <div class="col">
+                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style="width:162px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
+                                                </div>
+                                                <div class="col">
+                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; width:162px; height:50px"><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
+                                                </div>
+                                                
+                                        </div>
+                            
                             </div> <!--COL-LOg-4-->
                         </div> <!--row-->
                     </div><!--COL-LOg-12-->   

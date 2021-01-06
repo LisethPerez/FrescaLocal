@@ -13,7 +13,7 @@ $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
 $resultEmple = $sqlEmple->fetch_object();
 $idEmpleado = $resultEmple->id_empleado; 
 
-$consult ="SELECT SUM(pago_total) total FROM factura WHERE id_factura_web!=0 AND facturapaga=1 AND anulacion=0 AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
+$consult ="SELECT SUM(pago_total) total FROM factura WHERE id_factura_web!=0 AND facturapaga=1 AND anulacion=0 AND empleado_id_empleado='{$idEmpleado}' AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
 $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 $result = $sql->fetch_assoc();
 $total = $result['total'];

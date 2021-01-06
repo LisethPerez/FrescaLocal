@@ -131,22 +131,22 @@ if($num = $sqlDeta->num_rows>0){
         $pdf->Cell(9, 5,$row['cantidad'],0,0,'C',0);
         $pdf->Cell(10, 5,number_format($row['total']),0,0,'C',0);
         $pdf->Cell(5, 5,$nombreImpuesto,0,1,'C',0);
-
+        
+        $des = $precio * $descu;
         
         if($nombreImpuesto==0){    
             $iva_0 = ($precio * $porcentaje * $cantidad);
-            $baseIva_0 = ($precio * $cantidad);
+            $baseIva_0 = ($precio - $des) * $cantidad;
             $valor_0 =  ($baseIva_0 + $iva_0);
         }
         if($nombreImpuesto==5){
             $iva_5 = ($precio * $porcentaje * $cantidad);
-            $baseIva_5 = ($precio * $cantidad);
+            $baseIva_5 = ($precio - $des) * $cantidad;
             $valor_5 =  ($baseIva_5 + $iva_5);
 
         }
         if($nombreImpuesto==19){
-            $iva_19 = ($precio * $porcentaje * $cantidad);
-            $des = $precio * $descu;
+            $iva_19 = ($precio * $porcentaje * $cantidad);     
             $baseIva_19 = ($precio - $des) * $cantidad ;
             $valor_19 =  ($baseIva_19 + $iva_19);
            

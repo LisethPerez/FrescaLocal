@@ -211,6 +211,11 @@ display: block;
                                                     <input type="text" class="form-control selec" id="baseMo" name="baseMo" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" required><br>
                             
                                                 </div>
+                                                <div class="col">
+                                                    <label>Egresos</label>
+                                                    <input type="hidden" id="totalEg" name="totalEg">
+                                                    <input type="text" class="form-control" id="totalEgr" name="totalEgr" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
+                                                </div>
                                                 
                                         </form> 
                                             </div><hr>
@@ -243,6 +248,7 @@ display: block;
                                                     <input type="hidden" id="totalEle" name="totalEle">
                                                     <input type="text" class="form-control" id="totalElec" name="totalElec" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
                                                 </div>
+                                                
 
                                     
                                                 <div class="col">

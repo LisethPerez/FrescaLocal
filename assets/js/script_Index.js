@@ -362,15 +362,15 @@ $('.webb').click(function(){
 });
 
 var totalCaja = 0;
-var tota;
+//var tota;
 $('#baseMo').keyup(function (e) {
-  
     var myVar = setInterval(myTimer2, 1000);
-  
 });    
 
 function myTimer2() {
     var totalBase = parseInt($('#baseMo').val().replace(/[^a-zA-Z0-9]/g, '')); 
+    var tota = parseInt($('#totalEfe').val().replace(/[^a-zA-Z0-9]/g, '')); 
+    //alert(tota);
     $('#dineCaja').val(totalBase+tota);
    
 
@@ -384,11 +384,12 @@ $('#cerrar').click(function(){
     var base = $('#baseMo').val();
     var ingresosEfe = $('#totalEfe').val();
     var ingresosEle = $('#totalElec').val();
+    var egresos = $('#totalEg').val();
 
     $.ajax({
         url: "cerrar_caja.php",
         type: "POST",
-        data:{var: base, var2:ingresosEfe, var3:ingresosEle},
+        data:{var: base, var2:ingresosEfe, var3:ingresosEle, var4: egresos},
         success: function(data){
             alert(data);
           
@@ -761,12 +762,25 @@ $(document).ready(function(){
     });
 
     $.ajax({
+        url: "egresos.php",
+        type: "POST",
+        success: function(data){
+            //alert(data);
+            $('#totalEg').val(data);
+            //tota = parseInt(data);
+            var chain = String(data.replace(/\D/g, ""));
+            const newValue = new Intl.NumberFormat('en-US').format(chain);
+            $('#totalEgr').val("$ " + newValue);        
+        }
+    }); 
+
+    $.ajax({
         url: "ventas_efe.php",
         type: "POST",
         success: function(data){
             //alert(data);
             $('#totalEfec').val(data);
-            tota = parseInt(data);
+            //tota = parseInt(data);
             var chain = String(data.replace(/\D/g, ""));
             const newValue = new Intl.NumberFormat('en-US').format(chain);
             $('#totalEfe').val("$ " + newValue);          
@@ -1090,9 +1104,24 @@ $('#valor_ingre').keypress(function (e) {
     var totaal = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
     var valor_ingre = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
     if(e.which == 13) {
-        var residuo = valor_ingre-totaal;
-        const newValue = new Intl.NumberFormat('en-US').format(residuo.toString().replace(/\D/g, ""));
-        $('#vueltas').val("$" + newValue);
+        if(valor_ingre<totaal){
+            Swal.fire({
+                icon: 'error',
+                text: 'El valor ingresado debe ser mayor al total a pagar',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });  
+            
+        }else{
+            var residuo = valor_ingre-totaal;
+            const newValue = new Intl.NumberFormat('en-US').format(residuo.toString().replace(/\D/g, ""));
+            $('#vueltas').val("$" + newValue);
+        }
+        
     }
 });   
 

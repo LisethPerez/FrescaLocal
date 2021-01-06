@@ -1,7 +1,28 @@
 <?php
 
 session_start();
-require('fpdf/fpdf.php');
+//require('fpdf/fpdf.php');
+require('pdf_js.php');
+
+class PDF_AutoPrint extends PDF_JavaScript{
+    function AutoPrint($dialog=false){
+        $param=($dialog ? 'true' : 'false');
+        $script="print($param);";
+        $this->IncludeJS($script);
+    }
+
+    function AutoPrintToPrinter($server, $printer, $dialog=false){
+        $script="var pp = getPrintParams():";
+        if($dialog){
+            $script .= "pp.interactive = pp.constants.interactionLevel.full;";
+        }else{
+            $script .= "pp.interactive = pp.constants.interactionLevel.automatic;";
+            $script .= "pp.printerName = '\\\\\\\\".$server."\\\\".$printer."';";
+            $script .= "printer(pp)";
+            $this->IncludeJS($script);
+        }
+    }
+}
 require 'conexionBD.php';
 
 $id_usuario = $_SESSION['idUser'];
@@ -16,7 +37,8 @@ $tama = $resulTama['cantidad'];
 $nuevo = $tama*9;
 
 $x=150;
-$pdf = new FPDF($orientation='P',$unit='mm', array(80,$x+$nuevo));
+$pdf = new PDF_AutoPrint($orientation='P',$unit='mm', array(80,$x+$nuevo));
+//$pdf = new FPDF($orientation='P',$unit='mm', array(80,$x+$nuevo));
 $pdf->AddPage();
 $pdf->Image('./images/logoCo1.png',20,3,40);
 $pdf->Ln(10);  
@@ -197,8 +219,11 @@ $pdf->Cell(25,3,'CAMBIO: ',0,0,'R');
 $pdf->Cell(25,3,"$ ".number_format($vueltas),0,1,'L',0);
 }
 
-header('Content-type: application/pdf');
-$pdf->Output('D','Factura.pdf','UTF-8');
+//header('Content-type: application/pdf');
+//$pdf->Output('D','Factura.pdf','UTF-8');
+$pdf->AutoPrint(true);
+$pdf->Output();
+
 
 //echo $pdf;
 ?>
