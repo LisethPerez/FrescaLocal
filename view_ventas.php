@@ -33,6 +33,7 @@
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" rel="stylesheet"/>
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <script src="assets/jquery-ui/typeahead.js"></script>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 <style>
@@ -219,8 +220,8 @@
                     
                     </div><!-- /# column -->
                 </div>
-                <div class="modal fade" id="productos" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
-                                            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal fade bd-example-modal-lg" id="productos" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog modal-lg " role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel"><strong>Información venta</strong></h5>
@@ -234,12 +235,15 @@
                                                 <tr>    
                                                     <th>Cantidad</th>
                                                     <th>Producto</th>
-                                                    <th>Precio_venta</th>
+                                                    <th>Precio</th>
                                                     <th>Total</th>
                                                     <th>Descuento</th>
                                                     <th>Impuesto</th>
                                                     <th>Fecha</th>
                                                     <th>Empleado</th>
+                                                    <th style="display:none">id_Detalle</th>
+                                                    <th style="display:none">id_Stock</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="cont_productos">
@@ -255,6 +259,47 @@
                                                 </div><!--modal-content-->
                                             </div><!--modal-dialog-->
                                         </div> <!--modal-fade-->
+
+                <div class="modal fade" id="modificarProd" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><strong>Modificación de producto</strong></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="form-row">
+                                                <div class="col">
+                                                    <label for="staticEmail2">Buscar producto</label>
+                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;" data-minChars="1">
+                                                    
+                                                </div>
+                                                <div class="col">
+                                                        <label><a id="obte" class="">Peso (KG)</a></label>
+                                                        <input type="hidden" id="peso2" name="peso2"></input>
+                                                        <input type="text" class="form-control selec" id="pesooo" name="pesooo" style="height:35px; font-size:160%;" required>
+                                                       <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
+                                                </div>
+                                            </div><br>
+                                            <div class="form-row">
+                                                <div class="col">
+                                                        <label for="staticEmail2">Buscar por código</label>
+                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="validationCustom03">Cantidad</label>
+                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:35px; font-size:110%;" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
+                                                       
+                                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                            </div>
+                        </div><!--modal-content-->
+                    </div><!--modal-dialog-->
+               </div> <!--modal-fade-->       
             </div>
             </div>
         
@@ -293,8 +338,27 @@
 <script src="assets/js/sweetalert2.min.js"></script>
 <script src="assets/js/script_Index.js"></script>
 <script charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$('.modiProdu').click(function(){
+    alert("Entro");
+    $tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+        alert(datos[0]+" - " + datos[8]+" - " + datos[9]);
+    /*$.ajax({
+        type:"POST",
+        url: "anulacion.php?var="+datos[0],
+        success: function(data) {
+            alert(data);
+        
+        }
 
-
+    });*/
+    
+    
+});
+</script>
 </body>
 </html>
 <?php endif; ?>

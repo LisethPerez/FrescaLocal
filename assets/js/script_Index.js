@@ -287,7 +287,10 @@ $('.view_products').click(function () {
     <td>`+data[i].descuento+`</td>
     <td>`+data[i].impuesto+`</td>
     <td>`+data[i].fecha+`</td>  
-    <td>`+data[i].empleado+`</td>   
+    <td>`+data[i].empleado+`</td>
+    <td style="display:none">`+data[i].idDetalle+`</td> 
+    <td style="display:none">`+data[i].idStock+`</td>    
+    <td>`+data[i].opcion+`</td> 
     </tr>`;
     $('#cont_productos').append(trElement);  
     }  
@@ -370,8 +373,9 @@ $('#baseMo').keyup(function (e) {
 function myTimer2() {
     var totalBase = parseInt($('#baseMo').val().replace(/[^a-zA-Z0-9]/g, '')); 
     var tota = parseInt($('#totalEfe').val().replace(/[^a-zA-Z0-9]/g, '')); 
+    var egresos = parseInt($('#totalEgr').val().replace(/[^a-zA-Z0-9]/g, '')); 
     //alert(tota);
-    $('#dineCaja').val(totalBase+tota);
+    $('#dineCaja').val((totalBase+tota)-egresos);
    
 
     var total2 = $('#dineCaja').val();
@@ -381,20 +385,64 @@ function myTimer2() {
 }
 
 $('#cerrar').click(function(){
-    var base = $('#baseMo').val();
-    var ingresosEfe = $('#totalEfe').val();
-    var ingresosEle = $('#totalElec').val();
-    var egresos = $('#totalEg').val();
+    var base = parseInt($('#baseMo').val().replace(/[^a-zA-Z0-9]/g, ''));
+    var ingresosEfe = parseInt($('#totalEfe').val().replace(/[^a-zA-Z0-9]/g, ''));
+    var ingresosEle = parseInt($('#totalTarj').val().replace(/[^a-zA-Z0-9]/g, ''));
+    var egresos = parseInt($('#totalEgr').val().replace(/[^a-zA-Z0-9]/g, ''));
 
-    $.ajax({
-        url: "cerrar_caja.php",
-        type: "POST",
-        data:{var: base, var2:ingresosEfe, var3:ingresosEle, var4: egresos},
-        success: function(data){
-            alert(data);
-          
-        }
-    })
+    if(base === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese la base monetaria',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });  
+        $('#baseMo').val(0);
+        $('#totalEfe').val(0);
+        $('#totalTarj').val(0);
+        $('#totalEgr').val(0);
+        $('#dineCaja').val(0);
+
+    }else{
+        $.ajax({
+            url: "cerrar_caja.php",
+            type: "POST",
+            data:{var: base, var2:ingresosEfe, var3:ingresosEle, var4: egresos},
+            success: function(data){
+                if(data==="Caja correcta"){
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Cierre de caja exitoso',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });  
+
+                }else if(data==="Ha ocurrido un error"){
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'Ha ocurrido un error',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });  
+                }
+                        
+            }
+        })
+    }
+
+    
 ;
 });
 
@@ -730,6 +778,7 @@ $(document).ready(function(){
         }
     });
 
+
     $('#domi').typeahead({
         source: function(query,result){
             $.ajax({
@@ -922,6 +971,7 @@ var DataArray = [];
 var total=0;
 var cant;
 var cont = 0;
+var idStock = 0;
 //var descuento = 0, impuesto = 0;
 //Enviar datos por con enter
 
@@ -999,8 +1049,108 @@ $('.selec').keypress(function (e) {
                     url: "disponibilidad.php?var="+nombre_producto,
                     data:{var2: cant},
                     success: function(data) {
+                        //alert(data);
+
+                        if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
+                            Swal.fire({
+                                icon: 'error',
+                                text: data,
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            });    
+                        }else{
+                            //alert(data);
+                            //alert(data);
+                            //idStock = JSON.parse(data); 
+                             //alert(JSON.stringify(idStock));
+                            /*Swal.fire({
+                                icon: 'success',
+                                text: 'El id a descontar es: ' +data,
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            }); */
+                            cont = cont + 1;
+                             $.ajax({
+                                    type: "POST",
+                                    url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
+                                    data: $("#venta").serialize(),
+                                    success: function(data) {
+                                       
+                                        DataArray = JSON.parse(data);  
+                                    
+                                         
+                                        createRow(DataArray);
+                                        deleteRow(datos);  
+                                        //alert(JSON.stringify(DataArray));
+                                        //Recorrer el array temporal para llenar el nuevo JSON
+                                       
+                                        $.each(DataArray, function(i, _data) {
+                                            var id = _data.id;
+                                            var codigo =  _data.codigo;
+                                            var cantidad =  parseInt( _data.cantidad);
+                                            var producto =  _data.producto;
+                                            var peso =  parseFloat(_data.peso);
+                                            var precio = parseFloat(_data.precio);
+                                            var impuesto =  parseInt(_data.impuesto);
+                                            var descuento = parseInt(_data.descuento);
+                                            var total = parseFloat(_data.total);
+                                            
+                                            datos.push({
+                                                'id': id,
+                                                'codigo': codigo,
+                                                'cantidad': cantidad,
+                                                'producto': producto,
+                                                'peso': peso,
+                                                'precio' : precio,
+                                                'impuesto': impuesto,
+                                                'descuento': descuento,
+                                                'total' : total
+                                            })
+                                    
+                                        });
+                                        //Suma de los total por productos seleccionados
+                                        $.each(datos, function(i, _data) {
+                                            
+                                            total += parseFloat(_data.total);
+                                        });
+                                        
+                                        $('#producto').val('');
+                                        $('#cantidad').val('');
+                                        $('#peso').val('');
+                                        $('#peso2').val('');
+                                        $('#producto1').val('');
+                                        
+                                        
+                                        const newValue = new Intl.NumberFormat('en-US').format(total.toString());
+                                        
+                                        if(datos.length===0){
+                                            $('#total').val('');
+                                        }else{
+                                            $('#total').val("$" + newValue);
+                                        } 
+                                        total = 0;
+                                        //cont = 0;
+                                    }   
+                                   
+                                });
+                                //Sincronizar los nuevos productos con la eliminación y agregación
+                                venta = datos;
+                                $('#pesooo').val('');
+                                $('#peso2').val('');
+                                $('#producto').focus();
+
+
+                        }
                       
-                        if(data==="Hay disponibilidad"){
+                        /*if(data==="Hay disponibilidad"){
                             //Si se encuentra disponibilidad de agregar al JSON y la tabla
                             cont = cont + 1;
                              $.ajax({
@@ -1084,7 +1234,7 @@ $('.selec').keypress(function (e) {
                                     popup: 'animate__animated animate__fadeOutUp'
                                 }
                             });    
-                        }
+                        }*/
                     }
                     
                 });
@@ -1142,6 +1292,7 @@ $('#pagar').click(function(){
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
         success: function(data) {
+            alert(data);
             id_factura = data;
             if(data){
                 alert("Detalle guardado");
@@ -1181,11 +1332,14 @@ $('#pagar').click(function(){
                             }
                         });     
                     }else{
+                        alert("facturaCreada");
                         document.getElementById("submitButton1").click();
                         var myVar = setInterval(myTimer, 10000);
                     }
                 }
+                
             });
+        
         }
     });
     
@@ -1206,7 +1360,7 @@ function myTimer() {
 //Realizar descuento de la disponibilidad del producto (si se requiere)
 $('#volver_stock').click(function(){
     //alert(JSON.stringify(venta));
-    $.ajax({
+    /*$.ajax({
         type:"POST",
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
@@ -1244,14 +1398,18 @@ $('#volver_stock').click(function(){
                                 popup: 'animate__animated animate__fadeOutUp'
                             }
                         });     
-                    }*/
+                    }
                     var contenidoVen = document.getElementById("cont_ventas");
                         contenidoVen.innerHTML = "";
                       $('#total').val('');   
                 }
             });
         }
-    });
+    });*/
+
+    var contenidoVen = document.getElementById("cont_ventas");
+    contenidoVen.innerHTML = "";
+  $('#total').val('');  
    
 });
   
@@ -1441,4 +1599,40 @@ $('.impri').click(function(){
     $('#id_Factu').val(idFacc);
     document.getElementById("submitButton").click();
     
+});
+
+$('.anula').click(function(){
+    $tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+        
+    $.ajax({
+        type:"POST",
+        url: "anulacion.php?var="+datos[0],
+        success: function(data) {
+            alert(data);
+        
+        }
+    });
+ 
+});
+
+$(document).on("click", ".modiProdu", function(event){
+    //alert("Entro");
+    $tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+        //alert(datos[0]+" - " + datos[8]+" - " + datos[9]);
+    $.ajax({
+        type:"POST",
+        url: "notaDebito.php",
+        data:{var: datos[0], var2: datos[8], var3: datos[9]},
+        success: function(data) {
+            alert(data);
+        
+        }
+
+    });
 });

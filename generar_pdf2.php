@@ -1,7 +1,29 @@
 <?php
 
 session_start();
-require('fpdf/fpdf.php');
+//require('fpdf/fpdf.php');
+require('pdf_js.php');
+
+class PDF_AutoPrint extends PDF_JavaScript{
+    function AutoPrint($dialog=false){
+        $param=($dialog ? 'true' : 'false');
+        $script="print($param);";
+        $this->IncludeJS($script);
+    }
+
+    function AutoPrintToPrinter($server, $printer, $dialog=false){
+        $script="var pp = getPrintParams():";
+        if($dialog){
+            $script .= "pp.interactive = pp.constants.interactionLevel.full;";
+        }else{
+            $script .= "pp.interactive = pp.constants.interactionLevel.automatic;";
+            $script .= "pp.printerName = '\\\\\\\\".$server."\\\\".$printer."';";
+            $script .= "printer(pp)";
+            $this->IncludeJS($script);
+        }
+    }
+}
+
 require 'conexionBD.php';
 
 $id_usuario = $_SESSION['idUser'];
@@ -16,7 +38,7 @@ $tama = $resulTama['cantidad'];
 $nuevo = $tama*8;
 
 $x=120;
-$pdf = new FPDF($orientation='P',$unit='mm', array(80,$x+$nuevo));
+$pdf = new PDF_AutoPrint($orientation='P',$unit='mm', array(80,$x+$nuevo));
 
 $pdf->AddPage();
 $pdf->Image('./images/logoCo1.png',20,3,40);
@@ -84,14 +106,18 @@ $pdf->Ln(0);
 $consult = "SELECT * FROM detalle_factura WHERE factura_id_factura={$idFac}";
 $sqlDeta = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 
-$valor0 = 0; $baseIva0 = 0; $iva0=0; $valor_0 = 0; $baseIva_0 = 0; $iva_0=0;
-$valor5 = 0; $baseIva5 = 0; $iva5=0; $valor_5 = 0; $baseIva_5 = 0; $iva_5=0; 
-$valor19 = 0; $baseIva19 = 0; $iva19=0; $valor_19 = 0; $baseIva_19 = 0; $iva_19=0;
+$valor0 = 0; $baseIva0 = 0; $iva0=0; 
+$valor5 = 0; $baseIva5 = 0; $iva5=0;  
+$valor19 = 0; $baseIva19 = 0; $iva19=0; 
 
 if($num = $sqlDeta->num_rows>0){
 
     while($row = mysqli_fetch_assoc($sqlDeta)){
         
+        $valor_0 = 0; $baseIva_0 = 0; $iva_0=0;
+        $valor_5 = 0; $baseIva_5 = 0; $iva_5=0;
+        $valor_19 = 0; $baseIva_19 = 0; $iva_19=0;
+              
         $idDescuento = $row['descuento_id_descuento'];
         $idImpuesto =  $row['impuesto_id_impuestos'];
         $idStock =  $row['stock_id_stock'];
@@ -151,11 +177,12 @@ if($num = $sqlDeta->num_rows>0){
             $valor_19 =  ($baseIva_19 + $iva_19);
            
         }
-    
-    $iva0 = $iva_0 + $iva0; $baseIva0 = $baseIva_0 + $baseIva0; $valor0 = $valor_0 + $valor0;
+        $iva0 = $iva_0 + $iva0; $baseIva0 = $baseIva_0 + $baseIva0; $valor0 = $valor_0 + $valor0;
     $iva5 = $iva_5 + $iva5; $baseIva5 = $baseIva_5 + $baseIva5; $valor5 = $valor_5 + $valor5;
-    $iva19 = $iva_19 + $iva19; $baseIva19 = $baseIva_19 + $baseIva19; $valor19 = $valor_19 + $valor19;  
+    $iva19 = $iva_19 + $iva19; $baseIva19 = $baseIva_19 + $baseIva19; $valor19 = $valor_19 + $valor19; 
     }
+
+    
 
     $pdf->Cell(75,0,'','T');
     $pdf->Ln(3);  
@@ -179,6 +206,8 @@ if($num = $sqlDeta->num_rows>0){
     $pdf->Cell(12, 3, '0',0,0,'C');
     $pdf->Cell(18, 3, number_format($baseIva19),0,0,'C');
     $pdf->Cell(12, 3, number_format($iva19),0,1,'C');
+
+    
     $pdf->Ln(2);  
     $pdf->Cell(75,0,'','T');
 //$vueltas=$valorIngre-$total;
@@ -190,8 +219,11 @@ $pdf->Cell(25,2,number_format($total),0,1,'L',0);
 
 }
 
-header('Content-type: application/pdf');
-$pdf->Output('D','Factura.pdf','UTF-8');
+/*header('Content-type: application/pdf');
+$pdf->Output('D','Factura.pdf','UTF-8');*/
+
+$pdf->AutoPrint(true);
+$pdf->Output();
 
 //echo $pdf;
 ?>

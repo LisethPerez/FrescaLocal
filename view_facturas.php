@@ -239,6 +239,7 @@
                                                     <th>Impuesto</th>
                                                     <th>Fecha</th>
                                                     <th>Empleado</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody id="cont_productos">
@@ -254,6 +255,8 @@
                                                 </div><!--modal-content-->
                                             </div><!--modal-dialog-->
                                         </div> <!--modal-fade-->
+
+                                 
             </div>
             </div>
         

@@ -106,13 +106,17 @@ $pdf->Ln(0);
 $consult = "SELECT * FROM detalle_factura WHERE factura_id_factura={$idFac}";
 $sqlDeta = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 
-$valor0 = 0; $baseIva0 = 0; $iva0=0; $valor_0 = 0; $baseIva_0 = 0; $iva_0=0;
-$valor5 = 0; $baseIva5 = 0; $iva5=0; $valor_5 = 0; $baseIva_5 = 0; $iva_5=0; 
-$valor19 = 0; $baseIva19 = 0; $iva19=0; $valor_19 = 0; $baseIva_19 = 0; $iva_19=0;
+$valor0 = 0; $baseIva0 = 0; $iva0=0; 
+$valor5 = 0; $baseIva5 = 0; $iva5=0; 
+$valor19 = 0; $baseIva19 = 0; $iva19=0; 
 
 if($num = $sqlDeta->num_rows>0){
 
     while($row = mysqli_fetch_assoc($sqlDeta)){
+        
+        $valor_0 = 0; $baseIva_0 = 0; $iva_0=0;
+        $valor_5 = 0; $baseIva_5 = 0; $iva_5=0; 
+        $valor_19 = 0; $baseIva_19 = 0; $iva_19=0;
         
         $idDescuento = $row['descuento_id_descuento'];
         $idImpuesto =  $row['impuesto_id_impuestos'];
@@ -163,12 +167,12 @@ if($num = $sqlDeta->num_rows>0){
             $baseIva_0 = ($precio - $des) * $cantidad;
             $valor_0 =  ($baseIva_0 + $iva_0);
         }
-        if($nombreImpuesto==5){
+        else if($nombreImpuesto==5){
             $iva_5 = ($precio * $porcentaje * $cantidad);
             $baseIva_5 = ($precio - $des) * $cantidad;
             $valor_5 =  ($baseIva_5 + $iva_5);
         }
-        if($nombreImpuesto==19){
+        else if($nombreImpuesto==19){
             $iva_19 = ($precio * $porcentaje * $cantidad);
             $baseIva_19 = ($precio - $des) * $cantidad ;
             $valor_19 =  ($baseIva_19 + $iva_19);
