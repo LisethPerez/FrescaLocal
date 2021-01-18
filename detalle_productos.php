@@ -39,7 +39,6 @@ if($num = $sql->num_rows>0){
             "fecha"=>$row['fecha'],
             "empleado"=>$row['nombreEmple'],
             "idDetalle"=>$row['id_detallef'],
-            "idStock"=>$row['stock_id_stock'],
             "opcion"=>'<button class="btn btn-primary btn-sm modiProdu" data-toggle="modal" data-target="#modificarProd"> <i class="fa fa-list-alt" aria-hidden="true"></i></button>'
         );
     }

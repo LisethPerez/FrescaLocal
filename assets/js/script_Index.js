@@ -288,8 +288,7 @@ $('.view_products').click(function () {
     <td>`+data[i].impuesto+`</td>
     <td>`+data[i].fecha+`</td>  
     <td>`+data[i].empleado+`</td>
-    <td style="display:none">`+data[i].idDetalle+`</td> 
-    <td style="display:none">`+data[i].idStock+`</td>    
+    <td style="display:none">`+data[i].idDetalle+`</td>   
     <td>`+data[i].opcion+`</td> 
     </tr>`;
     $('#cont_productos').append(trElement);  
@@ -713,6 +712,8 @@ $('#total_web').keydown(function(e){
 });
 var nombre_producto;
 var tipo;
+var nombre_producto1;
+var tipo1;
 //Esconder formulario de busqueda
 $(document).ready(function(){
     //$('#menuToggle').trigger('click')
@@ -769,6 +770,47 @@ $(document).ready(function(){
                     if(tipo==="peso"){
                         $('#pesooo').focus();
                         $("#cantidad").val('');
+                       
+                    }        
+                }
+            });
+            
+            return item;    
+        }
+    });
+
+    $('#producto2').typeahead({
+        source: function(query,result){
+            $.ajax({
+                url:"get_var.php",
+                method:"POST",
+                data:{query:query},
+                dataType:"json",
+                success:function(data){
+                    result($.map(data,function(item){
+                        return item;
+                    }));
+                    
+                }
+            });
+        },
+        updater : function(item) {
+            this.$element[0].value = item;
+            nombre_producto1 = item;
+            
+            $.ajax({
+                url:"ocultar.php?var="+nombre_producto1,
+                method:"POST",    
+                success:function(data){ 
+                     tipo1 = data;   
+                     //alert(tipo);
+                     if(tipo1==="cantidad"){
+                        $('#cantidad2').focus();
+                        $("#pesooo2").val('');
+                    }
+                    if(tipo1==="peso"){
+                        $('#pesooo2').focus();
+                        $("#cantidad2").val('');
                        
                     }        
                 }
@@ -865,11 +907,44 @@ $(document).ready(function(){
 });
 
 
-$('#producto1').keydown(function (f) {
+$('#producto1').keypress(function (f) {
     tipo = "";
     var produ = $('#producto1').val();
+    if(f.which == 13){
+        $("#pesooo").val('');
+        $("#peso2").val('');
+        
+        $.ajax({
+            type: "POST",
+            url: "encontrar_ean.php?var="+produ,
+            success: function(data) {
+                //alert(data);
+                nombre_producto = data;
+            }
+        });
+
+        $.ajax({
+            url:"ocultar2.php?var="+produ,
+            method:"POST", 
+            success:function(data){
+                 tipo = data;   
+                 $("#pesooo").val('');
+                 $("#peso2").val('');      
+                 if(tipo==="cantidad"){
+                    $('#cantidad').focus();
+                    $("#pesooo").val('');
+                }
+                if(tipo==="peso"){
+                    $('#pesooo').focus();
+                    $("#cantidad").val('');
+                    
+                }      
+            }
+        }); 
+       
+    }
     
-    if(f.shiftKey==1){
+    /*if(f.shiftKey==1){
         //alert(produ);
         $("#pesooo").val('');
         $("#peso2").val('');
@@ -897,6 +972,45 @@ $('#producto1').keydown(function (f) {
                 if(tipo==="peso"){
                     $('#pesooo').focus();
                     $("#cantidad").val('');
+                    
+                }      
+            }
+        }); 
+       
+    }*/
+});
+
+$('#producto3').keypress(function (f) {
+    tipo1 = "";
+    var produ1 = $('#producto3').val();
+    if(f.which == 13){
+        $("#pesooo2").val('');
+        $("#peso3").val('');
+        
+        $.ajax({
+            type: "POST",
+            url: "encontrar_ean.php?var="+produ1,
+            success: function(data) {
+               // alert(data);
+                nombre_producto1 = data;
+            }
+        });
+
+        $.ajax({
+            url:"ocultar2.php?var="+produ1,
+            method:"POST", 
+            success:function(data){
+               // alert(data);
+                 tipo1 = data;   
+                 $("#pesooo").val('');
+                 $("#peso2").val('');      
+                 if(tipo1==="cantidad"){
+                    $('#cantidad2').focus();
+                    $("#pesooo2").val('');
+                }
+                if(tipo1==="peso"){
+                    $('#pesooo2').focus();
+                    $("#cantidad2").val('');
                     
                 }      
             }
@@ -961,6 +1075,20 @@ $("#pesooo").focus(function(e) {
         success: function(data) {
             $('#pesooo').val(data);
             $('#peso2').val(data);
+        }
+    }); */
+}); 
+
+$("#pesooo2").focus(function(e) {
+    $('#pesooo2').val(0.9);    
+    $('#peso3').val(0.9);
+
+    /*$.ajax({
+        
+        url: "lectura.php",
+        success: function(data) {
+            $('#pesooo2').val(data);
+            $('#peso3').val(data);
         }
     }); */
 });   
@@ -1617,22 +1745,134 @@ $('.anula').click(function(){
     });
  
 });
-
+var idDetalle;
 $(document).on("click", ".modiProdu", function(event){
     //alert("Entro");
     $tr=$(this).closest('tr');
         var datos = $tr.children("td").map(function (){
             return $(this).text();
         });
+    idDetalle=datos[8];
         //alert(datos[0]+" - " + datos[8]+" - " + datos[9]);
-    $.ajax({
+    /*$.ajax({
         type:"POST",
         url: "notaDebito.php",
-        data:{var: datos[0], var2: datos[8], var3: datos[9]},
+        data:{var: can, var2: datos[8], var3: datos[9]},
         success: function(data) {
             alert(data);
         
         }
 
-    });
+    });*/
+});
+var cant1;
+$('.select').keypress(function (e) {
+    var producto = $('#producto2').val();
+    var cantidad = $('#cantidad2').val();
+    var peso = $('#peso3').val();
+    var codigo = $('#producto3').val();
+
+    if(e.which == 13) {
+        if(tipo1==="cantidad" && cantidad===''){  
+            $('#cantidad2').focus();      
+            Swal.fire({
+                icon: 'error',
+                text: 'Por favor ingrese la cantidad',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                } 
+            });     
+            $('#peso3').val('');  
+            $('#pesooo2').val(''); 
+        }else if(tipo1==="peso" && peso===''){
+            $('#pesooo2').focus(); 
+            Swal.fire({
+                icon: 'error',
+                text: 'Por favor ingrese el peso',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });         
+            $('#cantidad2').val('');
+        }
+
+        if(tipo1==="cantidad"){
+            $('#peso3').val('');
+            $('#pesooo2').val('');
+            $('#cantidad2').focus();
+        }else{
+            $('#cantidad2').val('');
+            //$('#pesooo').focus();
+        }
+
+        if(peso === ''){
+            cant1 = cantidad;
+        }
+        if(cantidad === ''){
+            cant1 = peso;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "disponibilidad.php?var="+nombre_producto1,
+            data:{var2: cant1},
+            success: function(data) {
+                if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
+                    Swal.fire({
+                        icon: 'error',
+                        text: data,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });    
+                }else{
+                    $.ajax({
+                        type:"POST",
+                        url: "cambiarProducto.php",
+                        data:{var2: idDetalle, var4: cant1, var5:nombre_producto1},
+                        success: function(data) {
+                            if(data==="Cambios exitosos"){
+                                Swal.fire({
+                                    icon: 'success',
+                                    text: "Cambios realizados",
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeInDown'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOutUp'
+                                    }
+                                }); 
+                                window.location.href="view_ventas.php";
+
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    text: data,
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeInDown'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOutUp'
+                                    }
+                                });  
+                            }
+            
+                        }
+    
+                    });
+                }
+            }
+        });
+        //alert(producto + " - " + cantidad + " - " + peso + " - " + codigo);
+        
+    }
 });

@@ -199,7 +199,7 @@ display: block;
                                             <div class="form-row">
                                                 <div class="col">
                                                         <label for="staticEmail2">Buscar por código</label>
-                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;">
+                                                        <input type="text" class="form-control" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;">
                                                 </div>
                                                 <div class="col">
                                                     <label for="validationCustom03">Cantidad</label>

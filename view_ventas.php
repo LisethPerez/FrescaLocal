@@ -242,7 +242,7 @@
                                                     <th>Fecha</th>
                                                     <th>Empleado</th>
                                                     <th style="display:none">id_Detalle</th>
-                                                    <th style="display:none">id_Stock</th>
+                                                 
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -273,24 +273,24 @@
                             <div class="form-row">
                                                 <div class="col">
                                                     <label for="staticEmail2">Buscar producto</label>
-                                                    <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;" data-minChars="1">
+                                                    <input autocomplete="off"  type="text" class="form-control active select" id="producto2" name="producto2" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;" data-minChars="1">
                                                     
                                                 </div>
                                                 <div class="col">
                                                         <label><a id="obte" class="">Peso (KG)</a></label>
-                                                        <input type="hidden" id="peso2" name="peso2"></input>
-                                                        <input type="text" class="form-control selec" id="pesooo" name="pesooo" style="height:35px; font-size:160%;" required>
+                                                        <input type="hidden" id="peso3" name="peso3"></input>
+                                                        <input type="text" class="form-control select" id="pesooo2" name="pesooo2" style="height:35px; font-size:160%;" required>
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>
                                             <div class="form-row">
                                                 <div class="col">
                                                         <label for="staticEmail2">Buscar por código</label>
-                                                        <input type="text" class="form-control selec" id="producto1" name="producto1" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;">
+                                                        <input type="text" class="form-control" id="producto3" name="producto3" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;">
                                                 </div>
                                                 <div class="col">
                                                     <label for="validationCustom03">Cantidad</label>
-                                                    <input type="text" class="form-control selec" id="cantidad" name="cantidad" style="height:35px; font-size:110%;" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
+                                                    <input type="text" class="form-control select" id="cantidad2" name="cantidad2" style="height:35px; font-size:110%;" placeholder="Cantidad" onkeypress="return onlyNums(event)" required><br>
                                                        
                                                 </div>
                             </div>
