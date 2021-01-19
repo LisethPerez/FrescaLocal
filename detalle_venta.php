@@ -47,9 +47,11 @@ foreach ($datos as $product) {
     $total = $product['total'];
 
     if($peso == 'NaN'){
+        $cantt= $cantidad_pro;
         $cantTota = $cantidad_pro;
     }
     if($cantidad_pro == 'NaN'){
+        $cantt= $peso;
         $cantTota =  $peso;
     }  
 
@@ -70,7 +72,7 @@ foreach ($datos as $product) {
                 array_push($idStock, $resultado['id_stock']);
             }   
         }
-    }
+    
     $numA = count($idStock);
 
         for($i=0;$i<$numA;$i++){
@@ -86,10 +88,9 @@ foreach ($datos as $product) {
                     $cantidad1 = $cantidad - $cantTota;
 
                     $mensaje = $result1->id_stock;
-                    //echo $mensaje;
                     $consult5 = "UPDATE stock SET cantidad={$cantidad1} WHERE id_stock='{$mensaje}'";
                     break;
-                    //$mensaje = "Ha terminado";
+                    
                 }else{
                    // echo "Entro al else";
                     $residuo = $cantTota - $cantidad;
@@ -119,19 +120,20 @@ foreach ($datos as $product) {
     $sql5 = mysqli_query($conn,$consult5) or die(mysqli_error($conn));
     unset($idStock);
     $idStock = array();
-
-    
      //unset($idStock);
-     //echo "El detalle de factura es " .$cantidad_pro. " - " .$precio. " - " .$descuento." - " .$impuesto. " - ".$total. " - " .$idFactu. " _ " .$mensaje. " -" .$resultPro->descuento_id_descuento. " - " .$resultPro->impuestos_id_impuestos. " - " .$fecha. " - " .$idEmple;
-    if($peso=='NaN'){
+    /*if($peso=='NaN'){
         $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantidad_pro}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','$mensaje','{$resultPro->descuento_id_descuento}','{$resultPro->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
     } 
     if($cantidad_pro=='NaN'){
         $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$peso}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','$mensaje','{$resultPro->descuento_id_descuento}','{$resultPro->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
+    }*/
+
+    
+    $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantt}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','$mensaje','{$resultPro->descuento_id_descuento}','{$resultPro->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
+
+    $sqlFact1 = mysqli_query($conn,$consult3) or die(mysqli_error($conn));
+
     }
-
-     $sqlFact = mysqli_query($conn,$consult3) or die(mysqli_error($conn));
-
 
     //echo $cantidad;
     //Consulta para la obtención del id del producto desde la base de datos mediante el nombre del producto
@@ -184,6 +186,7 @@ foreach ($datos as $product) {
     
         //$sqlFact = mysqli_query($conn,$consult3) or die(mysqli_error($conn));*/
 }
+$mensaje = 0;
 
 //Devuelve el id factura creado con anterior, para su posterior modificación de su anulación o pago
 echo $idFactu;

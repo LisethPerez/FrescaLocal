@@ -31,11 +31,6 @@ if($num = $sqlFact->num_rows>0){
         $modiStock = "UPDATE stock SET cantidad={$nuevaCant} WHERE id_stock={$idStock}";
         $sqlModi = mysqli_query($conn,$modiStock) or die(mysqli_error($conn));
 
-        if($sqlStock){
-            echo "Stock actualizado";
-        }else{
-            echo "No se actulizó el stock";
-        }
     }
 
 }
@@ -43,19 +38,14 @@ if($num = $sqlFact->num_rows>0){
 $modiFact = "UPDATE factura SET anulacion=1 WHERE id_factura={$idFac}";
 $sqlFact = mysqli_query($conn,$modiFact) or die(mysqli_error($conn));
 
-if($sqlFact){
-    echo "Factura anulada";
-}else{
-    echo "Factura no anulada";
-}
 
 $createAnula = "INSERT INTO nota_credito(fecha,factura_id_factura,empleado_id_empleado,sede_id_sede) VALUES ('{$fecha}','{$idFac}','{$idEmple}','{$id_Sede}')";
 $sqlAnula = mysqli_query($conn,$createAnula) or die(mysqli_error($conn));
 
-if($sqlFact){
-    echo "Nota crédito creada";
+if($sqlFact AND $sqlAnula AND $sqlStock){
+    echo "Proceso correcto";
 }else{
-    echo "Nota crédito no creada";
+    echo "Ha ocurrido un error";
 }
 
 

@@ -1420,7 +1420,7 @@ $('#pagar').click(function(){
         url: "detalle_venta.php?cliente="+cedula_cliente,
         data: {var: venta},  
         success: function(data) {
-            alert(data);
+            //alert(data);
             id_factura = data;
             if(data){
                 alert("Detalle guardado");
@@ -1729,6 +1729,7 @@ $('.impri').click(function(){
     
 });
 
+
 $('.anula').click(function(){
     $tr=$(this).closest('tr');
         var datos = $tr.children("td").map(function (){
@@ -1739,7 +1740,30 @@ $('.anula').click(function(){
         type:"POST",
         url: "anulacion.php?var="+datos[0],
         success: function(data) {
-            alert(data);
+            if(data==="Proceso correcto"){
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Anulación realizada',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    } 
+                });    
+                window.location.href="view_ventas.php"; 
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    text: data,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    } 
+                });     
+            }
         
         }
     });

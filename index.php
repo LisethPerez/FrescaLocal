@@ -66,7 +66,7 @@ display: block;
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CLIENTES</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>CLIENTES</a>
                         <ul class="sub-menu children dropdown-menu">                            
                             <li><i class=""></i><a href="view_cliente.php">Lista clientes</a></li>
                         </ul>
@@ -81,7 +81,7 @@ display: block;
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>CAJA</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa fa-cogs"></i>CAJA</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class=""></i><a href="caja.php">Cierre caja</a></li>
                             
