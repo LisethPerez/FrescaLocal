@@ -31,11 +31,6 @@ $idFac = $_POST['var'];
 //echo $idFac;
 // Tamaño tickt 80mm x 150 mm (largo aprox)
 
-$consultNota = "SELECT * FROM nota_credito WHERE factura_id_factura={$idFac}";
-$sqlNota = mysqli_query($conn,$consultNota) or die(mysqli_error($conn));
-$resultNota = $sqlNota->fetch_object();
-$idNota = $resultNota->id_nota;
-
 $consultTama = "SELECT COUNT(*) cantidad FROM detalle_factura WHERE factura_id_factura={$idFac}";
 $sqlTama = mysqli_query($conn,$consultTama) or die(mysqli_error($conn));
 $resulTama = $sqlTama->fetch_assoc();
@@ -46,6 +41,7 @@ $x=120;
 $pdf = new PDF_AutoPrint($orientation='P',$unit='mm', array(80,$x+$nuevo));
 
 $pdf->AddPage();
+$pdf->Image('./images/cancel.png',25, 40, 32);
 $pdf->Image('./images/logoCo1.png',20,3,40);
 $pdf->Ln(10);  
 $pdf->SetFont('Helvetica','',11);
@@ -88,8 +84,8 @@ $pdf->SetMargins(2, 0 , 0);
 $pdf->Ln(5);
 $pdf->Cell(14,3,'FECHA: ',0,0);
 $pdf->Cell(30,3,$fechaFac,0,1,'L',0);
-$pdf->Cell(30,3,utf8_decode('NOTA CRÉDITO: '),0,0);
-$pdf->Cell(30,3,$idNota,0,1,'L',0);
+$pdf->Cell(30,3,'FACTURA DE VENTA: ',0,0);
+$pdf->Cell(30,3,$idFac,0,1,'L',0);
 $pdf->Cell(14,3,'NIT:',0,0);
 $pdf->Cell(30,3,'123456779',0,1,'L',0);
 $pdf->Cell(14,3,'CLIENTE:',0,0);
@@ -172,7 +168,7 @@ if($num = $sqlDeta->num_rows>0){
             $iva_0 = $baseIva_0*$porcentaje;
         }
         if($nombreImpuesto==5){
-            $valor_5 = $total2;
+            $$valor_5 = $total2;
             $baseIva_5 = $valor_5/$iva_tasa;
             $iva_5 = $baseIva_5*$porcentaje;
 

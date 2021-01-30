@@ -22,9 +22,11 @@ if(empty($codigo)){
 $sql = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 if($numFilas = $sql->num_rows>0){
     $result = $sql->fetch_assoc();
-    $impuesto = $result['valor_impuesto'];
-    $descuento = $result['valor_descuento'];
-
+    $impuesto = intval($result['valor_impuesto']);
+    $descuento = intval($result['valor_descuento']);
+    
+    $impuesto1 = $impuesto/100;
+    $descuento1 = $descuento/100;
     if($tipo=="1"){
         $precio = $result['precio_2'];
     }
@@ -33,10 +35,14 @@ if($numFilas = $sql->num_rows>0){
     }
 
     if(empty($peso)){
-        $total = round($cantidad*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
+       // $total = round($cantidad*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
+       $precioNuevo = round((($precio-($precio*$descuento1))*$cantidad));
+       $total = round($precioNuevo+($precioNuevo*$impuesto1));
     }
     if(empty($cantidad)){
-        $total = round($peso*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
+        //$total = round($peso*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
+        $precioNuevo1 = round((($precio-($precio*$descuento1))*$peso));
+        $total = round($precioNuevo1+($precioNuevo1*$impuesto1));
     }
     $datos[] = array(
         "id"=>$cont,

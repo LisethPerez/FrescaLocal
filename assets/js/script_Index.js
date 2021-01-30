@@ -52,6 +52,7 @@ $('#cedula').keydown(function(f){
         });
     }
 });
+
 //Buscar cedula para la existencia del cliente
 /*$('#buscar1').click(function () {
     $.ajax({
@@ -191,23 +192,33 @@ $('#registrar2').click(function () {
             url: "registrar_cliente.php?var="+tipo_cle,
             data: $("#form_cliente").serialize(),
             success: function(data) {
-                Swal.fire({
-                    icon: 'success',
-                    text: data,
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                });     
-                clearCliente();
-                $('#cedula').val('');
+                //alert(data);
+                if(data==='Datos ingresados'){
+                    Swal.fire({
+                        icon: 'success',
+                        text: "Datos ingresados",
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });    
+                    clearCliente();
+                    $('#cedula').val(''); 
+                }else{
+                    alert(data);
+                }
+                
+                
             }
         });
     }
 });
 
+function myTimer3() {
+   
+}
 //Método para el ingreso a la aplicación por medio del login
 $('#ingresar_login').click(function () {   
     var correo = $('#email').val();
@@ -231,7 +242,9 @@ $('#ingresar_login').click(function () {
         data: $("#formulario_ingreso").serialize(),
         success: function(data) {  
             if(data === "Datos correctos"){
+                //var myVar = setInterval(myTimer3, 6000);
                 window.location.href="index.php";
+                
             }
             if(data === "Datos erroneos"){
                 Swal.fire({
@@ -714,8 +727,124 @@ var nombre_producto;
 var tipo;
 var nombre_producto1;
 var tipo1;
+
+function actualizacion(){
+    $.ajax({
+        url: "comprobarConexion1.php",
+        type: "POST",
+        success: function(data){
+           if(data === 'Esta conectado'){
+                alert("Esta conectado");
+                $.ajax({
+                    url: "exportar.php",
+                    type: "POST",
+                    success: function(data){
+                        if(data ==='Importación realizada de forma correcta'){
+                            alert("Exportación hecha");
+                            $.ajax({
+                                url: "importar.php",
+                                type: "POST",
+                                success: function(data){
+                                    alert(data);
+                                    /*if(data==='Base de datos actulizada'){
+                                        alert(data);
+                                    }else{
+                                        alert("Error en la importación");
+                                    }*/
+                                }
+            
+                            });
+                        }else{
+                            alert("ERROR EN LA EXPORTACIÓN");
+                        }
+                    }
+                });
+           }else{
+               alert(data);
+           }
+        }
+    });    
+}
+
+function verificarConexion(){
+    $.ajax({
+        url: "comprobarConexionBD.php",
+        type: "POST",
+        success: function(data){
+           if(data === 'Esta conectado'){
+                alert("Esta conectado");
+                $.ajax({
+                    url: "verificarContBD.php",
+                    type: "POST",
+                    success: function(data){
+                       
+                        if(data==='El archivo tiene contenido'){
+                            alert("El archivo tiene contenido");
+                            $.ajax({
+                                url: "ejecutarBD.php",
+                                type: "POST",
+                                success: function(data){
+                                    alert(data);
+                                }
+                            });
+                        }else{
+                            alert("El archivo esta vacio");
+                        }
+                    }
+                });
+
+                /**/
+           }else{
+               alert(data);
+           }
+        }
+
+    });
+
+    /*$.ajax({
+        url: "comprobarConexionGene.php",
+        type: "POST",
+        success: function(data){
+           if(data === 'Esta conectado'){
+                alert("Esta conectado");
+           }else{
+               alert(data);
+           }
+        }
+
+    });*/
+}
+//setInterval('verificarConexion()',5000);
 //Esconder formulario de busqueda
 $(document).ready(function(){
+
+
+    //setInterval('actualizacion()',12000);
+    /*$.ajax({
+        url: "exportar.php",
+        type: "POST",
+        success: function(data){
+            if(data ==='Importación realizada de forma correcta'){
+                alert("Exportación hecha");
+                $.ajax({
+                    url: "importar.php",
+                    type: "POST",
+                    success: function(data){
+                        alert(data);
+                        /*if(data==='Base de datos actulizada'){
+                            alert(data);
+                        }else{
+                            alert("Error en la importación");
+                        }
+                    }
+
+                });
+            }else{
+                alert("ERROR EN LA EXPORTACIÓN");
+            }
+        }
+    });*/
+
     //$('#menuToggle').trigger('click')
     document.getElementById("menuToggle").click();
     //Esconder formulario de busqueda 
@@ -1408,7 +1537,9 @@ var id_factura;
 
 //Realizar modificaciones de la facrtura y hacer el pago de la compra 
 $('#pagar').click(function(){
-    if($('#id_factCre').val()===''){
+    //alert("Entro");
+    verificarConexion();
+    /*if($('#id_factCre').val()===''){
         referencia =  referencia = $('#id_factDe').val();
         $('#id_factDe').val('');
     }else{
@@ -1469,11 +1600,12 @@ $('#pagar').click(function(){
             });
         
         }
-    });
+    });*/
     
 });
 
 function myTimer() {
+    //verificarConexion();
     //window.print();
     window.location.href="index.php";  
     var contenidoVen = document.getElementById("cont_ventas");
@@ -1728,6 +1860,19 @@ $('.impri').click(function(){
     document.getElementById("submitButton").click();
     
 });
+
+var idFacc1;
+$('.impriCa').click(function(){
+    $tr=$(this).closest('tr');
+        var datos = $tr.children("td").map(function (){
+            return $(this).text();
+        });
+    idFacc1 = datos[0];
+    $('#id_Factu1').val(idFacc1);
+    document.getElementById("submitButton1").click();
+    
+});
+
 
 
 $('.anula').click(function(){

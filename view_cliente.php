@@ -203,7 +203,7 @@
                                             <tbody id="conte_tabla">
                                             <?php 
                                                     include 'conexionBD.php';
-                                                    $consulta = "SELECT * from cliente";
+                                                    $consulta = "SELECT * FROM cliente ORDER BY id_cliente DESC";
                                                     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                                                     while($row = mysqli_fetch_object($sql)){
                                                     ?>

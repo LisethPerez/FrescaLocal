@@ -144,6 +144,7 @@ if($num = $sqlDeta->num_rows>0){
         $resulImpuesto = $sqlImpuesto->fetch_assoc();
         $nombreImpuesto = intval($resulImpuesto['valor_impuesto']);
         $porcentaje = $nombreImpuesto/100;
+        $iva_tasa = $porcentaje+1;
 
         $consulProducto = "SELECT * FROM producto WHERE id_producto={$idProducto}";
         $sqlProducto = mysqli_query($conn,$consulProducto) or die(mysqli_error($conn));
@@ -163,19 +164,28 @@ if($num = $sqlDeta->num_rows>0){
 
         
         if($nombreImpuesto==0){    
-            $iva_0 = ($precio * $porcentaje * $cantidad);
+            /*$iva_0 = ($precio * $porcentaje * $cantidad);
             $baseIva_0 = ($precio - $des) * $cantidad;
-            $valor_0 =  ($baseIva_0 + $iva_0);
+            $valor_0 =  ($baseIva_0 + $iva_0);*/
+            $valor_0 = $total2;
+            $baseIva_0 = $valor_0/$iva_tasa;
+            $iva_0 = $baseIva_0*$porcentaje;
         }
         else if($nombreImpuesto==5){
-            $iva_5 = ($precio * $porcentaje * $cantidad);
+           /* $iva_5 = ($precio * $porcentaje * $cantidad);
             $baseIva_5 = ($precio - $des) * $cantidad;
-            $valor_5 =  ($baseIva_5 + $iva_5);
+            $valor_5 =  ($baseIva_5 + $iva_5);*/
+            $valor_5 = $total2;
+            $baseIva_5 = $valor_5/$iva_tasa;
+            $iva_5 = $baseIva_5*$porcentaje;
         }
         else if($nombreImpuesto==19){
-            $iva_19 = ($precio * $porcentaje * $cantidad);
+            /*$iva_19 = ($precio * $porcentaje * $cantidad);
             $baseIva_19 = ($precio - $des) * $cantidad ;
-            $valor_19 =  ($baseIva_19 + $iva_19);
+            $valor_19 =  ($baseIva_19 + $iva_19);*/
+            $valor_19 = $total2;
+            $baseIva_19 = $valor_19/$iva_tasa;
+            $iva_19 = $baseIva_19*$porcentaje;
         }
 
         $iva0 = $iva_0 + $iva0; $baseIva0 = $baseIva_0 + $baseIva0; $valor0 = $valor_0 + $valor0;
