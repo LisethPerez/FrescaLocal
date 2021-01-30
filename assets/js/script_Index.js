@@ -891,7 +891,7 @@ $(document).ready(function(){
                 method:"POST",    
                 success:function(data){ 
                      tipo = data;   
-                     //alert(tipo);
+                     //alert(data);
                      if(tipo==="cantidad"){
                         $('#cantidad').focus();
                         $("#pesooo").val('');
