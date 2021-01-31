@@ -35,6 +35,7 @@ $consultNota = "SELECT * FROM nota_credito WHERE factura_id_factura={$idFac}";
 $sqlNota = mysqli_query($conn,$consultNota) or die(mysqli_error($conn));
 $resultNota = $sqlNota->fetch_object();
 $idNota = $resultNota->id_nota;
+$fechaFac = $resultNota->fecha;
 
 $consultTama = "SELECT COUNT(*) cantidad FROM detalle_factura WHERE factura_id_factura={$idFac}";
 $sqlTama = mysqli_query($conn,$consultTama) or die(mysqli_error($conn));
@@ -76,10 +77,10 @@ $total = $fac->pago_total;*/
 $consultFact = "SELECT *, empleado.nombre AS nombreEmple, cliente.nombre AS nombreCliente FROM factura INNER JOIN empleado ON empleado.id_empleado=factura.empleado_id_empleado INNER JOIN cliente ON cliente.id_cliente=factura.cliente_id_cliente WHERE id_factura={$idFac}";
 $sqlFact = mysqli_query($conn,$consultFact) or die(mysqli_error($conn));
 $resulFact = $sqlFact->fetch_assoc();
-$fechaFac = $resulFact['fecha'];
 $total = $resulFact['pago_total'];
 $idCliente = $resulFact['nombreCliente'];
 $idEmple = $resulFact['nombreEmple'];
+
 
 $str1 = utf8_decode($idEmple);
 $str = utf8_decode($idCliente);

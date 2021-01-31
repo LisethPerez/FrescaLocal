@@ -351,6 +351,8 @@ $('.editarDomi').click(function(){
 
 
 $('.presen').click(function(){
+    $('.presen').removeClass("btn-success");
+    $(this).addClass("btn-success");
     var presen= $(this).val();
     $.ajax({
         url: "ventas_presenciales.php",
@@ -364,6 +366,9 @@ $('.presen').click(function(){
 });
 
 $('.webb').click(function(){
+    $('.webb').removeClass("btn-success");
+    $(this).addClass("btn-success");
+    
     var web= $(this).val();
     $.ajax({
         url: "ventas_web.php",
@@ -559,6 +564,9 @@ $('.editbtn').click(function () {
 
  var tipo_domi;
 $('.groupTipo').click(function(){
+    $('.groupTipo').removeClass("btn-primary");
+    $(this).addClass("btn-primary");
+
     tipo_domi = $(this).val();
     if(tipo_domi === "Presencial"){
         $('.pago').show();

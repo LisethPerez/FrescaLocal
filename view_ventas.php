@@ -12,12 +12,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Cosecha Fresca</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+    
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -29,6 +28,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="assets/fontawesome/css/all.css">
+    <link rel="shortcut icon" href="images/favico.png"> 
     <script src="assets/js/jQuery.js"></script>
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" rel="stylesheet"/>
 
@@ -67,7 +67,7 @@
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CLIENTES</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>CLIENTES</a>
                         <ul class="sub-menu children dropdown-menu">                            
                             <li><i class=""></i><a href="view_cliente.php">Lista clientes</a></li>
                         </ul>
@@ -79,6 +79,13 @@
                             <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
                             <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa fa-cogs"></i>CAJA</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class=""></i><a href="caja.php">Cierre caja</a></li>
+                            
                         </ul>
                     </li>
                     

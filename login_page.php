@@ -8,12 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>.: CAMSAL - Login</title>
+    <title>Cosecha Fresca</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+    <link rel="shortcut icon" href="images/favico.png"> 
 
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="assets/css/sb-admin-2.min.css">
@@ -39,7 +40,7 @@
                                     <a href="https://controler.com.co/" target="_blank">
                                         <img src="images/controler.jpg" style="width: 19rem; padding-bottom: 2%">
                                     </a>
-                                    <h5 style="padding-bottom: 1%">FRESCA</h5>
+                                    <h5 style="padding-bottom: 1%">COSECHA FRESCA</h5>
                                 </div>
                                 <form method="post" class="user" method="POST" id="formulario_ingreso">
                                     <div class="form-group">

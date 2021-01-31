@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="assets/jquery-ui/jquery-ui.css">
     <script src="assets/js/jQuery.js"></script>
     <script src="assets/jquery-ui/jquery-ui.js"></script>
+    <link rel="shortcut icon" href="images/favico.png"> 
   <!--  <script src="assets/jquery-ui/typeahead.js"></script>-->
     
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
@@ -66,7 +67,7 @@ display: block;
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CLIENTES</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>CLIENTES</a>
                         <ul class="sub-menu children dropdown-menu">                            
                             <li><i class=""></i><a href="view_cliente.php">Lista clientes</a></li>
                         </ul>
@@ -81,13 +82,12 @@ display: block;
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>CAJA</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CAJA</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class=""></i><a href="caja.php">Cierre caja</a></li>
                             
                         </ul>
                     </li>
-                    
                     <hr>
                     <li class="menu-title">Salir</li><!-- /.menu-title -->
                     <li>
@@ -310,7 +310,7 @@ display: block;
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id=""><strong>Información ventas elenctónicas</strong></h5>
+                                                            <h5 class="modal-title" id=""><strong>Información ventas electrónicas</strong></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -318,7 +318,7 @@ display: block;
                                                         <div class="modal-body">
                                                             <div class="card border border-secondary">
                                                                 <div class="card-header bg-dark">
-                                                                    <strong class="card-title text-light heading">Ventas electónicas</strong>
+                                                                    <strong class="card-title text-light heading">Ventas electrónicas</strong>
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <div class="form-row">
@@ -342,9 +342,9 @@ display: block;
                                                             </div><!--card-border-->
                                                         </div><!--model-body-->
                                                         <div class="modal-footer">
-                                                            <button type="button" id="" class="btn btn-success btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
                                                            
-                                                            <button type="button" id="confi" class="btn btn-success btn-sm mb-2">CONFIRMAR</button>
+                                                            <!--<button type="button" id="confi" class="btn btn-success btn-sm mb-2">CONFIRMAR</button>-->
                                                            
                                                         </div>
                                                     </div><!--modal-content-->

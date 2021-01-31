@@ -69,10 +69,10 @@ $fac = $sqll->fetch_object();
 $idFactu = $fac->id_factura;
 $total = $fac->pago_total;*/
 
-$consultFact = "SELECT *, empleado.nombre AS nombreEmple, cliente.nombre AS nombreCliente FROM factura INNER JOIN empleado ON empleado.id_empleado=factura.empleado_id_empleado INNER JOIN cliente ON cliente.id_cliente=factura.cliente_id_cliente WHERE id_factura={$idFac}";
+$consultFact = "SELECT *, empleado.nombre AS nombreEmple, cliente.nombre AS nombreCliente, factura.fecha AS fechaa FROM factura INNER JOIN empleado ON empleado.id_empleado=factura.empleado_id_empleado INNER JOIN cliente ON cliente.id_cliente=factura.cliente_id_cliente WHERE id_factura={$idFac}";
 $sqlFact = mysqli_query($conn,$consultFact) or die(mysqli_error($conn));
 $resulFact = $sqlFact->fetch_assoc();
-$fechaFac = $resulFact['fecha'];
+$fechaFac = $resulFact['fechaa'];
 $total = $resulFact['pago_total'];
 $idCliente = $resulFact['nombreCliente'];
 $idEmple = $resulFact['nombreEmple'];
@@ -168,7 +168,7 @@ if($num = $sqlDeta->num_rows>0){
             $iva_0 = $baseIva_0*$porcentaje;
         }
         if($nombreImpuesto==5){
-            $$valor_5 = $total2;
+            $valor_5 = $total2;
             $baseIva_5 = $valor_5/$iva_tasa;
             $iva_5 = $baseIva_5*$porcentaje;
 
