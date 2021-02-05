@@ -1,6 +1,6 @@
 <?php
     session_start(); 
-    if (empty($_SESSION['username'])): header("Location: login_page.php");
+    if (empty($_SESSION['username'])): header("Location: views/login_page.php");
     else: 
 ?>
         
@@ -19,18 +19,22 @@
     <!--<link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
     <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">-->
 
-    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"> EXISTEN ERRORES Y NO SE INCLUYO--> 
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css"> --> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"> <!-- BUSCAR-->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">-->
+
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="shortcut icon" href="images/favico.png"> 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/normalize.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-   
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="assets/css/flag-icon.min.css">
+
+    
     <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="assets/fontawesome/css/all.css">
     <link rel="stylesheet" href="assets/jquery-ui/jquery-ui.css">
@@ -63,7 +67,7 @@ display: block;
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
                         <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
@@ -72,22 +76,22 @@ display: block;
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>CLIENTES</a>
                         <ul class="sub-menu children dropdown-menu">                            
-                            <li><i class=""></i><a href="view_cliente.php">Lista clientes</a></li>
+                            <li><i class=""></i><a href="views/view_cliente.php">Lista clientes</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
-                            <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
-                            <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
-                            <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>
+                            <li><i class=""></i><a href="views/view_ventas.php">Realizadas</a></li>
+                            <li><i class=""></i><a href="views/view_facturas.php">Anuladas</a></li>
+                            <li><i class=""></i><a href="views/view_facturas_pendientes.php">Pendientes</a></li>
+                            <li><i class=""></i><a href="views/view_facturas_web.php">Web</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa fa-cogs"></i>CAJA</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="caja.php">Cierre caja</a></li>
+                            <li><i class=""></i><a href="views/caja.php">Cierre caja</a></li>
                             
                         </ul>
                     </li>
@@ -102,6 +106,7 @@ display: block;
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside><!-- /#left-panel -->
+
 
     <!-- Left Panel -->
 
@@ -720,6 +725,11 @@ display: block;
                                                 </div>
                                                 
                                         </div>
+                                        <div class="form-row">
+                                    <div class="col">
+                                        <button class="btn btn-primary btn-sm mb-2" id="sincro" type="button" style="width:338px; height:50px"><i class="fa fa-cogs"></i>&nbsp;SINCRONIZACIÓN</button>
+                                    </div>  
+                                </div>
                             
                             </div> <!--COL-LOg-4-->
                         </div> <!--row-->

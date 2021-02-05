@@ -14,17 +14,17 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
-    <link rel="shortcut icon" href="images/favico.png"> 
+    <link rel="shortcut icon" href="../images/favico.png"> 
 
     <!-- Custom styles for this template-->
-    <link rel="stylesheet" href="assets/css/sb-admin-2.min.css">
-    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
-    <link rel="stylesheet" href="assets/fontawesome/css/all.css">
+    <link rel="stylesheet" href="../assets/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
 
 
 </head>
 
-<body style="background-image: url(images/bakcground_image.jpg)">
+<body style="background-image: url(../images/bakcground_image.jpg)">
 <div class="container">
     <!-- Outer Row -->
     <div class="row justify-content-center">
@@ -38,7 +38,7 @@
                             <div class="p-5">
                                 <div class="text-center">
                                     <a href="https://controler.com.co/" target="_blank">
-                                        <img src="images/controler.jpg" style="width: 19rem; padding-bottom: 2%">
+                                        <img src="../images/controler.jpg" style="width: 19rem; padding-bottom: 2%">
                                     </a>
                                     <h5 style="padding-bottom: 1%">COSECHA FRESCA</h5>
                                 </div>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="col-lg-6 d-none d-lg-block">
                             <a href="https://controler.com.co/" target="_blank">
-                                <img src="images/controlerPanel.png" style="width: 30rem; padding-bottom: 0%">
+                                <img src="../images/controlerPanel.png" style="width: 30rem; padding-bottom: 0%">
                             </a>
                         </div>
                     </div>
@@ -82,10 +82,10 @@
 <!-- Bootstrap core JavaScript-->
 
 <!-- Custom scripts for all pages-->
-<script src="assets/fontawesome/js/all.js"></script>
-<script src="assets/js/jQuery.js"></script>
-<script src="assets/js/sweetalert2.min.js"></script>
-<script src="assets/js/script_Index.js"></script>
+<script src="../assets/fontawesome/js/all.js"></script>
+<script src="../assets/js/jQuery.js"></script>
+<script src="../assets/js/sweetalert2.min.js"></script>
+<script src="../assets/js/script_Index.js"></script>
 
 </body>
 

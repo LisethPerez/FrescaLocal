@@ -238,12 +238,12 @@ $('#ingresar_login').click(function () {
     }else{
     $.ajax({
         type: "POST",
-        url: "login.php",
+        url: "../login.php",
         data: $("#formulario_ingreso").serialize(),
         success: function(data) {  
             if(data === "Datos correctos"){
                 //var myVar = setInterval(myTimer3, 6000);
-                window.location.href="index.php";
+                window.location.href="../index.php";
                 
             }
             if(data === "Datos erroneos"){
@@ -525,7 +525,7 @@ $('#modificar').click(function(){
                         popup: 'animate__animated animate__fadeOutUp'
                     }
                 });  
-                window.location.href="view_facturas_pendientes.php"; 
+                window.location.href="views/view_facturas_pendientes.php"; 
                }else{
                 Swal.fire({
                     icon: 'error',
@@ -736,60 +736,24 @@ var tipo;
 var nombre_producto1;
 var tipo1;
 
-function actualizacion(){
-    $.ajax({
-        url: "comprobarConexion1.php",
-        type: "POST",
-        success: function(data){
-           if(data === 'Esta conectado'){
-                alert("Esta conectado");
-                $.ajax({
-                    url: "exportar.php",
-                    type: "POST",
-                    success: function(data){
-                        if(data ==='Importación realizada de forma correcta'){
-                            alert("Exportación hecha");
-                            $.ajax({
-                                url: "importar.php",
-                                type: "POST",
-                                success: function(data){
-                                    alert(data);
-                                    /*if(data==='Base de datos actulizada'){
-                                        alert(data);
-                                    }else{
-                                        alert("Error en la importación");
-                                    }*/
-                                }
-            
-                            });
-                        }else{
-                            alert("ERROR EN LA EXPORTACIÓN");
-                        }
-                    }
-                });
-           }else{
-               alert(data);
-           }
-        }
-    });    
-}
 
+//Método que ejecuta las sentencias guardadas en el archivo de texto
 function verificarConexion(){
     $.ajax({
-        url: "comprobarConexionBD.php",
+        url: "sincronizacion/comprobarConexionBD.php",
         type: "POST",
         success: function(data){
            if(data === 'Esta conectado'){
                 alert("Esta conectado");
                 $.ajax({
-                    url: "verificarContBD.php",
+                    url: "sincronizacion/verificarContBD.php",
                     type: "POST",
                     success: function(data){
                        
                         if(data==='El archivo tiene contenido'){
                             alert("El archivo tiene contenido");
                             $.ajax({
-                                url: "ejecutarBD.php",
+                                url: "sincronizacion/ejecutarBD.php",
                                 type: "POST",
                                 success: function(data){
                                     alert(data);
@@ -808,50 +772,86 @@ function verificarConexion(){
         }
 
     });
-
-    /*$.ajax({
-        url: "comprobarConexionGene.php",
+}
+$('#sincro').click(function(){
+    
+      $.ajax({
+        url: "sincronizacion/comprobarConexionBD.php",
         type: "POST",
         success: function(data){
-           if(data === 'Esta conectado'){
-                alert("Esta conectado");
-           }else{
-               alert(data);
-           }
+            if(data === 'Esta conectado'){
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Por favor espere mientras se realiza la sincronización',
+                    showConfirmButton: false,
+                    timer: 55000
+                  });
+                  $.ajax({
+                    url: "exportar.php",
+                    type: "POST",
+                    success: function(data){
+                        if(data ==='Importación realizada de forma correcta'){
+                            alert("Exportación hecha de la base de datos general");
+                            $.ajax({
+                                url: "importar.php",
+                                type: "POST",
+                                success: function(data){
+                                    alert(data);                     
+                                }
+            
+                            });
+                        }else{
+                            alert("Error en la exportanción de la base de datos general");
+                        }
+                    }
+                });
+            
+                $.ajax({
+                    url: "exportar2.php",
+                    type: "POST",
+                    success: function(data){
+                        if(data ==='Importación realizada de forma correcta'){
+                            alert("Exportación hecha de la base de datos de fresca");
+                            $.ajax({
+                                url: "importar2.php",
+                                type: "POST",
+                                success: function(data){
+                                    alert(data);
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Sincronización exitosa',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                      });
+                                }
+            
+                            });
+                        }else{
+                            alert("Error en la exportanción de la base de datos de fresca");
+                        }
+                    }
+                });       
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: data,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }         
+                  });
+            }
         }
+    });  
 
-    });*/
-}
-//setInterval('verificarConexion()',5000);
+});//setInterval('verificarConexion()',5000);
 //Esconder formulario de busqueda
 $(document).ready(function(){
 
 
     //setInterval('actualizacion()',12000);
-    /*$.ajax({
-        url: "exportar.php",
-        type: "POST",
-        success: function(data){
-            if(data ==='Importación realizada de forma correcta'){
-                alert("Exportación hecha");
-                $.ajax({
-                    url: "importar.php",
-                    type: "POST",
-                    success: function(data){
-                        alert(data);
-                        /*if(data==='Base de datos actulizada'){
-                            alert(data);
-                        }else{
-                            alert("Error en la importación");
-                        }
-                    }
-
-                });
-            }else{
-                alert("ERROR EN LA EXPORTACIÓN");
-            }
-        }
-    });*/
 
     //$('#menuToggle').trigger('click')
     document.getElementById("menuToggle").click();
@@ -1547,7 +1547,7 @@ var id_factura;
 $('#pagar').click(function(){
     //alert("Entro");
     verificarConexion();
-    /*if($('#id_factCre').val()===''){
+   /* if($('#id_factCre').val()===''){
         referencia =  referencia = $('#id_factDe').val();
         $('#id_factDe').val('');
     }else{
@@ -1601,7 +1601,7 @@ $('#pagar').click(function(){
                     }else{
                         alert("facturaCreada");
                         document.getElementById("submitButton1").click();
-                        var myVar = setInterval(myTimer, 10000);
+                        var myVar = setInterval(myTimer, 1500);
                     }
                 }
                 
@@ -1904,7 +1904,7 @@ $('.anula').click(function(){
                         popup: 'animate__animated animate__fadeOutUp'
                     } 
                 });    
-                window.location.href="view_ventas.php"; 
+                window.location.href="views/view_ventas.php"; 
             }else{
                 Swal.fire({
                     icon: 'error',
@@ -2028,7 +2028,7 @@ $('.select').keypress(function (e) {
                                         popup: 'animate__animated animate__fadeOutUp'
                                     }
                                 }); 
-                                window.location.href="view_ventas.php";
+                                window.location.href="views/view_ventas.php";
 
                             }else{
                                 Swal.fire({

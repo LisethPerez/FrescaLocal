@@ -10,6 +10,9 @@ $cantidadNueva = $_POST['var4'];
 $producto = $_POST['var5'];
 $id_Stock = array();
 
+$username="control3_cosechafresca2";
+$password="vk{j@%zq2HWq";
+
 include 'conexionGene.php';
 $consultPro = "SELECT * FROM producto WHERE nombre='{$producto}'";
 $sqlPro = mysqli_query($conn,$consultPro) or die(mysqli_error($conn));
@@ -56,6 +59,26 @@ $nuevaCan = $cantidadPro + $cantidadStock;
 $modiStock = "UPDATE stock SET cantidad={$nuevaCan} WHERE id_stock={$idStock}";
 $sqlModi = mysqli_query($conn,$modiStock) or die(mysqli_error($conn));
 
+if($sqlModi){
+    try {
+        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+        $mbd->query($modiFact);
+    } catch (PDOException $e) {
+        //echo 'Falló la conexión: ' . $e->getMessage();
+        
+        //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
+        
+        $file = fopen("sincronizacion/sentenciasBD.txt","a+");
+        //$file = fopen('sentencias.txt', 'w');
+        fwrite($file, '<?php'. PHP_EOL);
+        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+        fwrite($file, '$consulta1="'.$modiFact.'";' . PHP_EOL);
+        fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
+        fwrite($file, '?>'. PHP_EOL);
+        fclose($file); 
+    }
+}
+
 $consulta = "SELECT * FROM stock WHERE producto_id_producto={$idPro} AND sede_id_sede={$id_Sede}";
 $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
 
@@ -91,17 +114,77 @@ $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                     $consult2 = "UPDATE stock SET cantidad=0, producto_id_producto={$idPro} WHERE id_stock={$idStock[$i]}";
                     $sql2 = mysqli_query($conn,$consult2) or die(mysqli_error($conn));
                     $cantidadNueva = $residuo;
+
+                    if($sql2){
+                        try {
+                            $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+                            $mbd->query($consult2);
+                        } catch (PDOException $e) {
+                            //echo 'Falló la conexión: ' . $e->getMessage();
+                            
+                            //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
+                            
+                            $file = fopen("sincronizacion/sentenciasBD.txt","a+");
+                            //$file = fopen('sentencias.txt', 'w');
+                            fwrite($file, '<?php'. PHP_EOL);
+                            fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+                            fwrite($file, '$consulta1="'.$consult2.'";' . PHP_EOL);
+                            fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
+                            fwrite($file, '?>'. PHP_EOL);
+                            fclose($file); 
+                        }
+                    }
                 }
             }
         }
     }
 
     $sql5 = mysqli_query($conn,$consult5) or die(mysqli_error($conn));
+
+    if($sql5){
+        try {
+            $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+            $mbd->query($consult5);
+        } catch (PDOException $e) {
+            //echo 'Falló la conexión: ' . $e->getMessage();
+            
+            //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
+            
+            $file = fopen("sincronizacion/sentenciasBD.txt","a+");
+            //$file = fopen('sentencias.txt', 'w');
+            fwrite($file, '<?php'. PHP_EOL);
+            fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+            fwrite($file, '$consulta1="'.$consult5.'";' . PHP_EOL);
+            fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
+            fwrite($file, '?>'. PHP_EOL);
+            fclose($file); 
+        }
+    }
     unset($id_Stock);
     $id_Stock = array();
 
 $modiDetalle = "UPDATE detalle_factura SET cantidad={$cantidadNueva}, precio_venta={$precio}, total_impuesto={$valorImpu}, total_descuento={$valorDes}, total={$total}, stock_id_stock={$mensaje}, descuento_id_descuento={$descuento}, impuesto_id_impuestos={$impuesto}, empleado_id_empleado={$idEmple} WHERE id_detallef={$idDetalle}";
 $sqlDetalle = mysqli_query($conn,$modiDetalle) or die(mysqli_error($conn));
+
+if($sqlDetalle){
+    try {
+        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+        $mbd->query($modiDetalle);
+    } catch (PDOException $e) {
+        //echo 'Falló la conexión: ' . $e->getMessage();
+        
+        //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
+        
+        $file = fopen("sincronizacion/sentenciasBD.txt","a+");
+        //$file = fopen('sentencias.txt', 'w');
+        fwrite($file, '<?php'. PHP_EOL);
+        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+        fwrite($file, '$consulta1="'.$modiDetalle.'";' . PHP_EOL);
+        fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
+        fwrite($file, '?>'. PHP_EOL);
+        fclose($file); 
+    }
+}
 
 
 $consultaExi = "SELECT COUNT(*) contar, SUM(total) cant FROM detalle_factura WHERE factura_id_factura='{$idFact}'";
@@ -117,6 +200,26 @@ if($num = $sqlExi->num_rows>0){
 
     $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}' WHERE id_factura='{$idFact}'";
     $sqlMosiFac = mysqli_query($conn,$consultaModi) or die(mysqli_error($conn));
+
+    if($sqlMosiFac){
+        try {
+            $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+            $mbd->query($consultaModi);
+        } catch (PDOException $e) {
+            //echo 'Falló la conexión: ' . $e->getMessage();
+            
+            //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
+            
+            $file = fopen("sincronizacion/sentenciasBD.txt","a+");
+            //$file = fopen('sentencias.txt', 'w');
+            fwrite($file, '<?php'. PHP_EOL);
+            fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+            fwrite($file, '$consulta1="'.$consultaModi.'";' . PHP_EOL);
+            fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
+            fwrite($file, '?>'. PHP_EOL);
+            fclose($file); 
+        }
+    }
 
     if($sqlMosiFac AND $sqlDetalle AND $sql5 AND $sqlModi){
         echo "Cambios exitosos";

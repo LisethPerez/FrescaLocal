@@ -3,11 +3,16 @@
 $servidor="127.0.0.1";
 $username="root";
 $password="";
-$db="copiabase";
+$db="basegeneral";
+
+$dump = 'mysql -h' .$servidor .' -u' .$username.' ' .$db .'< sincronizacion/control3_cosechafresca1.sql'; 
+exec($dump, $output);
+echo "Base de datos de fresca actulizada";
+
 
 //Copiar base = BASE DE DATOS CON MENOR CANTIDAD DE TABLAS
 
-$conn1 = mysqli_connect($servidor,$username,$password,$db) or die(mysqli_error());
+/*$conn1 = mysqli_connect($servidor,$username,$password,$db) or die(mysqli_error());
 
 $consult ="SELECT COUNT(*) AS total FROM Information_Schema.Tables where TABLE_TYPE = 'BASE TABLE' and table_schema = '{$db}'";
 $sql5 = mysqli_query($conn1,$consult) or die(mysqli_error($conn1));
@@ -17,7 +22,7 @@ if($sql5){
     $idPro = $resultPro['total'];
 
     if($idPro==0){
-        $dump = 'mysql -h' .$servidor .' -u' .$username.' ' .$db .'< control3_cosechafresca1.sql'; 
+        $dump = 'mysql -h' .$servidor .' -u' .$username.' ' .$db .'< sincronizacion/control3_cosechafresca1.sql'; 
         exec($dump, $output);
         $mensaje = "Base de datos actulizada";
     }else{
@@ -30,7 +35,7 @@ if($sql5){
 
         if($sql1){
             //echo "Base de datos creada";
-            $dump = 'mysql  -h' .$servidor .' -u' .$username.' ' .$db .'< control3_cosechafresca1.sql'; 
+            $dump = 'mysql  -h' .$servidor .' -u' .$username.' ' .$db .'< sincronizacion/control3_cosechafresca1.sql'; 
             exec($dump, $output);
             $mensaje = "Base de datos actulizada";
         }else{
@@ -42,7 +47,7 @@ if($sql5){
     $mensaje = "Ocurrió un error";
 }
 
-echo $mensaje;
+echo $mensaje;*/
 
 //$salida_sql = $d.'sql';
 

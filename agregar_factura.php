@@ -52,7 +52,6 @@ if($num = $sqlExi->num_rows>0){
     }else if($tipo_domi=="Domicilios"){
         $consultaModi = "UPDATE factura SET empleado_id_domiciliario='{$EmpleId}', pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
     }
-
     
     /*if($tipo_pago == "Efectivo"){
         $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=1, tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
@@ -63,8 +62,31 @@ if($num = $sqlExi->num_rows>0){
     //Consulta para la modificación de los datos de la factura creda por defecto con anterioridad
   
     $sqlMoodi = mysqli_query($conn,$consultaModi) or die(mysqli_error($conn));
+
+    
     if($sqlMoodi){
         echo "Cambios relizados ";
+        $username="control3_cosechafresca2";
+        $password="vk{j@%zq2HWq";
+
+   
+        try {
+            $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+            $mbd->query($consultaModi);
+        } catch (PDOException $e) {
+            //echo 'Falló la conexión: ' . $e->getMessage();
+            
+            //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
+            
+            $file = fopen("sincronizacion/sentenciasBD.txt","a+");
+            //$file = fopen('sentencias.txt', 'w');
+            fwrite($file, '<?php'. PHP_EOL);
+            fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+            fwrite($file, '$consulta1="'.$consultaModi.'";' . PHP_EOL);
+            fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
+            fwrite($file, '?>'. PHP_EOL);
+            fclose($file); 
+        }
     }
     else{
         echo "No se hicieron cambios";

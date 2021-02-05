@@ -11,6 +11,9 @@ $fecha1 = date('Y/m/d H:i:s');
 $fecha = date("Y-m-d") . " 00:00:00";
 $diaSiguiente = date("Y-m-d", strtotime("+1 day", strtotime($fecha))) . " 00:00:00";
 
+$username="control3_cosechafresca2";
+$password="vk{j@%zq2HWq";
+
 include 'conexionBD.php';
 
 $consult ="SELECT COUNT(*) total FROM factura WHERE id_factura_web=0 AND facturapaga=1 AND anulacion=0 AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
@@ -29,8 +32,26 @@ $consultCaja = "INSERT INTO caja(base_monetaria,ingresos_efectivo,ingresos_elect
 $sqlCaja = mysqli_query($conn,$consultCaja) or die(mysqli_error($conn));
 //$resultadoCaja = $sqlCaja->fetch_object();
 
+
 if($sqlCaja){
     echo "Caja correcta";
+    try {
+        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+        $mbd->query($consultCaja);
+    } catch (PDOException $e) {
+        //echo 'Falló la conexión: ' . $e->getMessage();
+        
+        //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
+        
+        $file = fopen("sincronizacion/sentenciasBD.txt","a+");
+        //$file = fopen('sentencias.txt', 'w');
+        fwrite($file, '<?php'. PHP_EOL);
+        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+        fwrite($file, '$consulta1="'.$consultCaja.'";' . PHP_EOL);
+        fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
+        fwrite($file, '?>'. PHP_EOL);
+        fclose($file); 
+    }
 }else{
     echo "Ha ocurrido un error";
 }

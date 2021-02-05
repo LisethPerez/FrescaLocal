@@ -13,7 +13,7 @@ $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
 $resultEmple = $sqlEmple->fetch_object();
 $idEmpleado = $resultEmple->id_empleado; 
 
-$consultPago ="SELECT * FROM tipo_pago WHERE nombre!='Efectivo'";
+$consultPago ="SELECT * FROM tipo_pago WHERE nombre!='Eféctivo'";
 $sqlPago = mysqli_query($conn,$consultPago) or die(mysqli_error($conn));
 $resultPago = $sqlPago->fetch_assoc();
 $idEfec = $resultPago['id_tpago'];

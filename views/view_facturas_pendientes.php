@@ -1,6 +1,6 @@
 <?php
     session_start(); 
-    if (empty($_SESSION['username'])): header("Location: login_page.php");
+    if (empty($_SESSION['username'])): header("Location: views/login_page.php");
     else: 
 ?>
 
@@ -13,10 +13,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Cosecha Fresca</title>
-    <meta name="description" content="Ela Admin - HTML5 Admin Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
     
+
+   
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -24,11 +23,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
-    <link rel="shortcut icon" href="images/favico.png"> 
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
-    <link rel="stylesheet" href="assets/fontawesome/css/all.css">
+    <link rel="stylesheet" href="../assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
+    <link rel="shortcut icon" href="../images/favico.png"> 
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -60,7 +59,7 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
+                        <a href="../index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
@@ -89,7 +88,7 @@
                     <hr>
                     <li class="menu-title">Salir</li><!-- /.menu-title -->
                     <li>
-                        <a href="salir.php" class="nav-link"> <i class="menu-icon fa fa-power-off"></i>Cerrar sessión</a>
+                        <a href="../salir.php" class="nav-link"> <i class="menu-icon fa fa-power-off"></i>Cerrar sessión</a>
                         
                     </li>
                 </ul>
@@ -115,7 +114,7 @@
             </div>-->
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="images/logoCo1.png" alt="Logo"><img src="images/texto.png" alt="Logo"></a>
+                    <a class="navbar-brand" href="./"><img src="../images/logoCo1.png" alt="Logo"><img src="../images/texto.png" alt="Logo"></a>
                  
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                     
@@ -130,7 +129,7 @@
                     </div>
                     <div class="user-area dropdown float-right">
                     <a href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                            <img class="" src="images/controler2.jpg" style="width: 110px; height: 50px;">
+                            <img class="" src="../images/controler2.jpg" style="width: 110px; height: 50px;">
                         </a>
                     </div>
                 </div>
@@ -170,7 +169,7 @@
                     <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Facturas Anuladas</strong>
+                                <strong class="card-title text-dark">Información Facturas de Domiciliarios Pendientes</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
@@ -196,24 +195,27 @@
                                     </div>
                                 </div>  <br>
                                 
-                                    <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="taaable">
+                                    <div class="form-row table-wrapper-scroll-y my-custom-scrollbar"> 
+                                    <table class="table table-responsive" id="taaable">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
                                                     <th>Total</th>
-                                                    <th>#Productos</th>
+                                                    <th>#</th>
                                                     <th>Fecha</th>
                                                     <th>Tipo_pago</th>
-                                                    <th>Empleado</th>
+                                                    <th>Cajero</th>
+                                                    <th>Domiciliario</th>
                                                     <th>Cliente</th>
                                                     <th>Sede</th>
+                                                    <th style="display:none">Paga</th>
+                                                    <th style="display:none">Ref</th>
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="pro2">
+                                            <tbody id="pro3">
                                             <?php
-                                                include 'ver_fact2.php';
+                                                include 'ver_fact3.php';
                                             ?>
                                             
                                             </tbody>
@@ -225,7 +227,39 @@
                     
                     </div><!-- /# column -->
                 </div>
-                <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal fade" id="ModificacionEstado" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Modificación de estado</strong></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card border border-secondary">
+                                                            <div class="card-header bg-dark">
+                                                                <strong class="card-title text-light">Información</strong>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div id="cambiosFact">
+                                                                </div>
+                                                                <div id="cambios">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="modificar" class="btn btn-success btn-sm mb-2">MODIFICAR</button>
+                                                           
+                                                        </div>
+                                                    
+                                                </div><!--modal-content-->
+                                            </div><!--modal-dialog-->
+                                        </div> <!--modal-fade-->
+                                        <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -246,7 +280,6 @@
                                                     <th>Impuesto</th>
                                                     <th>Fecha</th>
                                                     <th>Empleado</th>
-                                                    
                                                 </tr>
                                             </thead>
                                             <tbody id="cont_productos">
@@ -255,15 +288,13 @@
                                         </table>
                                                     </div>
                                                     <div class="modal-footer">
-                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
-                                                           
+                                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            
                                                         </div>
                                                     
                                                 </div><!--modal-content-->
                                             </div><!--modal-dialog-->
                                         </div> <!--modal-fade-->
-
-                                 
             </div>
             </div>
         
@@ -296,11 +327,11 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/fontawesome/js/all.js"></script>
-<script src="assets/js/jQuery.js"></script>
-<script src="assets/js/sweetalert2.min.js"></script>
-<script src="assets/js/script_Index.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../assets/fontawesome/js/all.js"></script>
+<script src="../assets/js/jQuery.js"></script>
+<script src="../assets/js/sweetalert2.min.js"></script>
+<script src="../assets/js/script_Index.js"></script>
 
 
 </body>
