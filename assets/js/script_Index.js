@@ -241,6 +241,7 @@ $('#ingresar_login').click(function () {
         url: "../login.php",
         data: $("#formulario_ingreso").serialize(),
         success: function(data) {  
+           
             if(data === "Datos correctos"){
                 //var myVar = setInterval(myTimer3, 6000);
                 window.location.href="../index.php";
@@ -275,7 +276,7 @@ $('.view_products').click(function () {
     id_factu = datos[0];
     //alert(datos[0]);
     $.ajax({
-        url: "detalle_productos.php?var="+id_factu,
+        url: "../detalle_productos.php?var="+id_factu,
         type: "POST",
         success: function(data){
             //alert(JSON.parse(data));
@@ -335,7 +336,7 @@ $('.editarDomi').click(function(){
     total = "$ " + newValue;
 
     $.ajax({
-        url: "detalle_factura.php",
+        url: "../detalle_factura.php",
         type: "POST",
         data:{var: id_, var2: sipaga, var3: referencia_pago, var4: tipo_, var5: total},
         success: function(data){
@@ -426,7 +427,7 @@ $('#cerrar').click(function(){
 
     }else{
         $.ajax({
-            url: "cerrar_caja.php",
+            url: "../cerrar_caja.php",
             type: "POST",
             data:{var: base, var2:ingresosEfe, var3:ingresosEle, var4: egresos},
             success: function(data){
@@ -525,7 +526,7 @@ $('#modificar').click(function(){
                         popup: 'animate__animated animate__fadeOutUp'
                     }
                 });  
-                window.location.href="views/view_facturas_pendientes.php"; 
+                window.location.href="view_facturas_pendientes.php"; 
                }else{
                 Swal.fire({
                     icon: 'error',
@@ -597,9 +598,10 @@ var referencia;
             $('#efectivo').show();
             $('#credito').hide();
             $('#debito').hide();
+            $('#links').hide();
     
         }
-        if(pago === "Tarjeta debito"){
+        if(pago === "Tarjeta débito"){
             $('#efectivo').hide();
             $('#credito').hide();
             $('#links').hide();
@@ -626,7 +628,7 @@ var referencia;
                   }
               })
         }
-        if(pago === "Tarjeta credito"){
+        if(pago === "Tarjeta crédito"){
             $('#efectivo').hide();
             $('#debito').hide();
             $('#links').hide();
@@ -756,25 +758,42 @@ function verificarConexion(){
                                 url: "sincronizacion/ejecutarBD.php",
                                 type: "POST",
                                 success: function(data){
-                                    alert(data);
+                                    //alert(data);
+                                    if(data==='Sentencias ejecutadas'){
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Sincronización correcta',
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                          });
+                                    }
                                 }
                             });
                         }else{
-                            alert("El archivo esta vacio");
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'No hay sentencias pendientes a sincronizar',
+                                showConfirmButton: false,
+                                timer: 2000
+                              });
                         }
                     }
                 });
 
                 /**/
            }else{
-               alert(data);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Por el momento no tiene acceso al servidor. Por favor intente más tarde',
+                    showConfirmButton: false,
+                    timer: 2000
+                }); 
            }
         }
 
     });
 }
-$('#sincro').click(function(){
-    
+$('#sincro').click(function(){   
       $.ajax({
         url: "sincronizacion/comprobarConexionBD.php",
         type: "POST",
@@ -919,7 +938,7 @@ $(document).ready(function(){
     $('#producto2').typeahead({
         source: function(query,result){
             $.ajax({
-                url:"get_var.php",
+                url:"../get_var.php",
                 method:"POST",
                 data:{query:query},
                 dataType:"json",
@@ -936,7 +955,7 @@ $(document).ready(function(){
             nombre_producto1 = item;
             
             $.ajax({
-                url:"ocultar.php?var="+nombre_producto1,
+                url:"../ocultar.php?var="+nombre_producto1,
                 method:"POST",    
                 success:function(data){ 
                      tipo1 = data;   
@@ -990,7 +1009,7 @@ $(document).ready(function(){
     });
 
     $.ajax({
-        url: "egresos.php",
+        url: "../egresos.php",
         type: "POST",
         success: function(data){
             //alert(data);
@@ -1003,7 +1022,7 @@ $(document).ready(function(){
     }); 
 
     $.ajax({
-        url: "ventas_efe.php",
+        url: "../ventas_efe.php",
         type: "POST",
         success: function(data){
             //alert(data);
@@ -1015,7 +1034,7 @@ $(document).ready(function(){
         }
     }); 
     $.ajax({
-        url: "ventas_tarjetas.php",
+        url: "../ventas_tarjetas.php",
         type: "POST",
         success: function(data){
             //alert(data);
@@ -1027,7 +1046,7 @@ $(document).ready(function(){
         }
     }); 
     $.ajax({
-        url: "ventas_ele.php",
+        url: "../ventas_ele.php",
         type: "POST",
         success: function(data){
             //alert(data);
@@ -1342,6 +1361,23 @@ $('.selec').keypress(function (e) {
                                     popup: 'animate__animated animate__fadeOutUp'
                                 }
                             }); */
+                            $.ajax({
+                                type: "POST",
+                                url: "mensaje.php?var="+cant,
+                                data: $("#venta").serialize(),
+                                success: function(data) {
+                                    if(data==="Hay pocas unidades del producto"){
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            position: 'top',
+                                            title: data,
+                                            showConfirmButton: false,
+                                            timer: 1000
+                                          });
+                                    }
+                                }
+                            });
+
                             cont = cont + 1;
                              $.ajax({
                                     type: "POST",
@@ -1545,9 +1581,10 @@ var id_factura;
 
 //Realizar modificaciones de la facrtura y hacer el pago de la compra 
 $('#pagar').click(function(){
-    //alert("Entro");
+   
+    //alert("Entro")
     verificarConexion();
-   /* if($('#id_factCre').val()===''){
+    /*if($('#id_factCre').val()===''){
         referencia =  referencia = $('#id_factDe').val();
         $('#id_factDe').val('');
     }else{
@@ -1600,8 +1637,10 @@ $('#pagar').click(function(){
                         });     
                     }else{
                         alert("facturaCreada");
+                        //verificarConexion();
                         document.getElementById("submitButton1").click();
                         var myVar = setInterval(myTimer, 1500);
+                        verificarConexion();
                     }
                 }
                 
@@ -1609,13 +1648,14 @@ $('#pagar').click(function(){
         
         }
     });*/
+
+    
     
 });
 
 function myTimer() {
-    //verificarConexion();
     //window.print();
-    window.location.href="index.php";  
+
     var contenidoVen = document.getElementById("cont_ventas");
     contenidoVen.innerHTML = "";
     $('#valor_ingre').val('');
@@ -1677,7 +1717,15 @@ $('#volver_stock').click(function(){
 
     var contenidoVen = document.getElementById("cont_ventas");
     contenidoVen.innerHTML = "";
-  $('#total').val('');  
+    $('#total').val('');  
+    $('#valor_ingre').val('');  
+    $('#vueltas').val('');  
+    $('#total_venDe').val(''); 
+    $('#id_factDe').val('');   
+    $('#total_venCre').val('');  
+    $('#id_factCre').val('');  
+    $('#total_venLink').val('');  
+    $('#id_factLink').val('');  
    
 });
   
@@ -1889,9 +1937,10 @@ $('.anula').click(function(){
             return $(this).text();
         });
         
+        
     $.ajax({
         type:"POST",
-        url: "anulacion.php?var="+datos[0],
+        url: "../anulacion.php?var="+datos[0],
         success: function(data) {
             if(data==="Proceso correcto"){
                 Swal.fire({
@@ -1904,7 +1953,7 @@ $('.anula').click(function(){
                         popup: 'animate__animated animate__fadeOutUp'
                     } 
                 });    
-                window.location.href="views/view_ventas.php"; 
+                window.location.href="view_ventas.php"; 
             }else{
                 Swal.fire({
                     icon: 'error',
@@ -1997,7 +2046,7 @@ $('.select').keypress(function (e) {
 
         $.ajax({
             type: "POST",
-            url: "disponibilidad.php?var="+nombre_producto1,
+            url: "../disponibilidad.php?var="+nombre_producto1,
             data:{var2: cant1},
             success: function(data) {
                 if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
@@ -2014,7 +2063,7 @@ $('.select').keypress(function (e) {
                 }else{
                     $.ajax({
                         type:"POST",
-                        url: "cambiarProducto.php",
+                        url: "../cambiarProducto.php",
                         data:{var2: idDetalle, var4: cant1, var5:nombre_producto1},
                         success: function(data) {
                             if(data==="Cambios exitosos"){
@@ -2028,7 +2077,7 @@ $('.select').keypress(function (e) {
                                         popup: 'animate__animated animate__fadeOutUp'
                                     }
                                 }); 
-                                window.location.href="views/view_ventas.php";
+                                window.location.href="view_ventas.php";
 
                             }else{
                                 Swal.fire({

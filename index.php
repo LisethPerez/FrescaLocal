@@ -97,10 +97,15 @@ display: block;
                     </li>
                     
                     <hr>
+                    <li class="menu-title">EGRESOS</li><!-- /.menu-title -->
+                        <li>
+                            <a href="http://cosechafresca.controler.com.co/login" target="_blank"class="nav-link"> <i class="menu-icon fa fa-paper-plane"></i>Egresos</a>
+                            
+                        </li>
+                    <hr>
                     <li class="menu-title">Salir</li><!-- /.menu-title -->
                     <li>
                         <a href="salir.php" class="nav-link"> <i class="menu-icon fa fa-power-off"></i>Cerrar sessión</a>
-                        
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -505,7 +510,7 @@ display: block;
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <form method="POST" action="generar_pdf.php">  
+                                                                    <form method="POST" action="generar_pdf.php" target="_blank">  
                                                                             <input type="hidden" value="" id="ggg" name="var">
                                                                             <input type="hidden" value="" id="g2" name="var2">
                                                                 
@@ -516,7 +521,7 @@ display: block;
                                                         </div><!--model-body-->
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
-                                                            <button type="button" id="volver_stock" class="btn btn-success btn-sm mb-2" id="eliminar">ELIMINAR</button>
+                                                            <button type="button" id="volver_stock" class="btn btn-success btn-sm mb-2" data-dismiss="modal">ELIMINAR</button>
                                                             <button type="button" class="btn btn-success btn-sm mb-2" id="pagar">PAGAR</button>
                                                         </div>
                                                     </div><!--modal-content-->

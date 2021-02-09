@@ -11,9 +11,6 @@ $fecha1 = date('Y/m/d H:i:s');
 $fecha = date("Y-m-d") . " 00:00:00";
 $diaSiguiente = date("Y-m-d", strtotime("+1 day", strtotime($fecha))) . " 00:00:00";
 
-$username="control3_cosechafresca2";
-$password="vk{j@%zq2HWq";
-
 include 'conexionBD.php';
 
 $consult ="SELECT COUNT(*) total FROM factura WHERE id_factura_web=0 AND facturapaga=1 AND anulacion=0 AND fecha BETWEEN '{$fecha}' AND '{$diaSiguiente}'";
@@ -34,7 +31,10 @@ $sqlCaja = mysqli_query($conn,$consultCaja) or die(mysqli_error($conn));
 
 
 if($sqlCaja){
-    echo "Caja correcta";
+    
+    $username="control3_cosechafresca2";
+    $password="vk{j@%zq2HWq";
+
     try {
         $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($consultCaja);
@@ -52,6 +52,8 @@ if($sqlCaja){
         fwrite($file, '?>'. PHP_EOL);
         fclose($file); 
     }
+
+    echo "Caja correcta";
 }else{
     echo "Ha ocurrido un error";
 }

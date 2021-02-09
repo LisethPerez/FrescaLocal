@@ -68,8 +68,7 @@ if($num = $sqlExi->num_rows>0){
         echo "Cambios relizados ";
         $username="control3_cosechafresca2";
         $password="vk{j@%zq2HWq";
-
-   
+             
         try {
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consultaModi);

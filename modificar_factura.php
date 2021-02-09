@@ -4,8 +4,6 @@ $tipoPa = $_POST['var2'];
 $referencia = $_POST['var3'];
 $idFac = $_POST['var4'];
 
-$username="control3_cosechafresca2";
-$password="vk{j@%zq2HWq";
 
 include 'conexionBD.php';
 if($tipoPa=="Efectivo"){
@@ -18,6 +16,8 @@ if($tipoPa=="Efectivo"){
 $sql = $sqlMoodi = mysqli_query($conn, $ModiFac) or die(mysqli_error($conn));
 if($sql){
     echo "Modificación de estado de la factura correcta";
+    $username="control3_cosechafresca2";
+    $password="vk{j@%zq2HWq";
     try {
         $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($ModiFac);

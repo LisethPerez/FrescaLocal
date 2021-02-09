@@ -43,10 +43,10 @@ if($num = $sql->num_rows>0){
         if($pago == "Efectivo"){
             $totalEfectivo = $row['pago_total'] + $totalEfectivo;
         }
-        if($pago == "Tarjeta credito"){
+        if($pago == "Tarjeta crédito"){
             $totalCre = $row['pago_total'] + $totalCre;
         }
-        if($pago == "Tarjeta debito"){
+        if($pago == "Tarjeta débito"){
             $totalDe = $row['pago_total'] + $totalDe;
         }
         if($pago == "Link de pago"){

@@ -15,12 +15,14 @@ if($number = $sql->num_rows>0){
     if(password_verify($contra, $result->password)) {
 
         //$idUser = $result->id;
+        
         $_SESSION['username'] = $usuario;       
         $_SESSION['idUser'] = $result->id; 
         $_SESSION['idSede'] = $result->sede_id_sede; 
         $_SESSION['fecha'] = $fecha;
+        $_SESSION['id_cargo'] = $result->tipo_cargo_id_cargo;
 
-        include "conexionBD.php";
+       include "conexionBD.php";
         $consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$_SESSION['idUser']}'";
         $sqlEmple = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
         $resultEmple = $sqlEmple->fetch_object();

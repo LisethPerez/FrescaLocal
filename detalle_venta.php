@@ -9,8 +9,6 @@ $fecha = date('Y/m/d H:i:s');
 $cedula = $_GET['cliente'];
 //$idStock = $_POST['var2'];
 //$ids = json_decode(json_encode($idStock),true);
-$username="control3_cosechafresca2";
-$password="vk{j@%zq2HWq";
 
 $idStock = array();
 
@@ -32,10 +30,22 @@ $idEmple = $resultadoUser->id_empleado;
 $consultaFac = "INSERT INTO factura (id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,empleado_id_domiciliario,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago,tipo_web) VALUES (0,0,0,'{$fecha}',0,1,'{$idEmple}',0,'{$clienteId}','{$id_Sede}',0,'NULL','NULL')";
 $sqlFact = mysqli_query($conn,$consultaFac) or die(mysqli_error($conn));
 
+//Obtención del id de la factura generada anteriormente para la asignación de los productos del dettalle
+$consultt = "SELECT * FROM factura ORDER BY id_factura DESC LIMIT 1";
+$sqll = mysqli_query($conn,$consultt) or die(mysqli_error($conn));
+$fac = $sqll->fetch_object();
+$idFactu = $fac->id_factura;
+
+$consultaFac1 = "INSERT INTO factura (id_factura,id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,empleado_id_domiciliario,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago,tipo_web) VALUES ('{$idFactu}',0,0,0,'{$fecha}',0,1,'{$idEmple}',0,'{$clienteId}','{$id_Sede}',0,'NULL','NULL')";
+
+
 if($sqlFact){
+    $username="control3_cosechafresca2";
+    $password="vk{j@%zq2HWq";
+        
     try {
         $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
-        $mbd->query($consultaFac);
+        $mbd->query($consultaFac1);
     } catch (PDOException $e) {
         //echo 'Falló la conexión: ' . $e->getMessage();
         
@@ -45,18 +55,12 @@ if($sqlFact){
         //$file = fopen('sentencias.txt', 'w');
         fwrite($file, '<?php'. PHP_EOL);
         fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
-        fwrite($file, '$consulta1="'.$consultaFac.'";' . PHP_EOL);
+        fwrite($file, '$consulta1="'.$consultaFac1.'";' . PHP_EOL);
         fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
         fwrite($file, '?>'. PHP_EOL);
         fclose($file); 
     }
 }
-
-//Obtención del id de la factura generada anteriormente para la asignación de los productos del dettalle
-$consultt = "SELECT * FROM factura ORDER BY id_factura DESC LIMIT 1";
-$sqll = mysqli_query($conn,$consultt) or die(mysqli_error($conn));
-$fac = $sqll->fetch_object();
-$idFactu = $fac->id_factura;
 
 foreach ($datos as $product) {
     //Guardar cada una de los datos del JSON del detalle de productos
@@ -128,6 +132,8 @@ foreach ($datos as $product) {
                         $peso = $residuo;
 
                         if($sql2){
+                            $username="control3_cosechafresca2";
+                            $password="vk{j@%zq2HWq";
                             try {
                                 $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
                                 $mbd->query($consult2);
@@ -161,7 +167,9 @@ foreach ($datos as $product) {
 
     $sql5 = mysqli_query($conn,$consult5) or die(mysqli_error($conn));
     if($sql5){
-        try {
+        $username="control3_cosechafresca2";        
+        $password="vk{j@%zq2HWq";
+        try {    
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consult5);
         } catch (PDOException $e) {
@@ -190,11 +198,15 @@ foreach ($datos as $product) {
     }*/
 
     
-    $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado) VALUES ('{$cantt}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','$mensaje','{$resultPro->descuento_id_descuento}','{$resultPro->impuestos_id_impuestos}','{$fecha}','{$idEmple}')";
+    $consult3 ="INSERT INTO detalle_factura (cantidad,precio_venta,total_descuento,total_impuesto,total,factura_id_factura,stock_id_stock,descuento_id_descuento,impuesto_id_impuestos,fecha,empleado_id_empleado, producto_anterior) VALUES ('{$cantt}','{$precio}','{$descuento}','{$impuesto}','{$total}','{$idFactu}','$mensaje','{$resultPro->descuento_id_descuento}','{$resultPro->impuestos_id_impuestos}','{$fecha}','{$idEmple}','NULL')";
 
     $sqlFact1 = mysqli_query($conn,$consult3) or die(mysqli_error($conn));
 
+
     if($sqlFact1){
+        $username="control3_cosechafresca2";
+        $password="vk{j@%zq2HWq";
+
         try {
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consult3);

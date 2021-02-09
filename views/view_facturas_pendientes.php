@@ -84,7 +84,12 @@
                             
                         </ul>
                     </li>
-                    
+                    <hr>
+                    <li class="menu-title">EGRESOS</li><!-- /.menu-title -->
+                        <li>
+                            <a href="http://cosechafresca.controler.com.co/login" target="_blank"class="nav-link"> <i class="menu-icon fa fa-paper-plane"></i>Egresos</a>
+                            
+                        </li>
                     <hr>
                     <li class="menu-title">Salir</li><!-- /.menu-title -->
                     <li>

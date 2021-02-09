@@ -10,9 +10,6 @@ $cantidadNueva = $_POST['var4'];
 $producto = $_POST['var5'];
 $id_Stock = array();
 
-$username="control3_cosechafresca2";
-$password="vk{j@%zq2HWq";
-
 include 'conexionGene.php';
 $consultPro = "SELECT * FROM producto WHERE nombre='{$producto}'";
 $sqlPro = mysqli_query($conn,$consultPro) or die(mysqli_error($conn));
@@ -26,13 +23,18 @@ $consultIm = "SELECT * FROM impuestos WHERE id_impuestos='{$impuesto}'";
 $sqlIm = mysqli_query($conn,$consultIm) or die(mysqli_error($conn));
 $resultIm = $sqlIm->fetch_object();
 $valorImpu = $resultIm->valor_impuesto;
+$impuesto1 = $valorImpu/100;
 
 $consultDes = "SELECT * FROM descuento WHERE id_descuento='{$descuento}'";
 $sqlDes = mysqli_query($conn,$consultDes) or die(mysqli_error($conn));
 $resultDes = $sqlDes->fetch_object();
 $valorDes = $resultDes->valor_descuento;
+$descuento1 = $valorDes/100;
 
-$total = round($cantidadNueva*($precio+(($valorImpu*$precio)/100)-(($valorDes*$precio)/100)));
+$precioNuevo = round((($precio-($precio*$descuento1))*$cantidadNueva));
+$total = round($precioNuevo+($precioNuevo*$impuesto1));
+
+//$total = round($cantidadNueva*($precio+(($valorImpu*$precio)/100)-(($valorDes*$precio)/100)));
 
 include 'conexionBD.php';
 $consultEmple = "SELECT * FROM empleado WHERE user_id_user='{$id_usuario}'";
@@ -44,6 +46,10 @@ $consultDetalle = "SELECT * FROM detalle_factura WHERE id_detallef={$idDetalle}"
 $sqlDetalle = mysqli_query($conn,$consultDetalle) or die(mysqli_error($conn));
 $resul = $sqlDetalle->fetch_object();
 $cantidadPro = $resul->cantidad;
+$precioVenta = $resul->precio_venta;
+$totalImp = $resul->total_impuesto;
+$totalDes = $resul->total_descuento;
+$totalDetalle = $resul->total;
 $idStock = $resul->stock_id_stock;
 $idFact = intval($resul->factura_id_factura);
 
@@ -51,28 +57,35 @@ $consultStock = "SELECT * FROM stock WHERE id_stock={$idStock}";
 $sqlStock = mysqli_query($conn,$consultStock) or die(mysqli_error($conn));
 $result = $sqlStock->fetch_object();
 $cantidadStock = $result->cantidad;
+$produ = $result->producto_id_producto;
+
+include 'conexionGene.php';
+$consultPro2 = "SELECT * FROM producto WHERE id_producto='{$produ}'";
+$sqlPro2 = mysqli_query($conn,$consultPro2) or die(mysqli_error($conn));
+$resultPro2 = $sqlPro2->fetch_object();
+$nombre = $resultPro2->nombre;
 
 //echo $cantidadStock." - " .$cantidadPro." - ".$idStock;
+$descripcion = "Producto anterior: ".$nombre." , cantidad: ".$cantidadPro." , precio de venta: ".$precioVenta." , descuento: ".$totalDes." , impuesto: ".$totalImp." y un total de: ".$totalDetalle;
 
+include 'conexionBD.php';
 $nuevaCan = $cantidadPro + $cantidadStock;
 
 $modiStock = "UPDATE stock SET cantidad={$nuevaCan} WHERE id_stock={$idStock}";
 $sqlModi = mysqli_query($conn,$modiStock) or die(mysqli_error($conn));
 
 if($sqlModi){
+    $username="control3_cosechafresca2";
+    $password="vk{j@%zq2HWq";
     try {
         $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
-        $mbd->query($modiFact);
+        $mbd->query($modiStock);
     } catch (PDOException $e) {
-        //echo 'Falló la conexión: ' . $e->getMessage();
-        
-        //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
-        
         $file = fopen("sincronizacion/sentenciasBD.txt","a+");
         //$file = fopen('sentencias.txt', 'w');
         fwrite($file, '<?php'. PHP_EOL);
         fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
-        fwrite($file, '$consulta1="'.$modiFact.'";' . PHP_EOL);
+        fwrite($file, '$consulta1="'.$modiStock.'";' . PHP_EOL);
         fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
         fwrite($file, '?>'. PHP_EOL);
         fclose($file); 
@@ -116,6 +129,8 @@ $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                     $cantidadNueva = $residuo;
 
                     if($sql2){
+                        $username="control3_cosechafresca2";
+                        $password="vk{j@%zq2HWq";
                         try {
                             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
                             $mbd->query($consult2);
@@ -142,6 +157,8 @@ $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
     $sql5 = mysqli_query($conn,$consult5) or die(mysqli_error($conn));
 
     if($sql5){
+        $username="control3_cosechafresca2";
+        $password="vk{j@%zq2HWq";
         try {
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consult5);
@@ -163,10 +180,12 @@ $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
     unset($id_Stock);
     $id_Stock = array();
 
-$modiDetalle = "UPDATE detalle_factura SET cantidad={$cantidadNueva}, precio_venta={$precio}, total_impuesto={$valorImpu}, total_descuento={$valorDes}, total={$total}, stock_id_stock={$mensaje}, descuento_id_descuento={$descuento}, impuesto_id_impuestos={$impuesto}, empleado_id_empleado={$idEmple} WHERE id_detallef={$idDetalle}";
+$modiDetalle = "UPDATE detalle_factura SET cantidad={$cantidadNueva}, precio_venta={$precio}, total_impuesto={$valorImpu}, total_descuento={$valorDes}, total={$total}, stock_id_stock={$mensaje}, descuento_id_descuento={$descuento}, impuesto_id_impuestos={$impuesto}, empleado_id_empleado={$idEmple}, producto_anterior='{$descripcion}' WHERE id_detallef={$idDetalle}";
 $sqlDetalle = mysqli_query($conn,$modiDetalle) or die(mysqli_error($conn));
 
 if($sqlDetalle){
+    $username="control3_cosechafresca2";
+    $password="vk{j@%zq2HWq";
     try {
         $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($modiDetalle);
@@ -202,6 +221,8 @@ if($num = $sqlExi->num_rows>0){
     $sqlMosiFac = mysqli_query($conn,$consultaModi) or die(mysqli_error($conn));
 
     if($sqlMosiFac){
+        $username="control3_cosechafresca2";
+        $password="vk{j@%zq2HWq";
         try {
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consultaModi);

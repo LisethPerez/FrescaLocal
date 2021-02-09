@@ -5,8 +5,7 @@ $idFac = $_GET['var'];
 $id_Sede = $_SESSION['idSede'];
 $id_usuario = $_SESSION['idUser'];
 $fecha = date('Y/m/d H:i:s');
-$username="control3_cosechafresca2";
-$password="vk{j@%zq2HWq";
+
 
 include 'conexionBD.php';
 
@@ -34,6 +33,8 @@ if($num = $sqlFact->num_rows>0){
         $sqlModi = mysqli_query($conn,$modiStock) or die(mysqli_error($conn));
 
         if($sqlModi){
+            $username="control3_cosechafresca2";
+            $password="vk{j@%zq2HWq";
             try {
                 $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
                 $mbd->query($modiStock);
@@ -63,6 +64,9 @@ $modiFact = "UPDATE factura SET anulacion=1 WHERE id_factura={$idFac}";
 $sqlFact = mysqli_query($conn,$modiFact) or die(mysqli_error($conn));
 
 if($sqlFact){
+    $username="control3_cosechafresca2";
+    $password="vk{j@%zq2HWq";
+
     try {
         $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($modiFact);
@@ -87,6 +91,9 @@ $createAnula = "INSERT INTO nota_credito(fecha,factura_id_factura,empleado_id_em
 $sqlAnula = mysqli_query($conn,$createAnula) or die(mysqli_error($conn));
 
 if($sqlAnula){
+
+    $username="control3_cosechafresca2";
+    $password="vk{j@%zq2HWq";
     try {
         $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($createAnula);

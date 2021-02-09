@@ -11,8 +11,6 @@ $fecha = date('Y-m-d H:i:s');
 $datos = json_decode(json_encode($dato),true);
 $tipo_pago = $_POST['tipo_pago'];
 
-$username="control3_cosechafresca2";
-$password="vk{j@%zq2HWq";
 
 include 'conexionBD.php';
 $consultaExi = "SELECT COUNT(*) contar, SUM(total) cant FROM detalle_factura WHERE factura_id_factura='{$id_fact}'";
@@ -32,13 +30,12 @@ if($num = $sqlExi->num_rows>0){
     $sqlMoodi = mysqli_query($conn,$consultaModi) or die(mysqli_error($conn));
 
     if($sqlMoodi){
+        $username="control3_cosechafresca2";
+        $password="vk{j@%zq2HWq";
         try {
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consultaModi);
         } catch (PDOException $e) {
-            //echo 'Falló la conexión: ' . $e->getMessage();
-            
-            //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
             
             $file = fopen("sincronizacion/sentenciasBD.txt","a+");
             //$file = fopen('sentencias.txt', 'w');
@@ -89,6 +86,9 @@ foreach ($datos as $product) {
 
     if($sql2){
         $mensaje = "Adicción realizada";
+        
+        $username="control3_cosechafresca2";
+        $password="vk{j@%zq2HWq";
         try {
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consult1);
