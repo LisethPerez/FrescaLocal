@@ -1,12 +1,12 @@
 <?php 
 //En el servidor se debe agregar la libreria Direct IO de php para el manejo de los puertos seriales
-
+`mode com4: BAUD=9600 PARITY=N data=8 stop=1 xon=off`;
 //Abrimos el puerto con permisos de solo lectura 
 $handle = dio_open('COM4', O_RDONLY);
 
 if($handle){
     //Capturamos los datos, dejando solo números y reemplazando espacios
-    echo str_replace(' ', '', preg_replace('/[^0-9.\s]/','', dio_read($handle,19)));
+   echo str_replace(' ', '', preg_replace('/[^0-9.\s]/','', dio_read($handle,19)));
     //Cerramos la conexión con el puerto
     dio_close($handle);
 }else{
