@@ -27,6 +27,7 @@ if($numFilas = $sql->num_rows>0){
     
     $impuesto1 = $impuesto/100;
     $descuento1 = $descuento/100;
+    
     if($tipo=="1"){
         $precio = $result['precio_2'];
     }

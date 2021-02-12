@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $id_Sede = $_SESSION['idSede'];
 $id_usuario = $_SESSION['idUser'];
 $dato = $_POST['var'];
@@ -131,7 +130,7 @@ foreach ($datos as $product) {
                         $cantidad_pro = $residuo;
                         $peso = $residuo;
 
-                        if($sql2){
+                    if($sql2){
                             $username="control3_cosechafresca2";
                             $password="vk{j@%zq2HWq";
                             try {

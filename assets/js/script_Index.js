@@ -1580,17 +1580,16 @@ $('#valor_ingre').keypress(function (e) {
 var id_factura;
 
 //Realizar modificaciones de la facrtura y hacer el pago de la compra 
-$('#pagar').click(function(){
-   
-    //alert("Entro")
-    verificarConexion();
-    /*if($('#id_factCre').val()===''){
+$('#pagar').click(function(){  
+    //verificarConexion();
+    if($('#id_factCre').val()===''){
         referencia =  referencia = $('#id_factDe').val();
         $('#id_factDe').val('');
     }else{
         referencia =  referencia = $('#id_factCre').val();
         $('#id_factCre').val('')
     }
+
     $.ajax({
         type:"POST",
         url: "detalle_venta.php?cliente="+cedula_cliente,
@@ -1618,7 +1617,7 @@ $('#pagar').click(function(){
                 $('#g2').val(total);
             }
             
-                $.ajax({
+                /*$.ajax({
                 type:"POST",
                 url: "agregar_factura.php",
                 data:{tipo_pago: pago, id:  id_factura, refe: referencia, var2: tipo_domi, var3: emple},
@@ -1644,10 +1643,10 @@ $('#pagar').click(function(){
                     }
                 }
                 
-            });
+            });*/
         
         }
-    });*/
+    });
 
     
     

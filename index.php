@@ -510,10 +510,11 @@ display: block;
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <form method="POST" action="generar_pdf.php" target="_blank">  
+                                                                    <form method="POST" action="generar_pdf.php" target="_blank">
+                                                                   <!-- <form method="POST" action="pruebaImpre.php">  -->
                                                                             <input type="hidden" value="" id="ggg" name="var">
                                                                             <input type="hidden" value="" id="g2" name="var2">
-                                                                
+                                                                            <input type="hidden" value="<?php echo $_SESSION['nombreEmple']?>" id="" name="var3">
                                                                             <button type="submit" style="display:none;" id="submitButton1"></button>
                                                                     </form>
                                                                 </div><!--card-body-->
