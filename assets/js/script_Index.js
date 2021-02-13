@@ -746,14 +746,12 @@ function verificarConexion(){
         type: "POST",
         success: function(data){
            if(data === 'Esta conectado'){
-                alert("Esta conectado");
+                //alert("Esta conectado");
                 $.ajax({
                     url: "sincronizacion/verificarContBD.php",
                     type: "POST",
                     success: function(data){
-                       
                         if(data==='El archivo tiene contenido'){
-                            alert("El archivo tiene contenido");
                             $.ajax({
                                 url: "sincronizacion/ejecutarBD.php",
                                 type: "POST",
@@ -766,6 +764,8 @@ function verificarConexion(){
                                             showConfirmButton: false,
                                             timer: 2000
                                           });
+                                          var myVar = setInterval(myTimer, 2000);
+
                                     }
                                 }
                             });
@@ -776,6 +776,7 @@ function verificarConexion(){
                                 showConfirmButton: false,
                                 timer: 2000
                               });
+                              var myVar = setInterval(myTimer, 2000);
                         }
                     }
                 });
@@ -788,11 +789,16 @@ function verificarConexion(){
                     showConfirmButton: false,
                     timer: 2000
                 }); 
+                var myVar = setInterval(myTimer, 2000);
            }
         }
 
     });
 }
+function myTimer() {
+    window.location.href="index.php"; 
+}
+
 $('#sincro').click(function(){   
       $.ajax({
         url: "sincronizacion/comprobarConexionBD.php",
@@ -1222,17 +1228,17 @@ $('#total_venDe').keypress(function (evt) {
 
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
-    $('#pesooo').val(0.93);    
-    $('#peso2').val(0.93);
+    /*$('#pesooo').val(0.93);    
+    $('#peso2').val(0.93);*/
 
-    /*$.ajax({
+    $.ajax({
         
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
             $('#peso2').val(data);
         }
-    }); */
+    }); 
 }); 
 
 $("#pesooo2").focus(function(e) {
@@ -1597,11 +1603,12 @@ $('#pagar').click(function(){
         success: function(data) {
             //alert(data);
             id_factura = data;
-            if(data){
-                alert("Detalle guardado");
-            }else{
-                alert("Ha ocurrido algún problema");
-            }
+            Swal.fire({
+                icon: 'success',
+                title: 'Se esta generando la factura, ¡por favor espere un momento!',
+                showConfirmButton: false,
+                timer: 4000
+              });
             $('#ggg').val(data);
             
             var cost = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
@@ -1617,7 +1624,7 @@ $('#pagar').click(function(){
                 $('#g2').val(total);
             }
             
-                /*$.ajax({
+                $.ajax({
                 type:"POST",
                 url: "agregar_factura.php",
                 data:{tipo_pago: pago, id:  id_factura, refe: referencia, var2: tipo_domi, var3: emple},
@@ -1635,34 +1642,19 @@ $('#pagar').click(function(){
                             }
                         });     
                     }else{
-                        alert("facturaCreada");
                         //verificarConexion();
                         document.getElementById("submitButton1").click();
-                        var myVar = setInterval(myTimer, 1500);
+                        //var myVar = setInterval(myTimer, 1500);
                         verificarConexion();
                     }
                 }
                 
-            });*/
+            });
         
         }
     });
-
-    
-    
+   
 });
-
-function myTimer() {
-    //window.print();
-
-    var contenidoVen = document.getElementById("cont_ventas");
-    contenidoVen.innerHTML = "";
-    $('#valor_ingre').val('');
-    $('#vueltas').val('');
-    $('#efectivo').hide();
-    $('#total').val('');
-  }
-
 
 //Realizar descuento de la disponibilidad del producto (si se requiere)
 $('#volver_stock').click(function(){

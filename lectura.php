@@ -1,8 +1,8 @@
 <?php 
 //En el servidor se debe agregar la libreria Direct IO de php para el manejo de los puertos seriales
-`mode com4: BAUD=9600 PARITY=N data=8 stop=1 xon=off`;
+`mode com3: BAUD=9600 PARITY=N data=8 stop=1 xon=off`;
 //Abrimos el puerto con permisos de solo lectura 
-$handle = dio_open('COM4', O_RDONLY);
+$handle = dio_open('COM3', O_RDONLY);
 
 if($handle){
     //Capturamos los datos, dejando solo números y reemplazando espacios

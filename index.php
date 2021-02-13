@@ -510,8 +510,8 @@ display: block;
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <form method="POST" action="generar_pdf.php" target="_blank">
-                                                                   <!-- <form method="POST" action="pruebaImpre.php">  -->
+                                                                   <!-- <form method="POST" action="generar_pdf.php" target="_blank">-->
+                                                                   <form method="POST" action="pruebaImpre.php" target="_blank"> 
                                                                             <input type="hidden" value="" id="ggg" name="var">
                                                                             <input type="hidden" value="" id="g2" name="var2">
                                                                             <input type="hidden" value="<?php echo $_SESSION['nombreEmple']?>" id="" name="var3">

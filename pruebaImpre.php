@@ -22,8 +22,9 @@ try {
 	
 	//$printer->initialize();
 	$printer->setJustification(Printer::JUSTIFY_CENTER);
-	$logo = EscposImage::load("./images/logoCo1.png",false);
+	$logo = EscposImage::load("./images/fac.png",false);
 	$printer->bitImage($logo, Printer::IMG_DOUBLE_WIDTH | Printer::IMG_DOUBLE_HEIGHT);
+	//$printer->bitImage($logo);
 	//$printer->feed();
 	$printer->setFont(Printer::FONT_B);
 	$printer->setTextSize(2, 2);
@@ -183,6 +184,7 @@ try {
 	}
 	$printer->cut();
     $printer -> close();
+	echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";
 } catch (Exception $e) {
     echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
 }
