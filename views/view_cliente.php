@@ -212,6 +212,7 @@
                                                     <th>Correo</th>
                                                     <th>Documento</th>
                                                     <th>NIT</th>
+                                                    <th>Verificación</th>
                                                     <th>Fecha</th>
                                                     <th>Editar</th>
                                                 </tr>
@@ -231,6 +232,7 @@
                                                         <td><?php echo $row->telefono;?></td>
                                                         <td><?php echo $row->correo;?></td>
                                                         <td><?php echo $row->documento;?></td>
+                                                        <td><?php echo $row->nit;?></td>
                                                         <td><?php echo $row->verificacion_nit;?></td>
                                                         <td><?php echo $row->fecha;?></td>
                                                         <td> 
@@ -316,10 +318,16 @@
                                                                     </div>
                                                                     <div class="col">
                                                                             <label for="validationCustom03">Indentificación NIT</label>
-                                                                            <input type="number" class="form-control" id="nit1" name="nit1"   onkeypress="return onlyNums(event)" required><br>
-                                                                            <div class="invalid-feedback">
-                                                                            Ingrese identificación NIT
-                                                                        </div>
+                                                                            <div class="form-row">
+                                                                            <div class="col"> 
+                                                                                <input type="text" class="form-control" id="nit2" name="nit2" placeholder="NIT"  style="height:33px; width:142px" onkeypress="return onlyNums(event)" required>
+                                                                            </div>
+                                                                            <strong>-</strong>
+                                                                            <div class="col"> 
+                                                                               <input type="number" class="form-control" id="nit3" name="nit3"  style="height:33px; width:65px" min="1" max="9" onkeypress="return onlyNums(event)" required><br>
+                                                                            </div>
+                                                                              
+                                                                            </div>      
                                                                     </div>   
                                                                 </div>
                                                             

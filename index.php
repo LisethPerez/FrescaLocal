@@ -269,7 +269,7 @@ display: block;
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id=""><strong>Información Cliente</strong></h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <button type="button" class="close" data-dismiss="modal" id="cerrar" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                          </div>
@@ -305,7 +305,7 @@ display: block;
                                                             </div><!--card-border-->
                                                         </div><!--model-body-->
                                                         <div class="modal-footer">
-                                                            <button type="button" id="confi" class="btn btn-success btn-sm mb-2" data-dismiss="modal">Confirmar</button>
+                                                            <button type="button" id="confi" class="btn btn-success btn-sm mb-2" data-dismiss="modal" disabled>Confirmar</button>
                                                            
                                                         </div>
                                                     </div><!--modal-content-->
@@ -405,7 +405,7 @@ display: block;
                                                         
                                                     </div> <!--modal-body-->
                                                     <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancelar</button>
+                                                            <button type="button" class="btn btn-danger btn-sm" id="ocu" data-dismiss="modal">Cancelar</button>
                                                             <button type="button" class="btn btn-success btn-sm" id="registrar2">Confirmar</button>
                                   
                                                     </div> <!--modal-footer-->
@@ -418,7 +418,7 @@ display: block;
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="mediumModalLabel"><strong>Información Cliente</strong></h5>
+                                                            <h5 class="modal-title" id="mediumModalLabel"><strong>Información de Pago</strong></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>

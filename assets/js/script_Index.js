@@ -26,16 +26,83 @@ $('#seleEli').click(function () {
      
 });
 $('#cedula').keydown(function(f){
+    var cedula = $('#cedula').val();
     if(f.shiftKey==1){
+        if(cedula === ''){
+            Swal.fire({
+                icon: 'error',
+                text: 'Ingrese el número de cedula a buscar',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                showConfirmButton: false,
+                timer: 2000
+            });     
+        }else{
+        
+            $.ajax({
+                type: "POST",
+                url: "encontrar_cedula.php",
+                data: $('#formulario').serialize(),
+                success: function(data) {
+                                    
+                    if (data === "No existe ese registro"){
+                        $('#cedula').val('');
+                        $('#resultado').html('');
+                        Swal.fire({
+                            icon: 'error',
+                            text: 'No existen registros con la búsqueda',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            },
+                            showConfirmButton: false,
+                            timer: 2000
+                        });     
+                        $('#ingresar').prop('disabled', false);
+                        $('#confi').prop('disabled', true);
+                    }else{
+                        $('#resultado').html(data);  
+                        $('#confi').prop('disabled', false);
+                    }
+                }
+            });
+        }
+    }
+});
+
+//Buscar cedula para la existencia del cliente
+$('#buscar1').click(function () {
+    var cedula = $('#cedula').val();
+
+    if(cedula === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Por favor ingrese la cedula',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            },
+            showConfirmButton: false,
+            timer: 2000
+        });     
+    }else{
         $.ajax({
             type: "POST",
             url: "encontrar_cedula.php",
             data: $('#formulario').serialize(),
             success: function(data) {
-                
-                $('#resultado').html(data);
-                
+    
                 if (data === "No existe ese registro"){
+                    $('#cedula').val();
+                    $('#resultado').html('');
                     Swal.fire({
                         icon: 'error',
                         text: 'No existen registros con la búsqueda',
@@ -44,42 +111,22 @@ $('#cedula').keydown(function(f){
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOutUp'
-                        }
+                        },
+                        showConfirmButton: false,
+                        timer: 2000
                     });     
                     $('#ingresar').prop('disabled', false);
+                    $('#confi').prop('disabled', true);
+                }else{              
+                    $('#resultado').html(data);
+                    $('#confi').prop('disabled', false);
                 }
             }
         });
     }
+     
 });
 
-//Buscar cedula para la existencia del cliente
-/*$('#buscar1').click(function () {
-    $.ajax({
-        type: "POST",
-        url: "encontrar_cedula.php",
-        data: $('#formulario').serialize(),
-        success: function(data) {
-            
-            $('#resultado').html(data);
-            
-            if (data === "No existe ese registro"){
-                Swal.fire({
-                    icon: 'error',
-                    text: 'No existen registros con la búsqueda',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                });     
-                $('#ingresar').prop('disabled', false);
-            }
-        }
-    });
-     
-});*/
 var cedula_cliente;
 var tipo_cliente=0;
 $('#confi').click(function () {
@@ -89,13 +136,14 @@ $('#confi').click(function () {
         url: "obtener_tipo.php?var="+cedula_cliente,
         data: $('#formulario').serialize(),
         success: function(data) {          
-            tipo_cliente = data;           
+            tipo_cliente = data;  
+            document.getElementById("cerrar").click();         
         }
     });
 });
 
 //Buscar datos de clientes para su modificacion
-$('#buscar3').click(function () {
+/*$('#buscar3').click(function () {
     $.ajax({
         type: "POST",
         //url: "buscar_cliente.php?var='"+ valor+ "'",
@@ -128,7 +176,7 @@ $('#buscar3').click(function () {
         }
     });
      
-});
+});*/
 
 function createRow1(data) {                              //dynamically adding rows to the Table
     //design this according to your requirement    
@@ -202,10 +250,14 @@ $('#registrar2').click(function () {
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOutUp'
-                        }
+                        },
+                        showConfirmButton: false,
+                        timer: 2000
                     });    
                     clearCliente();
                     $('#cedula').val(''); 
+                    document.getElementById("ocu").click();
+
                 }else{
                     alert(data);
                 }
@@ -233,7 +285,9 @@ $('#ingresar_login').click(function () {
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOutUp'
-            }
+            },
+            showConfirmButton: false,
+            timer: 2000
         });     
     }else{
     $.ajax({
@@ -241,25 +295,25 @@ $('#ingresar_login').click(function () {
         url: "../login.php",
         data: $("#formulario_ingreso").serialize(),
         success: function(data) {  
-           
+            
             if(data === "Datos correctos"){
-                //var myVar = setInterval(myTimer3, 6000);
                 window.location.href="../index.php";
                 
-            }
-            if(data === "Datos erroneos"){
+            }else{
                 Swal.fire({
                     icon: 'error',
-                    text: 'Datos erroneos',
+                    text: data,
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOutUp'
-                    }
+                    },
+                    showConfirmButton: false,
+                    timer: 2000
                 });  
                 $('#email').val('');
-                $('#password').val('');   
+                $('#password').val(''); 
             }
         }
     });
@@ -288,6 +342,45 @@ $('.view_products').click(function () {
     });    
  });
 
+ $('.view_products1').click(function () {
+    $tr=$(this).closest('tr');
+    var datos = $tr.children("td").map(function (){
+        return $(this).text();
+    });
+    id_factu = datos[0];
+    //alert(datos[0]);
+    $.ajax({
+        url: "../detalle_productos1.php?var="+id_factu,
+        type: "POST",
+        success: function(data){
+            //alert(JSON.parse(data));
+            var produ = document.getElementById("cont_productos");
+            produ.innerHTML = "";
+            var datosPro = JSON.parse(data);
+            createRow5(datosPro);       
+        }
+    });    
+ });
+
+ function createRow5(data) {                              //dynamically adding rows to the Table
+    //design this according to your requirement    
+    for(var i=0; i<data.length; i++){
+    var trElement = `<tr>
+    <td>`+data[i].cantidad+`</td>
+    <td>`+data[i].producto+`</td>
+    <td>`+data[i].precio_venta+`</td>
+    <td>`+data[i].precio_total+`</td>
+    <td>`+data[i].descuento+`</td>
+    <td>`+data[i].impuesto+`</td>
+    <td>`+data[i].fecha+`</td>  
+    <td>`+data[i].empleado+`</td>
+    <td style="display:none">`+data[i].idDetalle+`</td>   
+    <td>`+data[i].opcion+`</td> 
+    </tr>`;
+    $('#cont_productos').append(trElement);  
+    }  
+
+}
 
 
  function createRow2(data) {                              //dynamically adding rows to the Table
@@ -302,8 +395,6 @@ $('.view_products').click(function () {
     <td>`+data[i].impuesto+`</td>
     <td>`+data[i].fecha+`</td>  
     <td>`+data[i].empleado+`</td>
-    <td style="display:none">`+data[i].idDetalle+`</td>   
-    <td>`+data[i].opcion+`</td> 
     </tr>`;
     $('#cont_productos').append(trElement);  
     }  
@@ -464,25 +555,56 @@ $('#cerrar').click(function(){
 ;
 });
 
-/*$('#tipoo').on('focus', function () { 
-    previous = this.value;
-}).change(function() {
+$('.form-control-user').keypress(function (e) {
 
-    alert(previous);
-    previous = this.value;
+    var correo = $('#email').val();
+    var password = $('#password').val();
 
-});*/
-/*$('#tipoo').change(function(){
-    alert("Se ha hecho un cambio");
-    /*var selectedValue = $(this).attr("selectedIndex");
-    alert(selectedValue);*/
-    /*if(selectedValue!=="Efectivo"){
-        $('#depe').hide();
-    }else{
-        $('#depe').html("Efectivo");
+    if(e.which == 13) {
+        if(correo==='' || password===''){
+            Swal.fire({
+                icon: 'error',
+                text: 'Por favor ingrese los datos',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                showConfirmButton: false,
+                timer: 2000
+            });     
+        }else{
+        $.ajax({
+            type: "POST",
+            url: "../login.php",
+            data: $("#formulario_ingreso").serialize(),
+            success: function(data) {  
+                
+                if(data === "Datos correctos"){
+                    window.location.href="../index.php";
+                    
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        text: data,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        },
+                        showConfirmButton: false,
+                        timer: 2000
+                    });  
+                    $('#email').val('');
+                    $('#password').val(''); 
+                }
+            }
+        });
+        }
     }
-
-});*/
+});
 
 $('#modificar').click(function(){
     var paga = $('#pagaa option:selected').val();
@@ -500,17 +622,19 @@ $('#modificar').click(function(){
     if(refe === ''){
         Swal.fire({
             icon: 'error',
-            text: 'Ingrese dato',
+            text: 'Ingrese el dato marcado con *',
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOutUp'
-            }
+            },
+            showConfirmButton: false,
+            timer: 2000
         });
     }else{
         $.ajax({
-            url: "modificar_factura.php",
+            url: "../modificar_factura.php",
             type: "POST",
             data:{var: paga, var2: tipo, var3: refe, var4: id_},
             success: function(data){
@@ -524,7 +648,9 @@ $('#modificar').click(function(){
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOutUp'
-                    }
+                    },
+                    showConfirmButton: false,
+                    timer: 2000
                 });  
                 window.location.href="view_facturas_pendientes.php"; 
                }else{
@@ -536,7 +662,9 @@ $('#modificar').click(function(){
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOutUp'
-                    }
+                    },
+                    showConfirmButton: false,
+                    timer: 2000
                 }); 
                }
             }
@@ -560,7 +688,8 @@ $('.editbtn').click(function () {
     $('#telefono1').val(datos[4]);
     $('#correo1').val(datos[5]); 
     $('#documento1').val(datos[6]);
-    $('#nit1').val(datos[7]);
+    $('#nit2').val(datos[7]);
+    $('#nit3').val(datos[8]);
  });
 
  var tipo_domi;
@@ -807,9 +936,9 @@ $('#sincro').click(function(){
             if(data === 'Esta conectado'){
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Por favor espere mientras se realiza la sincronización',
+                    title: 'Por favor espere mientras se realiza la sincronización y se evidencie el mensaje de exito',
                     showConfirmButton: false,
-                    timer: 55000
+                    timer: 65000
                   });
                   $.ajax({
                     url: "exportar.php",
@@ -1736,7 +1865,9 @@ $('#descontar').click(function(){
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOutUp'
-            }
+            },
+            showConfirmButton: false,
+            timer: 2000
         });     
 
     }else{
@@ -1745,7 +1876,8 @@ $('#descontar').click(function(){
             url: "volverStock2.php?codigo="+codigo,
             data: {var: venta, var3: cedula_cliente, var4: tipo_pa, var5: paga, var6: tipo_web},
             success: function(data) {
-             
+                //alert(data);
+                //alert(data);
                 if(data==="Cambios realizados"){
                     Swal.fire({
                         icon: 'success',
@@ -1758,8 +1890,7 @@ $('#descontar').click(function(){
                         }
                     });   
                     $('#codigo_inve').val('');  
-                    window.location.href="index.php";  
-
+                    window.location.href="index.php"; 
                 }
                 if(data ==="No se realizaron cambios"){
                     Swal.fire({

@@ -8,10 +8,11 @@
     $direccion = $_POST['direccion1'];
     $correo = $_POST['correo1'];
     $empresa = $_POST['empresa1'];
-    $nit = $_POST['nit1'];
+    $nit = $_POST['nit2'];
+    $verificacion_nit = $_POST['nit3'];
     
     
-$consulta1 = "UPDATE cliente SET nombre='{$nombre}', nombre_empresa='{$empresa}', direccion='{$direccion}', telefono={$telefono}, correo='{$correo}', documento={$documento},  verificacion_nit={$nit} WHERE id_cliente={$id}";
+$consulta1 = "UPDATE cliente SET nombre='{$nombre}', nombre_empresa='{$empresa}', direccion='{$direccion}', telefono='{$telefono}', correo='{$correo}', documento='{$documento}',  nit='{$nit}', verificacion_nit='{$verificacion_nit}' WHERE id_cliente={$id}";
 $sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error($conn));
 
 $username="control3_cosechafresca2";

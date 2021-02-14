@@ -108,7 +108,7 @@ foreach ($datos as $product) {
                 $result1 = $sql1->fetch_object();
                 $cantidad = $result1->cantidad;
 
-                if($cantTota<$cantidad){
+                if($cantTota<=$cantidad){
                     
                     $cantidad1 = $cantidad - $cantTota;
 

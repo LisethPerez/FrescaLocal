@@ -16,6 +16,10 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Dumping routines for database 'control3_cosechafresca1'
+--
+
+--
 -- Table structure for table `categoria_productos`
 --
 
@@ -172,62 +176,6 @@ INSERT INTO `punto_venta` VALUES (1,1,'calle 109'),(2,2,'calle 102'),(3,3,'no3')
 UNLOCK TABLES;
 
 --
--- Table structure for table `reporteinventarios`
---
-
-DROP TABLE IF EXISTS `reporteinventarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `reporteinventarios` (
-  `id_rInventario` int(11) NOT NULL AUTO_INCREMENT,
-  `fechaInicial` date NOT NULL,
-  `fechaFinal` date NOT NULL,
-  `fechaActual` date NOT NULL,
-  `noProductos` double NOT NULL,
-  `total` double NOT NULL,
-  PRIMARY KEY (`id_rInventario`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `reporteinventarios`
---
-
-LOCK TABLES `reporteinventarios` WRITE;
-/*!40000 ALTER TABLE `reporteinventarios` DISABLE KEYS */;
-INSERT INTO `reporteinventarios` VALUES (1,'2019-11-01','2021-01-30','2021-01-31',0,0),(2,'2020-12-01','2021-01-01','2021-01-31',0,0),(4,'2020-12-01','2020-12-31','2021-01-31',0,0);
-/*!40000 ALTER TABLE `reporteinventarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `reporteventas`
---
-
-DROP TABLE IF EXISTS `reporteventas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `reporteventas` (
-  `id_rVentas` int(11) NOT NULL AUTO_INCREMENT,
-  `fechaInicial` date NOT NULL,
-  `fechaFinal` date NOT NULL,
-  `fechaActual` date NOT NULL,
-  `noProductos` double NOT NULL,
-  `total` double NOT NULL,
-  PRIMARY KEY (`id_rVentas`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `reporteventas`
---
-
-LOCK TABLES `reporteventas` WRITE;
-/*!40000 ALTER TABLE `reporteventas` DISABLE KEYS */;
-INSERT INTO `reporteventas` VALUES (15,'2019-01-01','2019-12-31','2020-02-09',0,0),(16,'2019-01-01','2019-12-31','2020-02-09',0,0),(19,'2019-01-01','2020-04-01','2020-04-02',0,0),(21,'2019-03-01','2020-06-05','2020-06-04',0,0),(22,'2020-06-20','2020-06-21','2020-06-21',0,0),(23,'2020-06-28','2020-07-17','2020-07-26',0,0),(24,'1999-01-01','2022-01-01','2020-08-29',0,0),(25,'1999-01-01','2022-01-01','2020-08-29',0,0),(26,'2021-01-25','2021-01-29','2021-01-18',0,0),(27,'2019-01-01','2020-12-12','2021-01-24',0,0);
-/*!40000 ALTER TABLE `reporteventas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 
@@ -249,7 +197,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `users_sede_fk` (`sede_id_sede`),
   KEY `users_tipo_cargo_fk` (`tipo_cargo_id_cargo`)
-) ENGINE=MyISAM AUTO_INCREMENT=1253 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1254 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,16 +206,12 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'juan','juangomez3701@gmail.com','$2y$10$CVBkgWgaTeWmOb7g10IyF.cBms.j2V6hbrxdCkDwk5GRcytt9YEi6','vgfkGGxILnRvftLUNUokZioKbcNY0LTCLHMT9dyRp9aYWFA4yAt7zGcDlY6F','2019-11-06 11:38:48.000000','2021-02-10 23:02:46.000000',1,1,1,1),(10,'Holman','holman@gmail.com','$2y$10$gvCFGDii3ApTQpdA/5ls5e/XdWDZnl0PSOWcco8/g6QIlRcgMb4PW','6qD21rKWFxNXBYHRsB2XnieSpvABDINnTXPUDna9iWOvjGaMwXjG5mUmvEjl','2019-11-06 13:02:24.000000','2020-10-18 19:44:01.000000',2,3,0,1),(1239,'Andres','andres@gmail.com','$2y$10$ZtJAocgGfayDhByGWtUxNuvrfbklC2WDcr/ROXzxFZxmeTynKhl2y','','2020-10-18 20:33:44.000000','2020-10-18 20:34:01.000000',1,1,0,1),(1238,'carlos','carlos@gmail.com','$2y$10$TZ/nIUSfwQu4z.B.OqDUYOZZLPGEp7tPD9KUd3xLhlHtQ4PD5USR6','','2020-10-18 19:42:11.000000','2020-10-18 19:42:11.000000',1,1,0,1),(1237,'juliana','juliana@gmail.com','$2y$10$/YiUnvwBmPpL9ZuUFEqupeWO5i9h3ipsBNO07c85qYLg/tnGM1ccG','','2020-10-18 19:39:54.000000','2020-10-18 19:39:54.000000',1,1,0,1),(1240,'Holman rincon','holman123@gmail.com','$2y$10$A/mhG3pXEHNkBjEhq7jcquY02Y6y1ZlEigtX8S.TxRIH3LGquasAa','','2020-10-24 15:37:39.000000','2020-10-24 15:37:39.000000',1,1,1,1),(1241,'Holman2','holman.rincon@uptc.edu.co','$2y$10$vygSnwGcAv0JrO4mVqcyZ.0m1ooNILrV3scUaV9tSIWRX.ueVA9Wy','VW8zO6SRmbFrUjfsPT5vDljQ5CeAjGc3OEFHfGEAdQGwpXA62CNcSWlVWoQs','2020-10-24 15:39:29.000000','2021-02-10 23:01:23.000000',1,1,1,1),(1242,'prueba','prueba123@gmail.com','$2y$10$MVsoOhojTwcT8ylRGiNUie/avwg2kdeeWE.IJMyV.l2j69VwKj.pC','','2020-10-24 16:29:31.000000','2020-10-24 16:29:31.000000',1,1,0,1),(1243,'prueba120','qweyqiwoe@gmail.com','$2y$10$n7a8ZMTW6JUDT9GcgfZsPODdAR/RHVlsGlga.JhfgzXOzASroP5yy','','2020-10-24 16:31:02.000000','2020-10-24 17:00:21.000000',1,1,0,1),(1244,'Juliana Pérez','liseth.perez@uptc.edu.co','$2y$10$rn0T6gvc0PxVAXvVFk4gHeo1XtaaGb6si.oAkavTcPgQoRKKUXCGW','','2020-11-06 21:47:05.000000','2020-11-06 21:47:05.000000',1,1,1,1),(1245,'prueba','prueba123@gmail.com','$2y$10$k07aiXN.6z7a0K9j2bMLcOxjDyKasCxSe9sHUcONxdUlpyOqhrfcS','','2021-01-07 22:00:19.000000','2021-01-10 20:22:41.000000',1,1,1,1),(1246,'carlos camargo','contacto@controler.com.co','$2y$10$IjKj4cTd6g3Bq8D.L0ZuR.gdIUTDnSYoeYjKEmpssziJx0S/db1rq','vYN4XF3ycI2Q1eMknZCXUCehHah4k2DbmN4BmQ3ARcaR78P2Vmcni6tLhAtd','2021-01-24 20:18:42.000000','2021-02-07 21:40:29.000000',1,1,1,1),(1247,'USUARIO DE PRUEBA','holmanrincon7@gmail.com','$2y$10$EYy5UjxS013I.JvoyBrIwOnV/H5ZF0VAtqilz7nZ5q6y2TAulWfEW','CQuqJamZdcEeLrYanICj3N4EZhh1yNWawlywwdzozO1sRwmWIoxygixQkFF6','2021-02-10 16:22:56.000000','2021-02-10 22:54:46.000000',29,1,0,1),(1248,'USUARIO PRUEBA 2','holmanrincon17@gmail.com','$2y$10$OEv7j13mg28W3gX1WOpwX.kgIRzNUAeaot0Kjh6EugJudiW49B3rG','','2021-02-10 18:32:33.000000','2021-02-10 19:33:59.000000',29,1,0,1),(1249,'Hugo','hugo@gmail.com','$2y$10$Q1YFeaxIwIO4zUQO.oLhye7nq314jBWZShuso2umZUEBMC06dF9O.','1HQDwn21H2kDaTfazMHa1A5jJ8q29HCfO3Y5734faIgWxaLvMPTQjmjDZQwz','2021-02-10 22:50:07.000000','2021-02-11 18:06:58.000000',1,1,0,3),(1251,'juli','juli@gmail.com','$2y$10$iCkwAzM56LTR5iRfDYLfN.6aZGIPcEe8vHTUTbv6Di5.DVZKQQ0hK','','2021-02-11 16:39:47.000000','2021-02-11 16:39:47.000000',1,1,0,1),(1252,'prueba 3','prueba3@gmail.com','$2y$10$lsIFm80XI/y0cfqBXaj2bucD/BpL4LVnhjuxrXQw7AEbdQtN26qOO','','2021-02-11 18:07:28.000000','2021-02-11 18:07:28.000000',1,1,0,1);
+INSERT INTO `users` VALUES (1,'juan','juangomez3701@gmail.com','$2y$10$CVBkgWgaTeWmOb7g10IyF.cBms.j2V6hbrxdCkDwk5GRcytt9YEi6','vgfkGGxILnRvftLUNUokZioKbcNY0LTCLHMT9dyRp9aYWFA4yAt7zGcDlY6F','2019-11-06 11:38:48.000000','2021-02-10 23:02:46.000000',1,1,1,1),(10,'Holman','holman@gmail.com','$2y$10$gvCFGDii3ApTQpdA/5ls5e/XdWDZnl0PSOWcco8/g6QIlRcgMb4PW','6qD21rKWFxNXBYHRsB2XnieSpvABDINnTXPUDna9iWOvjGaMwXjG5mUmvEjl','2019-11-06 13:02:24.000000','2020-10-18 19:44:01.000000',2,3,0,1),(1239,'Andres','andres@gmail.com','$2y$10$ZtJAocgGfayDhByGWtUxNuvrfbklC2WDcr/ROXzxFZxmeTynKhl2y','','2020-10-18 20:33:44.000000','2020-10-18 20:34:01.000000',1,1,0,1),(1238,'carlos','carlos@gmail.com','$2y$10$TZ/nIUSfwQu4z.B.OqDUYOZZLPGEp7tPD9KUd3xLhlHtQ4PD5USR6','','2020-10-18 19:42:11.000000','2020-10-18 19:42:11.000000',1,1,0,1),(1237,'juliana','juliana@gmail.com','$2y$10$/YiUnvwBmPpL9ZuUFEqupeWO5i9h3ipsBNO07c85qYLg/tnGM1ccG','','2020-10-18 19:39:54.000000','2020-10-18 19:39:54.000000',1,1,0,1),(1240,'Holman rincon','holman123@gmail.com','$2y$10$A/mhG3pXEHNkBjEhq7jcquY02Y6y1ZlEigtX8S.TxRIH3LGquasAa','','2020-10-24 15:37:39.000000','2020-10-24 15:37:39.000000',1,1,1,1),(1241,'Holman2','holman.rincon@uptc.edu.co','$2y$10$vygSnwGcAv0JrO4mVqcyZ.0m1ooNILrV3scUaV9tSIWRX.ueVA9Wy','VW8zO6SRmbFrUjfsPT5vDljQ5CeAjGc3OEFHfGEAdQGwpXA62CNcSWlVWoQs','2020-10-24 15:39:29.000000','2021-02-10 23:01:23.000000',1,1,1,1),(1242,'prueba','prueba123@gmail.com','$2y$10$MVsoOhojTwcT8ylRGiNUie/avwg2kdeeWE.IJMyV.l2j69VwKj.pC','','2020-10-24 16:29:31.000000','2020-10-24 16:29:31.000000',1,1,0,1),(1243,'prueba120','qweyqiwoe@gmail.com','$2y$10$n7a8ZMTW6JUDT9GcgfZsPODdAR/RHVlsGlga.JhfgzXOzASroP5yy','','2020-10-24 16:31:02.000000','2020-10-24 17:00:21.000000',1,1,0,1),(1244,'Juliana Pérez','liseth.perez@uptc.edu.co','$2y$10$rn0T6gvc0PxVAXvVFk4gHeo1XtaaGb6si.oAkavTcPgQoRKKUXCGW','IHNeig57T5IpiZJeKVTETyt1h3SrMbFC85DQbzUbXKzig2gBJRYgVb9AoKi7','2020-11-06 21:47:05.000000','2021-02-12 16:10:44.000000',1,1,1,1),(1245,'prueba','prueba123@gmail.com','$2y$10$k07aiXN.6z7a0K9j2bMLcOxjDyKasCxSe9sHUcONxdUlpyOqhrfcS','','2021-01-07 22:00:19.000000','2021-01-10 20:22:41.000000',1,1,1,1),(1246,'carlos camargo','contacto@controler.com.co','$2y$10$IjKj4cTd6g3Bq8D.L0ZuR.gdIUTDnSYoeYjKEmpssziJx0S/db1rq','ui5YJw4f4WBZmqmMBSZLen8MaGdpCewPcKTOQG533euDTAY2ggbJCeHQoVVJ','2021-01-24 20:18:42.000000','2021-02-12 20:31:18.000000',1,1,1,1),(1247,'USUARIO DE PRUEBA','holmanrincon7@gmail.com','$2y$10$EYy5UjxS013I.JvoyBrIwOnV/H5ZF0VAtqilz7nZ5q6y2TAulWfEW','CQuqJamZdcEeLrYanICj3N4EZhh1yNWawlywwdzozO1sRwmWIoxygixQkFF6','2021-02-10 16:22:56.000000','2021-02-10 22:54:46.000000',29,1,0,1),(1248,'USUARIO PRUEBA 2','holmanrincon17@gmail.com','$2y$10$OEv7j13mg28W3gX1WOpwX.kgIRzNUAeaot0Kjh6EugJudiW49B3rG','','2021-02-10 18:32:33.000000','2021-02-10 19:33:59.000000',29,1,0,1),(1249,'Hugo','hugo@gmail.com','$2y$10$Q1YFeaxIwIO4zUQO.oLhye7nq314jBWZShuso2umZUEBMC06dF9O.','1HQDwn21H2kDaTfazMHa1A5jJ8q29HCfO3Y5734faIgWxaLvMPTQjmjDZQwz','2021-02-10 22:50:07.000000','2021-02-11 18:06:58.000000',1,1,0,3),(1251,'juli','juli@gmail.com','$2y$10$iCkwAzM56LTR5iRfDYLfN.6aZGIPcEe8vHTUTbv6Di5.DVZKQQ0hK','','2021-02-11 16:39:47.000000','2021-02-11 16:39:47.000000',1,1,0,1),(1252,'prueba 3','prueba3@gmail.com','$2y$10$lsIFm80XI/y0cfqBXaj2bucD/BpL4LVnhjuxrXQw7AEbdQtN26qOO','','2021-02-11 18:07:28.000000','2021-02-11 18:07:28.000000',1,1,0,1),(1253,'Pedro López','p.lopez@cosechafresca.com','$2y$10$O84eZqY/IJcGsyVCUrnuKef0NQbdkrlbr1oCWA53tMib6faNvC9ia','r00anCH5tr0PzCkU11yaM6nFeLmGbNd9hLmvgRp8hpY3vIVUUGyUGHSyHc0V','2021-02-12 20:27:41.000000','2021-02-12 21:08:32.000000',33,1,0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping events for database 'control3_cosechafresca1'
---
-
---
--- Dumping routines for database 'control3_cosechafresca1'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -279,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-12 15:16:34
+-- Dump completed on 2021-02-12 23:45:36

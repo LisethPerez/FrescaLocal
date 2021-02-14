@@ -23,7 +23,7 @@
             <td><?php echo $row['nombreCliente'];?></td>
             <td><?php echo $row['nombre_sede'];?></td>
             <td> 
-                <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos">
+                <button class="btn btn-white btn-sm view_products1" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos">
                 <i class="fa fa-list" aria-hidden="true"></i></button>
                 <button class="btn btn-success btn-sm impri" id="imprimir"> <i class="fa fa-print" aria-hidden="true"></i></button>
                 <button class="btn btn-danger btn-sm anula" id="anular"> <i class="fa fa-ban" aria-hidden="true"></i></button>

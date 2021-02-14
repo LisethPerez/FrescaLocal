@@ -37,7 +37,9 @@ if($num = $sql->num_rows>0){
             "descuento"=>$row['total_descuento'],
             "impuesto"=>$row['total_impuesto'],
             "fecha"=>$row['fecha'],
-            "empleado"=>$row['nombreEmple']
+            "empleado"=>$row['nombreEmple'],
+            "idDetalle"=>$row['id_detallef'],
+            "opcion"=>'<button class="btn btn-primary btn-sm modiProdu" data-toggle="modal" data-target="#modificarProd"> <i class="fa fa-list-alt" aria-hidden="true"></i></button>'
         );
     }
     echo json_encode($datos);

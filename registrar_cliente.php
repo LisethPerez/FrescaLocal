@@ -24,13 +24,16 @@ session_start();
     if(empty($correo)){
         $correo = '-';
     }
-    //---------------------------------
+
     if(empty($telefono)){
-        $telefono = 0;
+        $telefono = '-';
     }
+
     if(empty($nit)){
-        $nit = 0;
+        $nit = '-';
     }
+    //---------------------------------
+      
     if(empty($nit1)){
         $nit1 = 0;
     }
@@ -41,12 +44,12 @@ session_start();
     $resultadoUser = $sqlUser->fetch_object();
     $idEmple = $resultadoUser->id_empleado;
 
-    $consulta = "INSERT INTO cliente (nombre,nombre_empresa,direccion,telefono,correo,documento,nit,verificacion_nit,categoria_cliente_id_categoria,sede_id_sede,fecha,empleado_id_empleado) VALUES ('{$nombre}','{$empresa}','{$direccion}',$telefono,'{$correo}',$documento,'{$nit}','{$nit1}',$categoria_id_cliente,$id_Sede,'{$fecha}',$idEmple)";
+    $consulta = "INSERT INTO cliente (nombre,nombre_empresa,direccion,telefono,correo,documento,nit,verificacion_nit,categoria_cliente_id_categoria,sede_id_sede,fecha,empleado_id_empleado) VALUES ('{$nombre}','{$empresa}','{$direccion}','{$telefono}','{$correo}','{$documento}','{$nit}','{$nit1}',$categoria_id_cliente,$id_Sede,'{$fecha}',$idEmple)";
 
     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
 
 
-    $consulta1 = "INSERT INTO cliente (nombre,nombre_empresa,direccion,telefono,correo,documento,nit,verificacion_nit,categoria_cliente_id_categoria,sede_id_sede,fecha,empleado_id_empleado) VALUES ('{$nombre}','{$empresa}','{$direccion}',$telefono,'{$correo}',$documento,'{$nit}','{$nit1}',$categoria_id_cliente,$id_Sede,'{$fecha}',$idEmple)";
+    $consulta1 = "INSERT INTO cliente (nombre,nombre_empresa,direccion,telefono,correo,documento,nit,verificacion_nit,categoria_cliente_id_categoria,sede_id_sede,fecha,empleado_id_empleado) VALUES ('{$nombre}','{$empresa}','{$direccion}','{$telefono}','{$correo}','{$documento}','{$nit}','{$nit1}',$categoria_id_cliente,$id_Sede,'{$fecha}',$idEmple)";
    
 
     if($sql){

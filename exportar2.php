@@ -8,7 +8,7 @@ $salida_sql = 'sincronizacion/'.$db.'.sql';
 
 //$dump = 'mysqldump -v -h' .$servidor. ' -u' .$username.' -p '.$password. ' --opt ' .$db. ' –-single-transaction > $salida_sql';
 //$dump = 'mysqldump --routines --events --opt -h' .$servidor .' -u' .$username.' -p' .$password .' ' .$db .'  --no-tablespaces> ' .$salida_sql; 
-$dump = 'mysqldump --routines --events --opt -h' .$servidor .' -u' .$username.' -p' .$password .' ' .$db .' categoria_cliente cliente empleado password_resets sede stock tipo_cargo tipo_cuenta tipo_pago --no-tablespaces> ' .$salida_sql; 
+$dump = 'mysqldump --routines --events --opt -h' .$servidor .' -u' .$username.' -p' .$password .' ' .$db .' cargo_modulo categoria_cliente categoria_producto_trans cliente empleado modulos m_stock password_resets sede stock tipo_cargo tipo_cuenta tipo_pago --no-tablespaces> ' .$salida_sql; 
 
 //echo $dump;
 exec($dump, $output);

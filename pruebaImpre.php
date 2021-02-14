@@ -3,8 +3,6 @@
 
  $nombreEmple = $_POST['var3'];
  $idFac = $_POST['var'];
- //$idFac = 238;
- //$valorIngre = 42000;
  $valorIngre = $_POST['var2'];
 
 
@@ -69,7 +67,7 @@ try {
 
 	$printer->setFont(Printer::FONT_B);
 	$printer->setTextSize(1, 2);
-	$printer->text("                   DETALLE                 CANT.    VALOR    IVA\n");
+	$printer->text("                   DETALLE               CANT.    VALOR    IVA\n");
 	$printer->text("----------------------------------------------------------------\n");
 
 	$consult = "SELECT * FROM detalle_factura WHERE factura_id_factura={$idFac}";
@@ -121,13 +119,13 @@ try {
 			$nombreProducto = $resulProducto['nombre'];
 			$caracteres =  strlen($nombreProducto);
 
-			if($caracteres>=30){
-				$nombreProducto = substr($nombreProducto, 0, 30); 
+			if($caracteres>=28){
+				$nombreProducto = substr($nombreProducto, 0, 28); 
 			}
 			
 			$printer->setFont(Printer::FONT_C);
 			$printer->setTextSize(1, 1);
-			$printer->text(str_pad($nombreProducto,31)." ".str_pad($row['cantidad'],4," ", STR_PAD_BOTH)."".str_pad(number_format($row['total']),10," ", STR_PAD_BOTH)."".str_pad($nombreImpuesto,3," ", STR_PAD_BOTH)."\n");
+			$printer->text(str_pad($nombreProducto,29)." ".str_pad($row['cantidad'],4," ", STR_PAD_BOTH)."".str_pad(number_format($row['total']),10," ", STR_PAD_BOTH)."".str_pad($nombreImpuesto,3," ", STR_PAD_BOTH)."\n");
 			
 			$des = $precio * $descu;
 	
