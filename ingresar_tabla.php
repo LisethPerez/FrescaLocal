@@ -29,16 +29,16 @@ if($numFilas = $sql->num_rows>0){
     $descuento1 = $descuento/100;
     
     if($tipo=="1"){
-        $precio = $result['precio_1'];
+        $precio = round($result['precio_1']);
     }
     else if($tipo=="2"){
-        $precio = $result['precio_2'];
+        $precio = round($result['precio_2']);
 
     }else if($tipo=="3"){
-        $precio = $result['precio_3'];
+        $precio = round($result['precio_3']);
         
     }else if($tipo=="4"){
-        $precio = $result['precio_4'];
+        $precio = round($result['precio_4']);
     }
 
     if(empty($peso)){

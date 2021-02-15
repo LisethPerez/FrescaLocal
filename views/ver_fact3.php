@@ -19,7 +19,7 @@
         ?>
         <tr>    
             <td><?php echo $row['id_factura'];?></td>
-            <td><?php echo $row['pago_total'];?></td>
+            <td><?php echo "$ ".number_format($row['pago_total']);?></td>
             <td><?php echo $row['noproductos'];?></td>
             <td><?php echo $fecha;?></td>
             <td><?php echo $row['tipo'];?></td>
