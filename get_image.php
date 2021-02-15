@@ -15,7 +15,7 @@ if($numFilas = $sql->num_rows>0){
     header("Content-type: image/jpg"); 
 
     echo '<div class="col">';
-    echo '<img src="' .$result->imagen. '">';
+    echo '<img src="http://cosechafresca.controler.com.co/imagenes/articulos/'.$result->imagen.'">';
     echo '</div>';
     echo '<div class="col">';
     echo $result->nombre;
