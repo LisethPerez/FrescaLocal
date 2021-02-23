@@ -13,5 +13,6 @@ $cate = $_POST['query'];
             $rows[] = $row['nombre'];
         }
         echo json_encode($rows);
+
     }
 ?>

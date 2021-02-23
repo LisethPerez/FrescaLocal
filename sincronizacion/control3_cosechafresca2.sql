@@ -16,8 +16,68 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping routines for database 'control3_cosechafresca2'
+-- Table structure for table `bancos`
 --
+
+DROP TABLE IF EXISTS `bancos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bancos` (
+  `id_banco` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_banco` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `intereses` double NOT NULL,
+  `NoCuenta` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `tipo_cuenta_id_tcuenta` int(11) NOT NULL,
+  PRIMARY KEY (`id_banco`),
+  KEY `bancos_tipo_cuenta_fk` (`tipo_cuenta_id_tcuenta`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bancos`
+--
+
+LOCK TABLES `bancos` WRITE;
+/*!40000 ALTER TABLE `bancos` DISABLE KEYS */;
+INSERT INTO `bancos` VALUES (0,'Caja - Efectivo',1,'4412115',6),(1,'Bancolombia',2,'12351110',1),(3,'Caja Social',5,'321',2),(6,'BBVA',0,'79494083',1),(11,'Caja ',45,'4401105',6);
+/*!40000 ALTER TABLE `bancos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `caja`
+--
+
+DROP TABLE IF EXISTS `caja`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `caja` (
+  `id_caja` int(11) NOT NULL AUTO_INCREMENT,
+  `base_monetaria` double DEFAULT NULL,
+  `ingresos_efectivo` double NOT NULL,
+  `ingresos_electronicos` double NOT NULL,
+  `egresos_efectivo` double NOT NULL,
+  `egresos_electronicos` double NOT NULL,
+  `ventas` double NOT NULL,
+  `fecha` datetime NOT NULL,
+  `pagos` double NOT NULL,
+  `cierre` int(11) NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  `sede_id_sede` int(11) NOT NULL,
+  PRIMARY KEY (`id_caja`),
+  KEY `caja_empleado_fk` (`empleado_id_empleado`),
+  KEY `caja_sede_fk` (`sede_id_sede`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `caja`
+--
+
+LOCK TABLES `caja` WRITE;
+/*!40000 ALTER TABLE `caja` DISABLE KEYS */;
+INSERT INTO `caja` VALUES (1,1,0,0,0,0,12,'2020-11-28 23:40:38',0,0,1,1),(2,10000,0,0,0,0,12,'2020-11-29 20:17:11',0,0,1,1),(3,300000,21000,0,0,0,2,'2021-01-07 21:52:40',0,0,9,1);
+/*!40000 ALTER TABLE `caja` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `cargo_modulo`
@@ -40,7 +100,7 @@ CREATE TABLE `cargo_modulo` (
 
 LOCK TABLES `cargo_modulo` WRITE;
 /*!40000 ALTER TABLE `cargo_modulo` DISABLE KEYS */;
-INSERT INTO `cargo_modulo` VALUES (1,25,1),(4,26,1),(8,1,1),(9,1,2),(10,1,3),(12,1,5),(14,1,7),(15,1,8),(17,1,4),(18,1,9),(20,29,5),(21,29,4),(22,33,7),(23,33,3);
+INSERT INTO `cargo_modulo` VALUES (1,25,1),(4,26,1),(8,1,1),(9,1,2),(10,1,3),(12,1,5),(14,1,7),(15,1,8),(17,1,4),(18,1,9),(22,33,7),(23,33,3);
 /*!40000 ALTER TABLE `cargo_modulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +129,7 @@ CREATE TABLE `categoria_cliente` (
 
 LOCK TABLES `categoria_cliente` WRITE;
 /*!40000 ALTER TABLE `categoria_cliente` DISABLE KEYS */;
-INSERT INTO `categoria_cliente` VALUES (1,'Corriente','Precio 1','Cliente general.',14,'2021-02-11',1),(2,'Institucional','Precio 2','Varias instituciones',7,'2020-10-28',1),(3,'Otro 3','Precio 3','--',7,'2020-10-28',1),(4,'Otro 4','Precio 4','--',7,'2020-10-28',1);
+INSERT INTO `categoria_cliente` VALUES (1,'Corriente','Precio 1','Cliente general.',14,'2021-02-11',1),(2,'Institucional','Precio 2','Varias instituciones',7,'2020-10-28',1),(3,'1','Precio 3','--',11,'2021-02-16',1),(4,'Otro 4','Precio 4','--',7,'2020-10-28',1);
 /*!40000 ALTER TABLE `categoria_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,8 +177,8 @@ CREATE TABLE `cliente` (
   `direccion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `telefono` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `correo` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
-  `documento` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
-  `nit` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  `documento` varchar(45) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `nit` varchar(45) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `verificacion_nit` int(11) DEFAULT NULL,
   `categoria_cliente_id_categoria` int(11) NOT NULL,
   `sede_id_sede` int(11) NOT NULL,
@@ -130,7 +190,7 @@ CREATE TABLE `cliente` (
   KEY `categoria_cliente_id_categoria` (`categoria_cliente_id_categoria`),
   CONSTRAINT `categoria_cliente_id_categoria` FOREIGN KEY (`categoria_cliente_id_categoria`) REFERENCES `categoria_cliente` (`id_categoria`),
   CONSTRAINT `sede_id_sede` FOREIGN KEY (`sede_id_sede`) REFERENCES `sede` (`id_sede`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,8 +199,78 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (8,'eo','e','e','1','e@gmail.com','1223','0',0,1,3,'2020-10-17',2),(9,'carlos ramirez','CR','calle 56','312231','car@gmail.com','123456789','0',1,2,1,'2020-10-14',1),(10,'Andrea López','Empresa G','Carrera 27','31312132','and@gmail.com','1233444555','0',0,2,1,'2020-10-15',1),(12,'Ricardo Sánchez','Mercados H','Carrera 14 ','2147483647','ricar@gmail.com','555888988','0',7,2,1,'2020-10-17',1),(13,'Jhon Suárez','JSo','Carrera 19 ','317899872','js@gmail.com','126789992','0',2,2,1,'2020-10-18',1),(14,'Juan sanchéz','Empresa JP','Carrera 23','132312123','juannn@gmail.com','111111111','0',2,2,3,'2020-10-18',2),(18,'k','k','k','1','k@hotmail.com','1743','0',0,1,3,'2020-10-18',10),(21,'camilo perez','12','12','12','cap12@gmail.com','12222','1222',1,1,1,'2020-10-25',7),(22,'Juliana Pérez','Mercados A','Carrera 12-8','2147483647','julianaperez@gmail.com','2147483647','123456789',9,2,1,'2020-10-25',1),(23,'Camilo Rodríguez','Mercados C','Carrera 54','2147483647','camilo54@gmail.com','1234567123','0',0,2,1,'2020-10-29',7),(24,'r','ffffs','r','44353','rrrr@gmail.com','123132','1230000',4,1,1,'2020-10-30',7),(27,'Pedro Antonio','UPTC','Carrera 9 #1A-23 sur','3112733685','Pepito@uptc.edu.co','1057607465','1',1,1,1,'2020-11-12',1),(54,'Pedro Pinto','-','-','0','-','985673','0',0,1,1,'2021-01-31',9),(55,'Carlos Montañez','-','-','0','-','85796','0',0,1,1,'2021-01-31',9),(56,'Violeta Montañez','-','-','0','-','9589','0',0,1,1,'2021-02-02',9),(57,'Juana Valentina ','-','-','0','-','12578','0',0,1,1,'2021-02-02',9),(58,'carlos camargo','La canasta','-','3124569','-','9576834','0',0,1,1,'2021-02-02',11),(59,'Andres Fonseca Castro','-','-','0','-','2357','0',0,1,1,'2021-02-04',9),(60,'Juan Jose Pinto','-','-','0','-','682058','0',0,1,1,'2021-02-07',9),(61,'Federico Ramos','Lagos SA','carrera 78','67363','fede.ramos@gmail.com','14680','59492',5,1,1,'2021-02-07',9);
+INSERT INTO `cliente` VALUES (63,'Cliente normal','Ninguna','---','0000','normal@gmail.com','','',0,1,1,'2021-02-14',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `detalle_banco`
+--
+
+DROP TABLE IF EXISTS `detalle_banco`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `detalle_banco` (
+  `id_Dbanco` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime DEFAULT NULL,
+  `ingreso_efectivo` double NOT NULL,
+  `egreso_efectivo` double NOT NULL,
+  `banco_idBanco` int(11) NOT NULL,
+  `ingreso_electronico` double NOT NULL,
+  `egreso_electronico` double NOT NULL,
+  `sede_id_sede` int(11) NOT NULL,
+  PRIMARY KEY (`id_Dbanco`),
+  KEY `detalle_banco_fk` (`banco_idBanco`),
+  KEY `detalle_sede_fk` (`sede_id_sede`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `detalle_banco`
+--
+
+LOCK TABLES `detalle_banco` WRITE;
+/*!40000 ALTER TABLE `detalle_banco` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detalle_banco` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `detalle_factura`
+--
+
+DROP TABLE IF EXISTS `detalle_factura`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `detalle_factura` (
+  `id_detallef` int(11) NOT NULL AUTO_INCREMENT,
+  `cantidad` double NOT NULL,
+  `precio_venta` double NOT NULL,
+  `total_descuento` double NOT NULL,
+  `total_impuesto` double NOT NULL,
+  `total` double NOT NULL,
+  `factura_id_factura` int(11) NOT NULL,
+  `stock_id_stock` int(11) NOT NULL,
+  `descuento_id_descuento` int(11) NOT NULL,
+  `impuesto_id_impuestos` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  `producto_anterior` varchar(2000) COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`id_detallef`),
+  KEY `detalle_factura_descuento_fk` (`descuento_id_descuento`),
+  KEY `detalle_factura_factura_fk` (`factura_id_factura`),
+  KEY `detalle_factura_impuesto_fk` (`impuesto_id_impuestos`),
+  KEY `detalle_factura_producto_fk` (`stock_id_stock`)
+) ENGINE=InnoDB AUTO_INCREMENT=401 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `detalle_factura`
+--
+
+LOCK TABLES `detalle_factura` WRITE;
+/*!40000 ALTER TABLE `detalle_factura` DISABLE KEYS */;
+INSERT INTO `detalle_factura` VALUES (399,1,19200,0,19,22848,268,37,7,1,'2021-02-15',9,'NULL'),(400,3,19200,0,19,68544,269,37,7,1,'2021-02-15',9,'NULL');
+/*!40000 ALTER TABLE `detalle_factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -166,7 +296,7 @@ CREATE TABLE `empleado` (
   KEY `empleado_sede_fk` (`sede_id_sede`),
   KEY `empleado_tipo_cargo_fk` (`tipo_cargo_id_cargo`),
   KEY `empleado_users_fk` (`user_id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,32 +305,47 @@ CREATE TABLE `empleado` (
 
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-INSERT INTO `empleado` VALUES (1,'juan','juangomez3701@gmail.com','321','calle 12','31289362','3123',1,1,1,'2020-09-13'),(2,'holman ','holman@gmail.com','1','calle 12','1234','3123',1,1,10,'2020-12-12'),(3,'juliana','juliana@gmail.com','9876567','calle 12','312782681','1057612893',1,1,1237,'2020-10-18'),(4,'carlos','carlos@gmail.com','98012387','calle 12','98378124','12931239',1,1,1238,'2020-10-18'),(5,'Andres','andres@gmail.com','201562537','calle 12 no 12','2147483647','2147483647',1,1,1239,'2020-10-18'),(6,'Holman rincon','holman123@gmail.com','20188029','calle 12','12313213','23132',1,1,1240,'2020-10-24'),(7,'Holman2','holman.rincon@uptc.edu.co','123213121','calle 12','3120930','1238908123',1,1,1241,'2021-02-01'),(8,'prueba120','qweyqiwoe@gmail.com','2019231j1','calle 12 -12','2147483647','1389012093',1,1,1243,'2021-02-01'),(9,'Juliana Pérez','liseth.perez@uptc.edu.co','312890','---','23','-2',1,1,1244,'2020-11-06'),(10,'prueba','prueba123@gmail.com','201611889','---','2','2',1,1,1245,'2021-02-01'),(11,'carlos camargo','contacto@controler.com.co','0000000','----','0','0',1,1,1246,'2021-01-24'),(12,'USUARIO DE PRUEBA','holmanrincon7@gmail.com','123','Carrera 16','1111111111','11111',29,1,1247,'2021-02-01'),(13,'USUARIO PRUEBA 2','holmanrincon17@gmail.com','12333','999999','2147483647','9999999',29,1,1248,'2021-02-01'),(14,'Hugo','hugo@gmail.com','789','Carrera 5','888','8565566',1,1,1249,'0000-00-00'),(16,'juli','juli@gmail.com','00000001','calle 12','3126737823','1067895674',1,1,1251,'2021-02-11'),(17,'prueba 3','prueba3@gmail.com','000001','----','31231','1321100',1,1,1252,'2021-02-11'),(18,'Pedro López','p.lopez@cosechafresca.com','456','Calle 13','34435546','55645657665',33,1,1253,'0000-00-00');
+INSERT INTO `empleado` VALUES (1,'juan','juangomez3701@gmail.com','321','calle 12','31289362','3123',1,1,1,'2020-09-13'),(7,'Holman2','holman.rincon@uptc.edu.co','123213121','calle 12','3120930','1238908123',1,1,1241,'2021-02-01'),(9,'Juliana Pérez','liseth.perez@uptc.edu.co','312890','---','23','-2',1,1,1244,'2020-11-06'),(11,'carlos camargo','contacto@controler.com.co','0000000','----','0','0',1,1,1246,'2021-01-24'),(18,'Pedro López','p.lopez@cosechafresca.com','456','Calle 13','34435546','55645657665',33,1,1253,'0000-00-00'),(19,'NOHORA VILLA','nohora1843@gmail.com','123456','Cra 5 #71-45','3178931158','52472731',1,1,1255,'0000-00-00'),(20,'Dalila Villafañe','dalila298@yahoo.es','2','calle  5 N 71 45 local 103 ','3143323923','52192465',2,1,1256,'2021-02-16');
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `modulos`
+-- Table structure for table `factura`
 --
 
-DROP TABLE IF EXISTS `modulos`;
+DROP TABLE IF EXISTS `factura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `modulos` (
-  `id_modulo` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_modulo`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+CREATE TABLE `factura` (
+  `id_factura` int(11) NOT NULL AUTO_INCREMENT,
+  `id_factura_web` bigint(20) NOT NULL,
+  `pago_total` double NOT NULL,
+  `noproductos` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `facturapaga` decimal(38,0) NOT NULL,
+  `tipo_pago_id_tpago` int(11) NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  `empleado_id_domiciliario` int(11) NOT NULL,
+  `cliente_id_cliente` int(11) NOT NULL,
+  `sede_id_sede` int(11) NOT NULL,
+  `anulacion` int(11) NOT NULL,
+  `referencia_pago` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  `tipo_web` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`id_factura`),
+  KEY `factura_cliente_fk` (`cliente_id_cliente`),
+  KEY `factura_empleado_fk` (`empleado_id_empleado`),
+  KEY `factura_tipo_pago_fk` (`tipo_pago_id_tpago`)
+) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `modulos`
+-- Dumping data for table `factura`
 --
 
-LOCK TABLES `modulos` WRITE;
-/*!40000 ALTER TABLE `modulos` DISABLE KEYS */;
-INSERT INTO `modulos` VALUES (1,'Permisos'),(2,'Empleados'),(3,'Proveedores'),(4,'Clientes'),(5,'Sedes'),(7,'Inventario'),(8,'Facturacion'),(9,'Reportes');
-/*!40000 ALTER TABLE `modulos` ENABLE KEYS */;
+LOCK TABLES `factura` WRITE;
+/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
+INSERT INTO `factura` VALUES (269,0,68544,1,'2021-02-15 20:08:52',1,1,9,0,63,1,0,'NULL','NULL'),(268,0,22848,1,'2021-02-15 19:52:23',1,1,9,0,63,1,0,'NULL','NULL');
+/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -234,8 +379,80 @@ CREATE TABLE `m_stock` (
 
 LOCK TABLES `m_stock` WRITE;
 /*!40000 ALTER TABLE `m_stock` DISABLE KEYS */;
-INSERT INTO `m_stock` VALUES (1,'2020-12-13 13:09:40',1,1,1,1,1,0,0),(4,'2020-12-13 21:00:11',12,1,9,1,1,0,0),(3,'2020-12-13 19:35:34',12,1,4,1,1,0,0),(5,'2020-12-19 20:03:46',3,1,1,2,1,4,0),(6,'2020-12-19 20:41:06',21,1,1,2,1,1.5,0),(7,'2020-12-20 20:10:23',3,1,9,1,1,20,0),(8,'2020-12-23 09:01:44',9,1,1,1,1,10.5,0),(9,'2020-12-23 09:03:07',9,1,2,1,1,10.5,0),(10,'2020-12-23 09:04:24',26,1,1,2,1,5,0),(11,'2020-12-27 18:01:05',28,2,9,1,1,2,20000),(12,'2020-12-27 16:59:47',28,2,4,1,1,3,30000),(13,'2020-12-26 15:14:00',26,2,4,1,1,3.6,0),(14,'2020-12-27 20:12:02',29,1,1,2,1,1.5,15000),(16,'2021-01-06 10:17:11',28,4,10,1,1,0.6,6000),(17,'2021-01-06 10:21:45',31,10,4,1,1,0.6,6000),(18,'2021-01-10 20:38:53',26,2,10,1,1,0.6,6000);
 /*!40000 ALTER TABLE `m_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `modulos`
+--
+
+DROP TABLE IF EXISTS `modulos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `modulos` (
+  `id_modulo` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`id_modulo`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `modulos`
+--
+
+LOCK TABLES `modulos` WRITE;
+/*!40000 ALTER TABLE `modulos` DISABLE KEYS */;
+INSERT INTO `modulos` VALUES (1,'Permisos'),(2,'Empleados'),(3,'Proveedores'),(4,'Clientes'),(5,'Sedes'),(7,'Inventario'),(8,'Facturacion'),(9,'Reportes');
+/*!40000 ALTER TABLE `modulos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nota_credito`
+--
+
+DROP TABLE IF EXISTS `nota_credito`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nota_credito` (
+  `id_nota` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `factura_id_factura` int(11) NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  `sede_id_sede` int(11) NOT NULL,
+  PRIMARY KEY (`id_nota`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nota_credito`
+--
+
+LOCK TABLES `nota_credito` WRITE;
+/*!40000 ALTER TABLE `nota_credito` DISABLE KEYS */;
+/*!40000 ALTER TABLE `nota_credito` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `p_tiempo`
+--
+
+DROP TABLE IF EXISTS `p_tiempo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_tiempo` (
+  `id_periodo` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`id_periodo`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `p_tiempo`
+--
+
+LOCK TABLES `p_tiempo` WRITE;
+/*!40000 ALTER TABLE `p_tiempo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `p_tiempo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -265,6 +482,98 @@ INSERT INTO `password_resets` VALUES ('juan@gmail.com','dc64e5ed796631e3c49a4487
 UNLOCK TABLES;
 
 --
+-- Table structure for table `proveedor`
+--
+
+DROP TABLE IF EXISTS `proveedor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proveedor` (
+  `id_proveedor` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_empresa` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  `nombre_proveedor` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  `direccion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  `telefono` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  `correo` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  `documento` varchar(45) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `nit` varchar(45) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `verificacion_nit` int(11) DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  `sede_id_sede` int(11) NOT NULL,
+  PRIMARY KEY (`id_proveedor`),
+  KEY `empleado_id_empleado` (`empleado_id_empleado`),
+  KEY `sede_id_sede` (`sede_id_sede`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proveedor`
+--
+
+LOCK TABLES `proveedor` WRITE;
+/*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
+INSERT INTO `proveedor` VALUES (1,'aaa','Empresa JP','Carrera 23','132312123','emp@gmail.com','1','0',0,'2020-10-30',7,1),(3,'Empresa Carlos','Carlos Diaz','Calle 23 #45','132312123','dan@gmail.com','123321','222',2,'2020-11-01',7,1),(7,'Alpina','Pilar Perez','Calle 67 ','342345534','p.p@alpina.com','12312321312','343243434',2,'2021-02-12',11,1);
+/*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reporte_inventario`
+--
+
+DROP TABLE IF EXISTS `reporte_inventario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reporte_inventario` (
+  `id_rInventario` int(11) NOT NULL AUTO_INCREMENT,
+  `fechaInicial` date NOT NULL,
+  `fechaFinal` date NOT NULL,
+  `fechaActual` date NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  `sede_id_sede` int(11) NOT NULL,
+  PRIMARY KEY (`id_rInventario`),
+  KEY `empleado_id_empleado` (`empleado_id_empleado`),
+  KEY `sede_id_sede` (`sede_id_sede`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reporte_inventario`
+--
+
+LOCK TABLES `reporte_inventario` WRITE;
+/*!40000 ALTER TABLE `reporte_inventario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reporte_inventario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reporte_ventas`
+--
+
+DROP TABLE IF EXISTS `reporte_ventas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reporte_ventas` (
+  `id_rVentas` int(11) NOT NULL AUTO_INCREMENT,
+  `fechaInicial` date NOT NULL,
+  `fechaFinal` date NOT NULL,
+  `fechaActual` date NOT NULL,
+  `sede_id_sede` int(11) NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  PRIMARY KEY (`id_rVentas`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reporte_ventas`
+--
+
+LOCK TABLES `reporte_ventas` WRITE;
+/*!40000 ALTER TABLE `reporte_ventas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reporte_ventas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sede`
 --
 
@@ -282,7 +591,7 @@ CREATE TABLE `sede` (
   `empleado_id_empleado` int(11) NOT NULL,
   PRIMARY KEY (`id_sede`),
   KEY `empleado_id_empleado` (`empleado_id_empleado`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +600,7 @@ CREATE TABLE `sede` (
 
 LOCK TABLES `sede` WRITE;
 /*!40000 ALTER TABLE `sede` DISABLE KEYS */;
-INSERT INTO `sede` VALUES (1,'Calle 72','Sogamoso','sede principal','calle 12',0,'2020-09-13',1),(2,'Paraiso','Duitama','Central','calle 15',0,'2020-09-13',1),(3,'Centro ara','Duitama','ara','calle 12',0,'2020-09-13',1),(4,'Magdalena paraiso','Sogamoso','5','calle 12',0,'2020-09-13',1),(5,'Duitama Centro','Duitama','--','calle 12',2020,'2020-10-11',1),(9,'Calle 109','Bogotá','--','--',12,'2020-12-10',1),(10,'Calle 72','Bogotá','--','--',0,'2020-12-10',1);
+INSERT INTO `sede` VALUES (1,'Calle 72','Bogotá','--','--',0,'2020-12-10',1),(9,'Calle 109','Bogotá','--','--',12,'2020-12-10',1);
 /*!40000 ALTER TABLE `sede` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,7 +627,7 @@ CREATE TABLE `stock` (
   KEY `stock_producto_fk` (`producto_id_producto`),
   KEY `stock_proveedor_fk` (`proveedor_id_proveedor`),
   KEY `stock_sede_fk` (`sede_id_sede`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -327,8 +636,32 @@ CREATE TABLE `stock` (
 
 LOCK TABLES `stock` WRITE;
 /*!40000 ALTER TABLE `stock` DISABLE KEYS */;
-INSERT INTO `stock` VALUES (1,'1',0,'2020-11-09 00:00:00',1,1,1,1,1,'0',20000),(2,'1',4.95,'2020-12-26 13:08:53',25,1,1,1,1,'0',10500),(3,'1',13,'2020-11-15 00:00:00',10,1,1,9,1,'0',0),(4,'1',3,'2020-11-15 00:00:00',9,1,3,1,2,'0',0),(6,'1',0,'2020-11-15 19:45:29',1,1,1,1,1,'0',0),(9,'1',0,'2020-11-24 00:00:00',12,1,1,9,1,'0',0),(8,'1',1,'2020-11-15 20:22:55',12,1,1,7,1,'0',0),(10,'1',6,'2020-12-06 21:29:06',17,1,1,1,1,'0',0),(11,'1',36,'2020-12-05 11:27:32',12,1,1,1,2,'0',0),(12,'1',77,'2020-12-06 21:29:50',12,1,1,1,2,'0',0),(13,'1',5,'2020-12-10 22:26:40',11,1,1,1,2,'0',12),(14,'1',77,'2020-12-10 22:27:13',12,1,1,1,1,'0',1000),(16,'1',12.07,'2021-01-06 00:00:00',1,1,1,9,6,'123',20000),(20,'1',1,'2020-12-13 19:48:06',12,4,1,1,6,'0',0),(21,'1',10,'2020-12-13 19:48:06',25,4,1,1,6,'0',0),(22,'1',1,'2020-12-13 21:07:28',12,9,1,1,6,'0',0),(23,'1',1,'2020-12-16 21:45:13',25,1,1,1,6,'123',7000),(24,'1',33.07,'2020-12-16 21:45:44',14,1,1,1,6,'123',17000),(25,'1',20,'2020-12-20 20:12:11',10,9,1,1,6,'0',0),(26,'1',6.3,'2020-12-26 14:04:59',13,2,1,1,6,'0',99000),(27,'1',0,'2020-12-23 09:52:40',1,1,1,1,6,'686',78789),(28,'1',1.6,'2020-12-26 15:16:16',13,4,1,1,6,'0',0),(32,'1',0.6,'2021-01-10 20:40:30',13,10,1,1,6,'0',6000),(29,'1',2,'2020-12-27 18:01:50',13,9,1,1,6,'0',20000),(30,'1',0.5,'2020-12-27 20:08:30',25,1,1,1,6,'112',3500),(31,'1',0,'2021-01-06 10:20:57',13,10,1,1,6,'0',0),(33,'1',193.49,'2021-01-25 00:00:00',199,1,1,9,0,'0',0),(34,'1',191.66,'2021-01-25 00:00:00',200,1,1,9,0,'0',0),(35,'1',190,'2021-01-25 00:00:00',201,1,1,9,0,'0',0),(36,'1',50,'2021-02-12 20:20:09',2599,1,7,11,6,'A-34567',53300);
+INSERT INTO `stock` VALUES (37,'1',8,'2021-02-14 21:39:32',2635,1,3,1,6,'123',32000),(38,'1',12,'2021-02-16 12:32:53',1565,1,1,11,6,'tfytrtrer',50000),(39,'1',19,'2021-02-16 21:19:49',1001,1,1,9,1,'0',0);
 /*!40000 ALTER TABLE `stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_movimiento`
+--
+
+DROP TABLE IF EXISTS `t_movimiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_movimiento` (
+  `id_tmovimiento` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`id_tmovimiento`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_movimiento`
+--
+
+LOCK TABLES `t_movimiento` WRITE;
+/*!40000 ALTER TABLE `t_movimiento` DISABLE KEYS */;
+INSERT INTO `t_movimiento` VALUES (1,'Realizado'),(2,'Pendiente');
+/*!40000 ALTER TABLE `t_movimiento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -354,7 +687,7 @@ CREATE TABLE `tipo_cargo` (
 
 LOCK TABLES `tipo_cargo` WRITE;
 /*!40000 ALTER TABLE `tipo_cargo` DISABLE KEYS */;
-INSERT INTO `tipo_cargo` VALUES (1,'Gerente','gerencia','2020-03-23',1),(2,'cajero','caja','2020-03-23',9),(3,'Vendedor','vendedor','2019-10-24',1),(4,'patinador','patinador','2019-10-24',1),(20,'coordinador','ninguna','2019-10-24',1),(23,'Servicios Generales','Servicios','2020-03-23',1),(25,'Cordiandor de ventas','---','2020-10-18',1),(26,'Subgerente','-----','2020-10-18',1),(28,'prueba','prueba ---','2020-10-24',1),(29,'Cargo Prueba','Este cargo es una prueba','2021-02-10',1),(30,'r','r','2021-02-10',7),(31,'Cocinero','Cocinar','2021-02-10',7),(32,'prueba 10 feb','--','2021-02-10',14),(33,'Parametrización','Parametrización','2021-02-12',11);
+INSERT INTO `tipo_cargo` VALUES (1,'Gerente','gerencia','2020-03-23',1),(2,'cajero','caja','2020-03-23',9),(3,'Vendedor','vendedor','2019-10-24',1),(26,'Subgerente','-----','2020-10-18',1),(33,'Parametrización','Parametrización','2021-02-12',11);
 /*!40000 ALTER TABLE `tipo_cargo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,7 +741,38 @@ INSERT INTO `tipo_pago` VALUES (1,'Efectivo','Efectivo'),(2,'Tarjeta crédito','
 UNLOCK TABLES;
 
 --
+-- Table structure for table `transformacion_stock`
+--
+
+DROP TABLE IF EXISTS `transformacion_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `transformacion_stock` (
+  `id_transformacion` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
+  `descripcion` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
+  `empleado_id_empleado` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  PRIMARY KEY (`id_transformacion`),
+  KEY `empleado_id_empleado` (`empleado_id_empleado`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transformacion_stock`
+--
+
+LOCK TABLES `transformacion_stock` WRITE;
+/*!40000 ALTER TABLE `transformacion_stock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transformacion_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping events for database 'control3_cosechafresca2'
+--
+
+--
+-- Dumping routines for database 'control3_cosechafresca2'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -420,4 +784,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-12 23:51:38
+-- Dump completed on 2021-02-18  0:39:06

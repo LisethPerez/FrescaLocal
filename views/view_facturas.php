@@ -204,9 +204,10 @@
                                     <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="taaable">
                                             <thead class="thead-dark">
                                                 <tr>    
-                                                    <th>ID</th>
+                                                    <th>#Factura</th>
+                                                    <th>#Nota</th>
                                                     <th>Total</th>
-                                                    <th>#Productos</th>
+                                                    <th>Cantidad</th>
                                                     <th>Fecha</th>
                                                     <th>Tipo_pago</th>
                                                     <th>Empleado</th>
