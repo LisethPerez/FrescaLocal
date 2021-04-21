@@ -77,22 +77,25 @@ display: block;
                             <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
                             <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
+                            <li><i class=""></i><a href="view_facturas_restaurante.php">Restaurante</a></li>
                             <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>
                         </ul>
                     </li>
+                   
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CAJA</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa fa-cogs"></i>CAJA</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class=""></i><a href="caja.php">Cierre caja</a></li>
                             
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa fa-cogs"></i>EGRESOS</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="http://cosechafresca.controler.com.co/login" target="_blank">Egresos</a></li>
-                        </ul>
-                    </li>
+                    <hr>
+                    <li class="menu-title">EGRESOS</li><!-- /.menu-title -->
+                        <li>
+                            <a href="http://cosechafresca.controler.com.co/login" target="_blank"class="nav-link"> <i class="menu-icon fa fa-paper-plane"></i>Egresos</a>
+                            
+                        </li>
+                    <hr>
                     <hr>
                     <li class="menu-title">Salir</li><!-- /.menu-title -->
                     <li>

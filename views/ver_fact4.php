@@ -6,32 +6,59 @@
     //mysql_set_charset('utf8');
     $consulta = "SELECT *, cliente.nombre AS nombreCliente, tipo_pago.nombre AS tipo, empleado.nombre AS nombreEmple, factura.fecha AS fecha from factura INNER JOIN cliente ON factura.cliente_id_cliente=cliente.id_cliente INNER JOIN tipo_pago ON factura.tipo_pago_id_tpago=tipo_pago.id_tpago INNER JOIN empleado ON factura.empleado_id_empleado=empleado.id_empleado INNER JOIN sede ON factura.sede_id_sede=sede.id_sede WHERE factura.id_factura_web!=0 ORDER BY factura.id_factura DESC";
     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
-
+    //$result = $sql->fetch_assoc();
+    
         while($row = mysqli_fetch_assoc($sql)){
-        ?>
-        <tr>    
-           <td><?php echo $row['id_factura'];?></td>
-            <td><?php echo "$ ".number_format($row['pago_total']);?></td>
-            <td><?php echo $row['noproductos'];?></td>
-            <td><?php echo $row['fecha'];?></td>
-            <td><?php echo $row['tipo'];?></td>
-            <td><?php echo $row['nombreEmple'];?></td>
-            <td><?php echo $row['nombreCliente'];?></td>
-            <td><?php echo $row['nombre_sede'];?></td>
-            <td> 
-           
-                <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos2">
-                <i class="fa fa-list" aria-hidden="true"></i></button>
-                <button class="btn btn-success btn-sm impri" id="imprimir"><i class="fa fa-print" aria-hidden="true"></i></button>
-                <!--<button class="btn btn-primary btn-sm editar" id="editar"><i class="fa fa-wrench" aria-hidden="true"></i></button>-->
-            </td>
-        </tr>
-        <form id="numberFact" method="POST" action="../generar_pdf2.php">  
+            $pago = $row['facturapaga'];
+            $tipo_web = $row['tipo_web'];
+
+            if($pago==0 AND $tipo_web=='Mercado en casa'){
+            ?>
+            <tr>    
+                <td style="color:#F71627; font-weight: bold"><?php echo $row['id_factura'];?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo "$".number_format($row['pago_total']);?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo $row['noproductos'];?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo $row['fecha'];?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo $row['tipo'];?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo utf8_decode($row['tipo_web']);?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo $row['nombreEmple'];?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo $row['nombreCliente'];?></td>
+                <td style="color:#F71627; font-weight: bold"><?php echo $row['nombre_sede'];?></td>
+                <td style="display:none"><?php echo $row['facturapaga'];?></td>
+                <td style="display:none"><?php echo $row['referencia_pago'];?></td>
+                    <td> 
+                        <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos2">
+                        <i class="fa fa-list" aria-hidden="true"></i></button>
+                        <button class="btn btn-success btn-sm impri" id="imprimir"><i class="fa fa-print" aria-hidden="true"></i></button>
+                        <button class="btn btn-primary btn-sm editarDomi" id="editar" data-toggle="modal" data-target="#ModificacionEstado"><i class="fa fa-wrench" aria-hidden="true"></i></button>
+                    </td>
+            </tr>
+            <?php }else{    
+            ?>   
+            <tr>    
+                <td><?php echo $row['id_factura'];?></td>
+                    <td><?php echo "$".number_format($row['pago_total']);?></td>
+                    <td><?php echo $row['noproductos'];?></td>
+                    <td><?php echo $row['fecha'];?></td>
+                    <td><?php echo $row['tipo'];?></td>
+                    <td><?php echo utf8_decode($row['tipo_web']);?></td>
+                    <td><?php echo $row['nombreEmple'];?></td>
+                    <td><?php echo $row['nombreCliente'];?></td>
+                    <td><?php echo $row['nombre_sede'];?></td>
+                    <td> 
+                        <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos2">
+                        <i class="fa fa-list" aria-hidden="true"></i></button>
+                        <button class="btn btn-success btn-sm impri" id="imprimir"><i class="fa fa-print" aria-hidden="true"></i></button>
+                       
+                    </td>
+            </tr> 
+            <?php }?>
+
+        <form id="numberFact" method="POST" action="../generar_pdf2.php" target="_blank">  
             <input type="hidden" value="" id="id_Factu" name="var">
-            <button type="submit" style="display:none;" id="submitButton">
+            <button type="submit" style="display:none;" id="submitButton" target="_blank">
         </form>
-        
-  
+            
 <?php    }
 
                                                 

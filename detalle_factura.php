@@ -54,17 +54,18 @@ echo '<hr>';
 echo '<div class="row">';
 echo '<div class="col">';
 echo '<strong>Total Factura</strong>';
+echo '<input id="tota" class="form-control" onkeypress="return onlyNums(event)" value="'.htmlspecialchars($total) .'" type="hidden"></input>';
 echo '<input type="text" class="form-control" onkeypress="return onlyNums(event)" value="'.htmlspecialchars($total) .'"  disabled></input>';
 echo '</div>';
 echo '<div class="col" id="depe">';
 
 if($pago!="Efectivo"){
     echo '<strong>Ingrese el número de referencia de pago<strong style="color:#F71627">*</strong></strong>';
-    echo '<input type="text" class="form-control" id="ref" name="ref" onkeypress="return onlyNums(event)" style="width:200px;"></input>';
+    echo '<input type="text" class="form-control" id="ref" name="ref" onkeypress="return onlyNums(event)" onkeypress="return onlyNums(event)" style="width:200px;"></input>';
 
 }else{
     echo '<strong>Valor recibido<strong style="color:#F71627">*</strong></strong>';
-    echo '<input type="text" class="form-control" id="valor_ingresado" name="valor_ingresado" onkeypress="return onlyNums(event)" value=""></input>';
+    echo '<input type="text" class="form-control" id="valor_ingresado" name="valor_ingresado" onkeypress="return onlyNums(event)" value="'.htmlspecialchars($total) .'" disabled></input>';
 }
 
 echo '</div>';
@@ -74,13 +75,14 @@ echo '</div>';
 
 <script>
 $('#tipoo').change(function(){
+    var total = $('#tota').val();
     
     var selectedValue = $('#tipoo option:selected').text();
     if(selectedValue!=="Efectivo"){
         $('#depe').html('<strong>Ingrese el número de referencia de pago<strong style="color:#F71627">*</strong></strong><input type="text" class="form-control" id="ref" name="ref" onkeypress="return onlyNums(event)" style="width:200px;"></input>');
         
     }else{
-        $('#depe').html('<strong>Valor recibido<strong style="color:#F71627">*</strong></strong><input type="text" class="form-control" id="valor_ingresado" name="valor_ingresado" onkeypress="return onlyNums(event)" value=""></input>');
+        $('#depe').html('<strong>Valor recibido<strong style="color:#F71627">*</strong></strong><input type="text" class="form-control" id="valor_ingresado" name="valor_ingresado" onkeypress="return onlyNums(event)" value="'+total+'" disabled></input>');
     }
 
 });

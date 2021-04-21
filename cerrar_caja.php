@@ -23,12 +23,9 @@ $sqlUser = mysqli_query($conn,$consultEmple) or die(mysqli_error($conn));
 $resultadoUser = $sqlUser->fetch_object();
 $idEmple = $resultadoUser->id_empleado;
 
-echo $base." - ".$ingresosEfe." - ".$ingresosElec." - ".$total. " - " . $egresos;
-
 $consultCaja = "INSERT INTO caja(base_monetaria,ingresos_efectivo,ingresos_electronicos,egresos_efectivo,egresos_electronicos,ventas,fecha,pagos,cierre,empleado_id_empleado,sede_id_sede) VALUES ('$base','$ingresosEfe','$ingresosElec','$egresos',0,'$total','$fecha1',0,0,'$idEmple','$id_Sede')";
 $sqlCaja = mysqli_query($conn,$consultCaja) or die(mysqli_error($conn));
 //$resultadoCaja = $sqlCaja->fetch_object();
-
 
 if($sqlCaja){
     

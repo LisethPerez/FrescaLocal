@@ -85,6 +85,7 @@ display: block;
                             <li><i class=""></i><a href="views/view_ventas.php">Realizadas</a></li>
                             <li><i class=""></i><a href="views/view_facturas.php">Anuladas</a></li>
                             <li><i class=""></i><a href="views/view_facturas_pendientes.php">Pendientes</a></li>
+                            <li><i class=""></i><a href="views/view_facturas_restaurante.php">Restaurante</a></li>
                             <li><i class=""></i><a href="views/view_facturas_web.php">Web</a></li>
                         </ul>
                     </li>
@@ -442,6 +443,9 @@ display: block;
                                                                     <div class="col">
                                                                         <button type="button" class="btn btn-primary btn-sm mb-2 groupTipo" data-toggle="modal" data-target="#infoDomiciliario" value="Domicilios">Domicilios</button>
                                                                     </div>
+                                                                    <div class="col">
+                                                                        <button type="button" class="btn btn-primary btn-sm mb-2 groupTipo" value="Restaurante">Restaurante</button>
+                                                                    </div>
                                                                 </div><hr>
                                                                     <div class="form-row pago">
                                                                         <div class="col">
@@ -510,8 +514,8 @@ display: block;
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <!--<form method="POST" action="generar_pdf.php" target="_blank">-->
-                                                                   <form method="POST" action="pruebaImpre.php" target="_blank"> 
+                                                                    <form method="POST" action="generar_pdf.php" target="_blank">
+                                                                   <!--<form method="POST" action="pruebaImpre.php" target="_blank"> -->
                                                                             <input type="hidden" value="" id="ggg" name="var">
                                                                             <input type="hidden" value="" id="g2" name="var2">
                                                                             <input type="hidden" value="<?php echo $_SESSION['nombreEmple']?>" id="" name="var3">

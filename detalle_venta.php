@@ -107,23 +107,28 @@ foreach ($datos as $product) {
             if($numFilas1 = $sql1->num_rows>0){
                 $result1 = $sql1->fetch_object();
                 $cantidad = $result1->cantidad;
+                $precio = $result1->total;
 
                 if($cantTota<=$cantidad){
                     
                     $cantidad1 = $cantidad - $cantTota;
+                    $totalNuevo = $precio - $total;
 
                     $mensaje = $result1->id_stock;
+                    //$consult5 = "UPDATE stock SET cantidad={$cantidad1}, total={$totalNuevo} WHERE id_stock='{$mensaje}'";
                     $consult5 = "UPDATE stock SET cantidad={$cantidad1} WHERE id_stock='{$mensaje}'";
                     break;
                     
                 }else{
                    // echo "Entro al else";
                     $residuo = $cantTota - $cantidad;
+                    $totalNuevo1 = $precio - $total;
                    // echo $residuo;
                     if($residuo>0){
                         //$residuo = $residuo*(-1);
                         //echo "Entro al nuevo if";
                         //echo $idStock[$i];
+                       // $consult2 = "UPDATE stock SET cantidad=0, total={$totalNuevo1} WHERE id_stock={$idStock[$i]}";
                         $consult2 = "UPDATE stock SET cantidad=0 WHERE id_stock={$idStock[$i]}";
                         $sql2 = mysqli_query($conn,$consult2) or die(mysqli_error($conn));
                         $cantTota = $residuo;

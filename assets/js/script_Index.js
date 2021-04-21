@@ -25,6 +25,8 @@ $('#seleEli').click(function () {
     $('#cantidad').val(cadena);
      
 });
+
+//Encontrar cedula del cliente por medio al preciosar shift
 $('#cedula').keydown(function(f){
     var cedula = $('#cedula').val();
     if(f.shiftKey==1){
@@ -76,7 +78,7 @@ $('#cedula').keydown(function(f){
     }
 });
 
-//Buscar cedula para la existencia del cliente
+//Buscar cedula para la existencia del cliente (botón)
 $('#buscar1').click(function () {
     var cedula = $('#cedula').val();
 
@@ -129,6 +131,7 @@ $('#buscar1').click(function () {
 
 var cedula_cliente;
 var tipo_cliente=0;
+//Obtener el tipo de cliente según la cedula ingresada
 $('#confi').click(function () {
     cedula_cliente = $('#cedula1').val()
     $.ajax({
@@ -177,7 +180,7 @@ $('#confi').click(function () {
     });
      
 });*/
-
+//Agregar contenido del array del cliente a la tabla 
 function createRow1(data) {                              //dynamically adding rows to the Table
     //design this according to your requirement    
     for(var i=0; i<data.length; i++){
@@ -342,6 +345,7 @@ $('.view_products').click(function () {
     });    
  });
 
+ //Ver los productos de la factura especificada
  $('.view_products1').click(function () {
     $tr=$(this).closest('tr');
     var datos = $tr.children("td").map(function (){
@@ -362,6 +366,7 @@ $('.view_products').click(function () {
     });    
  });
 
+ //Mostrar los productos que vienen del array de detalle
  function createRow5(data) {                              //dynamically adding rows to the Table
     //design this according to your requirement    
     for(var i=0; i<data.length; i++){
@@ -382,7 +387,7 @@ $('.view_products').click(function () {
 
 }
 
-
+//Mostrar datos de la factura especificada
  function createRow2(data) {                              //dynamically adding rows to the Table
     //design this according to your requirement    
     for(var i=0; i<data.length; i++){
@@ -403,7 +408,7 @@ $('.view_products').click(function () {
 
 //Buscar factura por el número de factura
 
-
+//Borrar contenido del modal de productos
 $('.atras').click(function(){  
     var contenidoFac = document.getElementById("cont_productos");
     contenidoFac.innerHTML = "";
@@ -411,6 +416,7 @@ $('.atras').click(function(){
 
 var tipo_;
 var id_;
+//Editar información de las facturas que son generadas por domicilios
 $('.editarDomi').click(function(){
     $tr=$(this).closest('tr');
     var datos = $tr.children("td").map(function (){
@@ -433,21 +439,19 @@ $('.editarDomi').click(function(){
         success: function(data){
             var contenido = document.getElementById("cambiosFact");
             contenido.innerHTML = "";
-            $('#cambiosFact').html(data);
-            
-         //alert(data);           
+            $('#cambiosFact').html(data);      
         }
     });
 
 });
 
-
+//Mostrar el total de ventas presenciales
 $('.presen').click(function(){
     $('.presen').removeClass("btn-success");
     $(this).addClass("btn-success");
     var presen= $(this).val();
     $.ajax({
-        url: "ventas_presenciales.php",
+        url: "../ventas_presenciales.php",
         type: "POST",
         data:{var: presen},
         success: function(data){
@@ -457,13 +461,14 @@ $('.presen').click(function(){
     });
 });
 
+//Mostrar el total de ventas web
 $('.webb').click(function(){
     $('.webb').removeClass("btn-success");
     $(this).addClass("btn-success");
     
     var web= $(this).val();
     $.ajax({
-        url: "ventas_web.php",
+        url: "../ventas_web.php",
         type: "POST",
         data:{var: web},
         success: function(data){
@@ -475,10 +480,12 @@ $('.webb').click(function(){
 
 var totalCaja = 0;
 //var tota;
+//Colocar el valor de la base monetaria en caja
 $('#baseMo').keyup(function (e) {
     var myVar = setInterval(myTimer2, 1000);
 });    
 
+//Función para obtener el valor total de la caja
 function myTimer2() {
     var totalBase = parseInt($('#baseMo').val().replace(/[^a-zA-Z0-9]/g, '')); 
     var tota = parseInt($('#totalEfe').val().replace(/[^a-zA-Z0-9]/g, '')); 
@@ -493,13 +500,13 @@ function myTimer2() {
     $('#dineCaja').val("$ " + newValue);
 }
 
+//Enviar datos de cierre de caja a la base de datos
 $('#cerrar').click(function(){
-    var base = parseInt($('#baseMo').val().replace(/[^a-zA-Z0-9]/g, ''));
     var ingresosEfe = parseInt($('#totalEfe').val().replace(/[^a-zA-Z0-9]/g, ''));
     var ingresosEle = parseInt($('#totalTarj').val().replace(/[^a-zA-Z0-9]/g, ''));
     var egresos = parseInt($('#totalEgr').val().replace(/[^a-zA-Z0-9]/g, ''));
-
-    if(base === ''){
+    
+    if($('#baseMo').val() === ''){
         Swal.fire({
             icon: 'error',
             text: 'Ingrese la base monetaria',
@@ -510,18 +517,16 @@ $('#cerrar').click(function(){
                 popup: 'animate__animated animate__fadeOutUp'
             }
         });  
-        $('#baseMo').val(0);
-        $('#totalEfe').val(0);
-        $('#totalTarj').val(0);
-        $('#totalEgr').val(0);
-        $('#dineCaja').val(0);
-
+    
     }else{
+        var base = parseInt($('#baseMo').val().replace(/[^a-zA-Z0-9]/g, ''));
+        //alert("Todo bien");
         $.ajax({
             url: "../cerrar_caja.php",
             type: "POST",
             data:{var: base, var2:ingresosEfe, var3:ingresosEle, var4: egresos},
             success: function(data){
+                //alert(data);
                 if(data==="Caja correcta"){
                     Swal.fire({
                         icon: 'success',
@@ -533,6 +538,11 @@ $('#cerrar').click(function(){
                             popup: 'animate__animated animate__fadeOutUp'
                         }
                     });  
+                    $('#baseMo').val(0);
+                    $('#totalEfe').val(0);
+                    $('#totalTarj').val(0);
+                    $('#totalEgr').val(0);
+                    $('#dineCaja').val(0);
 
                 }else if(data==="Ha ocurrido un error"){
                     Swal.fire({
@@ -548,13 +558,11 @@ $('#cerrar').click(function(){
                 }
                         
             }
-        })
+        });
     }
-
-    
-;
 });
 
+//Ingreso a aplicación por medio del enter
 $('.form-control-user').keypress(function (e) {
 
     var correo = $('#email').val();
@@ -606,6 +614,7 @@ $('.form-control-user').keypress(function (e) {
     }
 });
 
+//Modificación del estado pendiente de las facturas
 $('#modificar').click(function(){
     var paga = $('#pagaa option:selected').val();
     var tipo = $('#tipoo option:selected').val();
@@ -642,7 +651,7 @@ $('#modificar').click(function(){
                if(data==="Modificación de estado de la factura correcta"){
                 Swal.fire({
                     icon: 'success',
-                    text: 'Datos erroneos',
+                    text: 'Modificación correcta',
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -653,6 +662,140 @@ $('#modificar').click(function(){
                     timer: 2000
                 });  
                 window.location.href="view_facturas_pendientes.php"; 
+               }else{
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Ha ocurrido un error',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    showConfirmButton: false,
+                    timer: 2000
+                }); 
+               }
+            }
+        });
+    }
+
+});
+
+$('#modificar1').click(function(){
+    var paga = $('#pagaa option:selected').val();
+    var tipo = $('#tipoo option:selected').val();
+    var tipo2 = $('#tipoo option:selected').text();
+   
+
+    if(tipo2==="Efectivo"){
+        refe = $('#valor_ingresado').val();
+
+    }else{
+         refe = $('#ref').val();
+    }
+
+    if(refe === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese el dato marcado con *',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            },
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }else{
+        $.ajax({
+            url: "../modificar_factura.php",
+            type: "POST",
+            data:{var: paga, var2: tipo, var3: refe, var4: id_},
+            success: function(data){
+             
+               if(data==="Modificación de estado de la factura correcta"){
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Modificación correcta',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    showConfirmButton: false,
+                    timer: 2000
+                });  
+                window.location.href="view_facturas_restaurante.php"; 
+               }else{
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Ha ocurrido un error',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    showConfirmButton: false,
+                    timer: 2000
+                }); 
+               }
+            }
+        });
+    }
+
+});
+
+$('#modificar2').click(function(){
+    var paga = $('#pagaa option:selected').val();
+    var tipo = $('#tipoo option:selected').val();
+    var tipo2 = $('#tipoo option:selected').text();
+   
+
+    if(tipo2==="Efectivo"){
+        refe = $('#valor_ingresado').val();
+
+    }else{
+         refe = $('#ref').val();
+    }
+
+    if(refe === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese el dato marcado con *',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            },
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }else{
+        $.ajax({
+            url: "../modificar_factura.php",
+            type: "POST",
+            data:{var: paga, var2: tipo, var3: refe, var4: id_},
+            success: function(data){
+             
+               if(data==="Modificación de estado de la factura correcta"){
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Modificación correcta',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    showConfirmButton: false,
+                    timer: 2000
+                });  
+                window.location.href="view_facturas_web.php"; 
                }else{
                 Swal.fire({
                     icon: 'error',
@@ -693,25 +836,25 @@ $('.editbtn').click(function () {
  });
 
  var tipo_domi;
+
+//Cambiar clase de los botones según la selección
 $('.groupTipo').click(function(){
     $('.groupTipo').removeClass("btn-primary");
     $(this).addClass("btn-primary");
 
     tipo_domi = $(this).val();
-    if(tipo_domi === "Presencial"){
+    if(tipo_domi === "Presencial" || tipo_domi==="Restaurante"){
         $('.pago').show();
     }else{
         $('.pago').hide();
     }
-    
-
 });
 
 var emple;
+//Cambiar informacion según la opción de compra
 $('#domiciliario').click(function(){
     emple = $('#domi').val();
     $('.pago').show();
-    
 });
 
 var pago;
@@ -831,7 +974,7 @@ var referencia;
 
 });
 
-
+ //Colocar signo de $ y comas 
 $('#baseMo').on('keyup', () => {
     const value = $('#baseMo').val();
     var chain = String(value.replace(/\D/g, ""));
@@ -840,6 +983,7 @@ $('#baseMo').on('keyup', () => {
 
 });
 
+ //Colocar signo de $ y comas 
 $('#prueba').click(function(){
     const value = $('#total').val();
     var chain = String(value.replace(/\D/g, ""));
@@ -847,6 +991,7 @@ $('#prueba').click(function(){
     $('#total_web').val("$ " + newValue);
 });
 
+//Bloquear opción para editar
 $('#total_web').keydown(function(e){
     e.preventDefault();
     try {                
@@ -881,6 +1026,12 @@ function verificarConexion(){
                     type: "POST",
                     success: function(data){
                         if(data==='El archivo tiene contenido'){
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Espere un momento mientras se realizar la sincronización y se evidencia el mensaja de éxito',
+                                showConfirmButton: false,
+                                timer: 100000
+                              });
                             $.ajax({
                                 url: "sincronizacion/ejecutarBD.php",
                                 type: "POST",
@@ -928,6 +1079,7 @@ function myTimer() {
     window.location.href="index.php"; 
 }
 
+//Función para la sincronización de bases de datos
 $('#sincro').click(function(){   
       $.ajax({
         url: "sincronizacion/comprobarConexionBD.php",
@@ -1003,8 +1155,7 @@ $('#sincro').click(function(){
 });//setInterval('verificarConexion()',5000);
 //Esconder formulario de busqueda
 $(document).ready(function(){
-
-
+    
     //setInterval('actualizacion()',12000);
 
     //$('#menuToggle').trigger('click')
@@ -1070,6 +1221,7 @@ $(document).ready(function(){
         }
     });
 
+    //Autocompletado para el cambio de productos
     $('#producto2').typeahead({
         source: function(query,result){
             $.ajax({
@@ -1111,7 +1263,7 @@ $(document).ready(function(){
         }
     });
 
-
+    //Autocompletado para el nombre de empleados
     $('#domi').typeahead({
         source: function(query,result){
             $.ajax({
@@ -1142,7 +1294,7 @@ $(document).ready(function(){
             return item;    
         }
     });
-
+    //Obtener el total de ingresos diarios 
     $.ajax({
         url: "../egresos.php",
         type: "POST",
@@ -1155,7 +1307,7 @@ $(document).ready(function(){
             $('#totalEgr').val("$ " + newValue);        
         }
     }); 
-
+    //Ontener el total de ventas en efectivo del día
     $.ajax({
         url: "../ventas_efe.php",
         type: "POST",
@@ -1168,6 +1320,7 @@ $(document).ready(function(){
             $('#totalEfe').val("$ " + newValue);          
         }
     }); 
+    //Obtener el total de ventas por tarjetas del dia
     $.ajax({
         url: "../ventas_tarjetas.php",
         type: "POST",
@@ -1180,6 +1333,7 @@ $(document).ready(function(){
             $('#totalTarj').val("$ " + newValue);         
         }
     }); 
+    //Obtener el total de ventas electronicas del día 
     $.ajax({
         url: "../ventas_ele.php",
         type: "POST",
@@ -1197,7 +1351,7 @@ $(document).ready(function(){
 
 });
 
-
+//Método para encontrar producto por EAN 
 $('#producto1').keypress(function (f) {
     tipo = "";
     var produ = $('#producto1').val();
@@ -1234,43 +1388,9 @@ $('#producto1').keypress(function (f) {
         }); 
        
     }
-    
-    /*if(f.shiftKey==1){
-        //alert(produ);
-        $("#pesooo").val('');
-        $("#peso2").val('');
-        
-        $.ajax({
-            type: "POST",
-            url: "encontrar_ean.php?var="+produ,
-            success: function(data) {
-                alert(data);
-                nombre_producto = data;
-            }
-        });
-
-        $.ajax({
-            url:"ocultar2.php?var="+produ,
-            method:"POST", 
-            success:function(data){
-                 tipo = data;   
-                 $("#pesooo").val('');
-                 $("#peso2").val('');      
-                 if(tipo==="cantidad"){
-                    $('#cantidad').focus();
-                    $("#pesooo").val('');
-                }
-                if(tipo==="peso"){
-                    $('#pesooo').focus();
-                    $("#cantidad").val('');
-                    
-                }      
-            }
-        }); 
-       
-    }*/
 });
 
+//Buscar el producto por medio de su EAN
 $('#producto3').keypress(function (f) {
     tipo1 = "";
     var produ1 = $('#producto3').val();
@@ -1311,6 +1431,7 @@ $('#producto3').keypress(function (f) {
 });
 //Desabilitar editar y eliminación del datos dentro del input
 //keydown
+//Bloquear opciones de edición al peso
 $('#pesooo').keypress(function (evt) {
     evt.preventDefault();
     try {                
@@ -1326,7 +1447,7 @@ $('#pesooo').keypress(function (evt) {
     }
 });
 
-
+//Bloquear opciones de edición en el total de ventas credito
 $('#total_venCre').keypress(function (evt) {
     evt.preventDefault();
     try {                
@@ -1341,6 +1462,7 @@ $('#total_venCre').keypress(function (evt) {
     }
 });
 
+//Bloquear opciones de edición en el total de ventas debito
 $('#total_venDe').keypress(function (evt) {
     evt.preventDefault();
     try {                
@@ -1359,7 +1481,6 @@ $('#total_venDe').keypress(function (evt) {
 $("#pesooo").focus(function(e) {
     /*$('#pesooo').val(0.93);    
     $('#peso2').val(0.93);*/
-
     $.ajax({
         
         url: "lectura.php",
@@ -1393,7 +1514,6 @@ var cont = 0;
 var idStock = 0;
 //var descuento = 0, impuesto = 0;
 //Enviar datos por con enter
-
 $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
     var cantidad = $('#cantidad').val();
@@ -1444,7 +1564,7 @@ $('.selec').keypress(function (e) {
             }else{ 
 
                 if(tipo==="cantidad"){
-                    $('#peso').val('');
+                    $('#peso2').val('');
                     $('#pesooo').val('');
                     $('#cantidad').focus();
                 }else{
@@ -1461,8 +1581,6 @@ $('.selec').keypress(function (e) {
 
                 
                 //Verificar la disponibilidad del producto seleccionado 
-                //Colocar luego el codigo comentado y el vectos de ventas 
-                //cont = cont + 1;
                 $.ajax({
                     type: "POST",
                     url: "disponibilidad.php?var="+nombre_producto,
@@ -1482,20 +1600,7 @@ $('.selec').keypress(function (e) {
                                 }
                             });    
                         }else{
-                            //alert(data);
-                            //alert(data);
-                            //idStock = JSON.parse(data); 
-                             //alert(JSON.stringify(idStock));
-                            /*Swal.fire({
-                                icon: 'success',
-                                text: 'El id a descontar es: ' +data,
-                                showClass: {
-                                    popup: 'animate__animated animate__fadeInDown'
-                                },
-                                hideClass: {
-                                    popup: 'animate__animated animate__fadeOutUp'
-                                }
-                            }); */
+                            //Mostrar mensaje de alerta de pocas unidades
                             $.ajax({
                                 type: "POST",
                                 url: "mensaje.php?var="+cant,
@@ -1512,7 +1617,7 @@ $('.selec').keypress(function (e) {
                                     }
                                 }
                             });
-
+                            //Ingresar pruductos a la tabla de ventas
                             cont = cont + 1;
                              $.ajax({
                                     type: "POST",
@@ -1527,7 +1632,6 @@ $('.selec').keypress(function (e) {
                                         deleteRow(datos);  
                                         //alert(JSON.stringify(DataArray));
                                         //Recorrer el array temporal para llenar el nuevo JSON
-                                       
                                         $.each(DataArray, function(i, _data) {
                                             var id = _data.id;
                                             var codigo =  _data.codigo;
@@ -1539,6 +1643,7 @@ $('.selec').keypress(function (e) {
                                             var descuento = parseInt(_data.descuento);
                                             var total = parseFloat(_data.total);
                                             
+                                        
                                             datos.push({
                                                 'id': id,
                                                 'codigo': codigo,
@@ -1581,96 +1686,8 @@ $('.selec').keypress(function (e) {
                                 venta = datos;
                                 $('#pesooo').val('');
                                 $('#peso2').val('');
-                                $('#producto').focus();
-
-
+                                $('#producto').focus(); 
                         }
-                      
-                        /*if(data==="Hay disponibilidad"){
-                            //Si se encuentra disponibilidad de agregar al JSON y la tabla
-                            cont = cont + 1;
-                             $.ajax({
-                                    type: "POST",
-                                    url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
-                                    data: $("#venta").serialize(),
-                                    success: function(data) {
-                                       
-                                        DataArray = JSON.parse(data);  
-                                    
-                                         
-                                        createRow(DataArray);
-                                        deleteRow(datos);  
-                                        //alert(JSON.stringify(DataArray));
-                                        //Recorrer el array temporal para llenar el nuevo JSON
-                                       
-                                        $.each(DataArray, function(i, _data) {
-                                            var id = _data.id;
-                                            var codigo =  _data.codigo;
-                                            var cantidad =  parseInt( _data.cantidad);
-                                            var producto =  _data.producto;
-                                            var peso =  parseFloat(_data.peso);
-                                            var precio = parseFloat(_data.precio);
-                                            var impuesto =  parseInt(_data.impuesto);
-                                            var descuento = parseInt(_data.descuento);
-                                            var total = parseFloat(_data.total);
-                                            
-                                            datos.push({
-                                                'id': id,
-                                                'codigo': codigo,
-                                                'cantidad': cantidad,
-                                                'producto': producto,
-                                                'peso': peso,
-                                                'precio' : precio,
-                                                'impuesto': impuesto,
-                                                'descuento': descuento,
-                                                'total' : total
-                                            })
-                                    
-                                        });
-                                        //Suma de los total por productos seleccionados
-                                        $.each(datos, function(i, _data) {
-                                            
-                                            total += parseFloat(_data.total);
-                                        });
-                                        
-                                        $('#producto').val('');
-                                        $('#cantidad').val('');
-                                        $('#peso').val('');
-                                        $('#peso2').val('');
-                                        $('#producto1').val('');
-                                        
-                                        
-                                        const newValue = new Intl.NumberFormat('en-US').format(total.toString());
-                                        
-                                        if(datos.length===0){
-                                            $('#total').val('');
-                                        }else{
-                                            $('#total').val("$" + newValue);
-                                        } 
-                                        total = 0;
-                                        //cont = 0;
-                                    }   
-                                   
-                                });
-                                //Sincronizar los nuevos productos con la eliminación y agregación
-                                venta = datos;
-                                $('#pesooo').val('');
-                                $('#peso2').val('');
-                                $('#producto').focus();
-
-                        //Mensaje de no existencia de disponibilidad del producto
-                        }else if(data==="Excede la disponibilidad del producto" || data==="No se encuentra disponibilidad del producto" || data === "El producto no se encuentra en stock" || data ==="El producto no existe"){
-                            Swal.fire({
-                                icon: 'error',
-                                text: data,
-                                showClass: {
-                                    popup: 'animate__animated animate__fadeInDown'
-                                },
-                                hideClass: {
-                                    popup: 'animate__animated animate__fadeOutUp'
-                                }
-                            });    
-                        }*/
                     }
                     
                 });
@@ -1773,8 +1790,8 @@ $('#pagar').click(function(){
                     }else{
                         //verificarConexion();
                         document.getElementById("submitButton1").click();
-                        //var myVar = setInterval(myTimer, 1500);
-                        verificarConexion();
+                        var myVar = setInterval(myTimer, 1500);
+                        //verificarConexion();
                     }
                 }
                 

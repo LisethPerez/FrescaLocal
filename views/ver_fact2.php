@@ -27,11 +27,11 @@
                 <button class="btn btn-danger btn-sm impriCa" id="imprimirCance"><i class="fa fa-print" aria-hidden="true"></i></button>
             </td>
         </tr>
-        <form id="numberFact" method="POST" action="../generar_pdf3.php">  
+        <form id="numberFact" method="POST" action="../generar_pdf3.php" target="_blank">  
             <input type="hidden" value="" id="id_Factu" name="var">
             <button type="submit" style="display:none;" id="submitButton">
         </form>
-        <form id="numberFact1" method="POST" action="../generar_pdf4.php">  
+        <form id="numberFact1" method="POST" action="../generar_pdf4.php" target="_blank">  
             <input type="hidden" value="" id="id_Factu1" name="var">
             <button type="submit" style="display:none;" id="submitButton1">
         </form>

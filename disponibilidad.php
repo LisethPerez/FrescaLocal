@@ -28,54 +28,33 @@ if($numFilas = $sql->num_rows>0){
             $diponibilidad = $resultado['disponibilidad'];
             if($diponibilidad == "1"){
                 array_push($idStock, $resultado['id_stock']);
-            }else{
-                $mensaje = "No se encuentra disponibilidad del producto";
-            }    
+            }  
         }
 
         $array_num = count($idStock);
-        
-        for($i=0; $i<$array_num; $i++){
-            $ids = $idStock[$i];
-            //echo $ids;
-            $consulta1 = "SELECT * FROM stock WHERE id_stock={$ids} ORDER BY id_stock DESC LIMIT 1";
-            $sql2 = mysqli_query($conn,$consulta1) or die(mysqli_error($conn));
-            $result = $sql2->fetch_object();
-            $cantidad_produ = $result->cantidad;
-            $cant_total = $cantidad_produ + $cant_total;
 
-            /*if($cantidad_produ>0){
-                array_push($cant,$cantidad_produ);
-            }*/
-
-            
-            /*if($cantidad<=$cantidad_produ AND $cantidad_produ>0){
-                $result->id_stock;
+        if(!empty($array_num)){
+            for($i=0; $i<$array_num; $i++){
+                $ids = $idStock[$i];
+                //echo $ids;
+                $consulta1 = "SELECT * FROM stock WHERE id_stock={$ids} ORDER BY id_stock DESC LIMIT 1";
+                $sql2 = mysqli_query($conn,$consulta1) or die(mysqli_error($conn));
+                $result = $sql2->fetch_object();
+                $cantidad_produ = $result->cantidad;
+                $cant_total = $cantidad_produ + $cant_total;
             }
-            else{
-                unset($idStock[$i]);
-            }*/
-        }
-        if($cant_total<$cantidad){
-            $mensaje = "Excede la disponibilidad del producto";
+                    
+            if($cant_total<$cantidad){
+                $mensaje = "Excede la disponibilidad del producto";
 
+            }else{
+                $mensaje = "Hay disponibilidad";
+            }
         }else{
-            /*for($i=0; $i<$array_num; $i++){
-                if($cant[0]>$cantidad){
-                    $idS = $idStock[0];
-                }else
-                   
-                if($cant[$i]<$cantidad AND $cantidad<$cant[$i+1]){
-                   
-                   array_push($datos,$idStock[$i]);
-                }
-      
-            }*/
-            //echo $idS;
-            //array_push($datos,$idS);
-            //$mensaje = json_encode($idStock);
-            $mensaje = "Hay disponibilidad";
+            $mensaje = "No se encuentra disponibilidad del producto";
+           
         }
+
         
         /*$idStock = array_values($idStock);
         

@@ -13,9 +13,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Cosecha Fresca</title>
-
-
     
+
+   
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -24,10 +24,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="../assets/css/cs-skin-elastic.css">
-    <link rel="shortcut icon" href="../images/favico.png"> 
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
+    <link rel="shortcut icon" href="../images/favico.png"> 
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -79,7 +79,7 @@
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>CAJA</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa fa-cogs"></i>CAJA</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class=""></i><a href="caja.php">Cierre caja</a></li>
                             
@@ -87,10 +87,10 @@
                     </li>
                     <hr>
                     <li class="menu-title">EGRESOS</li><!-- /.menu-title -->
-                    <li>
-                        <a href="http://cosechafresca.controler.com.co/login" target="_blank"class="nav-link"> <i class="menu-icon fa fa-paper-plane"></i>Egresos</a>
-                        
-                    </li>
+                        <li>
+                            <a href="http://cosechafresca.controler.com.co/login" target="_blank"class="nav-link"> <i class="menu-icon fa fa-paper-plane"></i>Egresos</a>
+                            
+                        </li>
                     <hr>
                     <li class="menu-title">Salir</li><!-- /.menu-title -->
                     <li>
@@ -175,7 +175,7 @@
                     <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Facturas Anuladas</strong>
+                                <strong class="card-title text-dark">Información Facturas de Restaurante Pendientes</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
@@ -201,25 +201,26 @@
                                     </div>
                                 </div>  <br>
                                 
-                                    <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="taaable">
+                                    <div class="form-row table-wrapper-scroll-y my-custom-scrollbar"> 
+                                    <table class="table table-responsive" id="taaable">
                                             <thead class="thead-dark">
                                                 <tr>    
-                                                    <th>#Factura</th>
-                                                    <th>#Nota</th>
+                                                    <th>ID</th>
                                                     <th>Total</th>
                                                     <th>Cant.</th>
                                                     <th>Fecha</th>
                                                     <th>Tipo_pago</th>
-                                                    <th>Empleado</th>
+                                                    <th>Cajero</th>
                                                     <th>Cliente</th>
                                                     <th>Sede</th>
+                                                    <th style="display:none">Paga</th>
+                                                    <th style="display:none">Ref</th>
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="pro2">
+                                            <tbody id="pro3">
                                             <?php
-                                                include 'ver_fact2.php';
+                                                include 'ver_fact5.php';
                                             ?>
                                             
                                             </tbody>
@@ -231,7 +232,39 @@
                     
                     </div><!-- /# column -->
                 </div>
-                <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal fade" id="ModificacionEstado" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Modificación de estado</strong></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card border border-secondary">
+                                                            <div class="card-header bg-dark">
+                                                                <strong class="card-title text-light">Información</strong>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div id="cambiosFact">
+                                                                </div>
+                                                                <div id="cambios">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="modificar1" class="btn btn-success btn-sm mb-2">MODIFICAR</button>
+                                                           
+                                                        </div>
+                                                    
+                                                </div><!--modal-content-->
+                                            </div><!--modal-dialog-->
+                                        </div> <!--modal-fade-->
+                                        <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -252,7 +285,6 @@
                                                     <th>Impuesto</th>
                                                     <th>Fecha</th>
                                                     <th>Empleado</th>
-                                                    
                                                 </tr>
                                             </thead>
                                             <tbody id="cont_productos">
@@ -261,15 +293,13 @@
                                         </table>
                                                     </div>
                                                     <div class="modal-footer">
-                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
-                                                           
+                                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            
                                                         </div>
                                                     
                                                 </div><!--modal-content-->
                                             </div><!--modal-dialog-->
                                         </div> <!--modal-fade-->
-
-                                 
             </div>
             </div>
         

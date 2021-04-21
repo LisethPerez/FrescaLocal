@@ -73,6 +73,7 @@
                             <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
                             <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
+                            <li><i class=""></i><a href="view_facturas_restaurante.php">Restaurante</a></li>
                             <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>
                         </ul>
                     </li>
@@ -205,13 +206,16 @@
                                                 <tr>    
                                                     <th>ID</th>
                                                     <th>Total</th>
-                                                    <th>#Productos</th>
+                                                    <th>Cant.</th>
                                                     <th>Fecha</th>
                                                     <th>Tipo_pago</th>
+                                                    <th>Canal</th>
                                                     <th>Empleado</th>
                                                     <th>Cliente</th>
                                                     <th>Sede</th>
                                                     <th>Opciones</th>
+                                                    <th style="display:none">Paga</th>
+                                                    <th style="display:none">Ref</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="pro4">
@@ -228,6 +232,38 @@
                     
                     </div><!-- /# column -->
                 </div>
+                <div class="modal fade" id="ModificacionEstado" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Modificación de estado</strong></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card border border-secondary">
+                                                            <div class="card-header bg-dark">
+                                                                <strong class="card-title text-light">Información</strong>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div id="cambiosFact">
+                                                                </div>
+                                                                <div id="cambios">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="modificar2" class="btn btn-success btn-sm mb-2">MODIFICAR</button>
+                                                           
+                                                        </div>
+                                                    
+                                                </div><!--modal-content-->
+                                            </div><!--modal-dialog-->
+                                        </div> <!--modal-fade-->
                 <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">

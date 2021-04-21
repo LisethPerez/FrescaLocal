@@ -13,7 +13,7 @@ if($tipo_pago != "Efectivo"){
     $referencia = 0;
 }
 
-if($tipo_domi!="Presencial"){
+if($tipo_domi=="Domicilios"){
     $empleado = $_POST['var3'];
     
     $consultEmple= "SELECT * FROM empleado WHERE nombre='{$empleado}'";
@@ -50,7 +50,11 @@ if($num = $sqlExi->num_rows>0){
             $consultaModi = "UPDATE factura SET referencia_pago='{$referencia}', pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', facturapaga=1, tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
         }
     }else if($tipo_domi=="Domicilios"){
+        
         $consultaModi = "UPDATE factura SET empleado_id_domiciliario='{$EmpleId}', pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
+    }else if($tipo_domi=="Restaurante"){
+
+        $consultaModi = "UPDATE factura SET pago_total='{$totalPro}', noproductos='{$cantidadProductos}', fecha='{$fecha}', tipo_pago_id_tpago='{$pagoId}' WHERE id_factura='{$id_fact}'";
     }
     
     /*if($tipo_pago == "Efectivo"){

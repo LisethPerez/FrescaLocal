@@ -76,6 +76,7 @@
                             <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
                             <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
+                            <li><i class=""></i><a href="view_facturas_restaurante.php">Restaurante</a></li>
                             <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>
                         </ul>
                     </li>

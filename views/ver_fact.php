@@ -6,8 +6,6 @@
 
     //mysql_set_charset('utf8');
     
-
-
     $consulta = "SELECT *, cliente.nombre AS nombreCliente, tipo_pago.nombre AS tipo, empleado.nombre AS nombreEmple, factura.fecha AS fecha from factura INNER JOIN cliente ON factura.cliente_id_cliente=cliente.id_cliente INNER JOIN tipo_pago ON factura.tipo_pago_id_tpago=tipo_pago.id_tpago INNER JOIN empleado ON factura.empleado_id_empleado=empleado.id_empleado INNER JOIN sede ON factura.sede_id_sede=sede.id_sede WHERE factura.anulacion=0 AND factura.facturapaga=1 ORDER BY factura.id_factura DESC";
     $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
 
@@ -15,7 +13,7 @@
         while($row = mysqli_fetch_assoc($sql)){?>
             <tr>    
             <td><?php echo $row['id_factura'];?></td>
-            <td><?php echo "$ ".number_format($row['pago_total']);?></td>
+            <td><?php echo "$".number_format($row['pago_total']);?></td>
             <td><?php echo $row['noproductos'];?></td>
             <td><?php echo $row['fecha'];?></td>
             <td><?php echo $row['tipo'];?></td>

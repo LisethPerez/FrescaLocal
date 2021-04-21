@@ -17,6 +17,7 @@ $idPago = $_POST['var4'];
 $paga = $_POST['var5'];
 $web = $_POST['var6'];
 
+
 $idStock = array();
 
 include 'conexionBD.php';
