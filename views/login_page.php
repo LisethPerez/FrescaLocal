@@ -53,7 +53,10 @@
                                     <button type="button" id="ingresar_login" class="btn btn-outline-primary btn-user btn-block">
                                         Login
                                     </button>
-                                </form>
+				    <div class="text-center">
+                                    	<a class="btn btn-link" href="http://cosechafresca.controler.com.co/password/reset">¿Olvidaste la contraseña?</a> 
+                                    </div>
+				</form>
                                 <footer class="sticky-footer bg-white">
                                     <div class="container my-auto">
                                         <div class="copyright text-center my-auto">
