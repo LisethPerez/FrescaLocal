@@ -2,7 +2,7 @@
 $servidor="controler.com.co";
 $username="control3_cosechafresca2";
 $password="vk{j@%zq2HWq";
-$db="control3_cosechafresca2";
+$db="control3_prueba2";
 //$db="dbfresca";
 
 $conn = mysqli_connect($servidor,$username,$password,$db) or die(mysqli_error());

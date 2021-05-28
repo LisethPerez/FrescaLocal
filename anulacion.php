@@ -36,7 +36,7 @@ if($num = $sqlFact->num_rows>0){
             $username="control3_cosechafresca2";
             $password="vk{j@%zq2HWq";
             try {
-                $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+                $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_prueba2',$username,$password, array(PDO::ERRMODE_WARNING));
                 $mbd->query($modiStock);
             } catch (PDOException $e) {
                 //echo 'Falló la conexión: ' . $e->getMessage();
@@ -46,7 +46,7 @@ if($num = $sqlFact->num_rows>0){
                 $file = fopen("sincronizacion/sentenciasBD.txt","a+");
                 //$file = fopen('sentencias.txt', 'w');
                 fwrite($file, '<?php'. PHP_EOL);
-                fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+                fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_prueba2") or die(mysqli_error());'. PHP_EOL);
                 fwrite($file, '$consulta1="'.$modiStock.'";' . PHP_EOL);
                 fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
                 fwrite($file, '?>'. PHP_EOL);
@@ -68,7 +68,7 @@ if($sqlFact){
     $password="vk{j@%zq2HWq";
 
     try {
-        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_prueba2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($modiFact);
     } catch (PDOException $e) {
         //echo 'Falló la conexión: ' . $e->getMessage();
@@ -78,7 +78,7 @@ if($sqlFact){
         $file = fopen("sincronizacion/sentenciasBD.txt","a+");
         //$file = fopen('sentencias.txt', 'w');
         fwrite($file, '<?php'. PHP_EOL);
-        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_prueba2") or die(mysqli_error());'. PHP_EOL);
         fwrite($file, '$consulta1="'.$modiFact.'";' . PHP_EOL);
         fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
         fwrite($file, '?>'. PHP_EOL);
@@ -95,7 +95,7 @@ if($sqlAnula){
     $username="control3_cosechafresca2";
     $password="vk{j@%zq2HWq";
     try {
-        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_prueba2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($createAnula);
     } catch (PDOException $e) {
         //echo 'Falló la conexión: ' . $e->getMessage();
@@ -105,7 +105,7 @@ if($sqlAnula){
         $file = fopen("sincronizacion/sentenciasBD.txt","a+");
         //$file = fopen('sentencias.txt', 'w');
         fwrite($file, '<?php'. PHP_EOL);
-        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_prueba2") or die(mysqli_error());'. PHP_EOL);
         fwrite($file, '$consulta1="'.$createAnula.'";' . PHP_EOL);
         fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
         fwrite($file, '?>'. PHP_EOL);

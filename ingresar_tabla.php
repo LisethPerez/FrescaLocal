@@ -9,8 +9,13 @@ $peso = $_POST['peso2'];
 $codigo = $_POST['producto1'];
 $cantidad = $_POST['cantidad'];
 
-
 $total = 0;
+
+if(empty($peso)){
+    $cantt = $cantidad;
+}else{
+    $cantt = $peso;
+}
 
 if(empty($codigo)){
     $consult = "SELECT *, producto.nombre AS nombreEmple FROM producto INNER JOIN descuento ON producto.descuento_id_descuento=descuento.id_descuento INNER JOIN impuestos ON producto.impuestos_id_impuestos=impuestos.id_impuestos WHERE producto.nombre='{$producto_1}'";
@@ -43,20 +48,34 @@ if($numFilas = $sql->num_rows>0){
 
     if(empty($peso)){
        // $total = round($cantidad*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
-       $precioNuevo = round((($precio-($precio*$descuento1))*$cantidad));
+       //echo gettype($precio).' - '. gettype($descuento1).' - ' . gettype($cantidad);
+       $precioNuevo = round((($precio-($precio*$descuento1))*$cantt));
        $total = round($precioNuevo+($precioNuevo*$impuesto1));
+       //echo $total;
     }
     if(empty($cantidad)){
         //$total = round($peso*($precio+(($impuesto*$precio)/100)-(($descuento*$precio)/100)));
-        $precioNuevo1 = round((($precio-($precio*$descuento1))*$peso));
+        $peso = doubleval($peso);
+        $precioNuevo1 = round((($precio-($precio*$descuento1))*$cantt));
         $total = round($precioNuevo1+($precioNuevo1*$impuesto1));
     }
-    $datos[] = array(
+    /*$datos[] = array(
         "id"=>$cont,
         "codigo"=>$result['ean'],
         "cantidad"=>$cantidad,
         "producto"=>$result['nombreEmple'],
         "peso"=>$peso,
+        "precio"=>$precio,//$result->costo_compra,
+        "total"=>$total,
+        "impuesto"=>$impuesto,
+        "descuento"=>$descuento,
+        "opcion"=>'<button class="btn btn-danger btn-sm eliRows" id="eliminar_pro"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+    );*/
+    $datos[] = array(
+        "id"=>$cont,
+        "codigo"=>$result['ean'],
+        "cantidad"=>$cantt,
+        "producto"=>$result['nombreEmple'],
         "precio"=>$precio,//$result->costo_compra,
         "total"=>$total,
         "impuesto"=>$impuesto,

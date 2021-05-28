@@ -21,6 +21,11 @@ $web = $_POST['var6'];
 $idStock = array();
 
 include 'conexionBD.php';
+$consultt = "SELECT * FROM factura ORDER BY id_factura DESC LIMIT 1";
+$sqll = mysqli_query($conn,$consultt) or die(mysqli_error($conn));
+$fac = $sqll->fetch_object();
+$ultimo = $fac->id_factura;
+$idFactu = $ultimo +1;
 
 $consultCliente= "SELECT * FROM cliente WHERE documento='{$cedula}'";
 $sqlCliente = mysqli_query($conn,$consultCliente) or die(mysqli_error($conn));
@@ -33,14 +38,11 @@ $resultadoUser = $sqlUser->fetch_object();
 $idEmple = $resultadoUser->id_empleado;
 
 //Creación de la factura con la mayoria de campos por defecto
-$consultaFac = "INSERT INTO factura (id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,empleado_id_domiciliario,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago,tipo_web) VALUES ('{$codigo}',0,0,'{$fecha}','{$paga}','{$idPago}','{$idEmple}',0,'{$clienteId}','{$id_Sede}',0,'NULL','{$web}')";
+$consultaFac = "INSERT INTO factura (id_factura,id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,empleado_id_domiciliario,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago,tipo_web) VALUES ({$idFactu},'{$codigo}',0,0,'{$fecha}','{$paga}','{$idPago}','{$idEmple}',0,'{$clienteId}','{$id_Sede}',0,'NULL','{$web}')";
 $sqlFact = mysqli_query($conn,$consultaFac) or die(mysqli_error($conn));
 
 //Obtención del id de la factura generada anteriormente para la asignación de los productos del dettalle
-$consultt = "SELECT * FROM factura ORDER BY id_factura DESC LIMIT 1";
-$sqll = mysqli_query($conn,$consultt) or die(mysqli_error($conn));
-$fac = $sqll->fetch_object();
-$idFactu = $fac->id_factura;
+
 
 $consultaFac1 = "INSERT INTO factura (id_factura,id_factura_web,pago_total,noproductos,fecha,facturapaga,tipo_pago_id_tpago,empleado_id_empleado,empleado_id_domiciliario,cliente_id_cliente,sede_id_sede,anulacion,referencia_pago,tipo_web) VALUES ('{$idFactu}','{$codigo}',0,0,'{$fecha}','{$paga}','{$idPago}','{$idEmple}',0,'{$clienteId}','{$id_Sede}',0,'NULL','{$web}')";
 
@@ -48,14 +50,14 @@ if($sqlFact){
     $username="control3_cosechafresca2";
     $password="vk{j@%zq2HWq";
     try {
-        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_cosechafresca2',$username,$password, array(PDO::ERRMODE_WARNING));
+        $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_prueba2',$username,$password, array(PDO::ERRMODE_WARNING));
         $mbd->query($consultaFac1);
     } catch (PDOException $e) {
         
         $file = fopen("sincronizacion/sentenciasBD.txt","a+");
         //$file = fopen('sentencias.txt', 'w');
         fwrite($file, '<?php'. PHP_EOL);
-        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_cosechafresca2") or die(mysqli_error());'. PHP_EOL);
+        fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_prueba2") or die(mysqli_error());'. PHP_EOL);
         fwrite($file, '$consulta1="'.$consultaFac1.'";' . PHP_EOL);
         fwrite($file, '$sql1 = mysqli_query($conn,$consulta1) or die(mysqli_error());' . PHP_EOL);
         fwrite($file, '?>'. PHP_EOL);
@@ -65,7 +67,7 @@ if($sqlFact){
 
 foreach ($datos as $product) {
 
-    $nombre_producto = $product['producto'];
+    /*$nombre_producto = $product['producto'];
     $cantidad_pro = $product['cantidad'];
     $precio = $product['precio'];
     $peso = $product['peso'];
@@ -80,7 +82,17 @@ foreach ($datos as $product) {
     if($cantidad_pro == 'NaN'){
         $cantt= $peso;
         $cantTota =  $peso;
-    }  
+    }  */
+    $nombre_producto = $product['producto'];
+    $cantidad_pro = $product['cantidad'];
+    $precio = $product['precio'];
+    $impuesto = $product['impuesto'];
+    $descuento = $product['descuento'];
+    $total = $product['total'];
+
+    $cantTota = 0;
+    $cantt= $cantidad_pro;
+    $cantTota = $cantidad_pro;
 
    // print_r($product);
    include 'conexionGene.php';

@@ -44,7 +44,6 @@ $('#cedula').keydown(function(f){
                 timer: 2000
             });     
         }else{
-        
             $.ajax({
                 type: "POST",
                 url: "encontrar_cedula.php",
@@ -52,7 +51,7 @@ $('#cedula').keydown(function(f){
                 success: function(data) {
                                     
                     if (data === "No existe ese registro"){
-                        $('#cedula').val('');
+                        //$('#cedula').val('');
                         $('#resultado').html('');
                         Swal.fire({
                             icon: 'error',
@@ -67,6 +66,7 @@ $('#cedula').keydown(function(f){
                             timer: 2000
                         });     
                         $('#ingresar').prop('disabled', false);
+                        $('#documento').val($('#cedula').val());
                         $('#confi').prop('disabled', true);
                     }else{
                         $('#resultado').html(data);  
@@ -103,7 +103,7 @@ $('#buscar1').click(function () {
             success: function(data) {
     
                 if (data === "No existe ese registro"){
-                    $('#cedula').val();
+                    //$('#cedula').val();
                     $('#resultado').html('');
                     Swal.fire({
                         icon: 'error',
@@ -118,6 +118,7 @@ $('#buscar1').click(function () {
                         timer: 2000
                     });     
                     $('#ingresar').prop('disabled', false);
+                    $('#documento').val($('#cedula').val());
                     $('#confi').prop('disabled', true);
                 }else{              
                     $('#resultado').html(data);
@@ -133,7 +134,9 @@ var cedula_cliente;
 var tipo_cliente=0;
 //Obtener el tipo de cliente según la cedula ingresada
 $('#confi').click(function () {
-    cedula_cliente = $('#cedula1').val()
+    cedula_cliente = $('#cedula1').val();
+    $('#nom_clie').text(" -------- Cliente: " +$('#cedula2').val());
+    //alert($('#cedula2').val());
     $.ajax({
         type: "POST",
         url: "obtener_tipo.php?var="+cedula_cliente,
@@ -215,7 +218,7 @@ function clearCliente(){
 }
 
 //Metodo para el ingreso de los datos del formulario de cliente 
-$('#registrar2').click(function () {   
+$('.nuevoCli').keypress(function (e) {   
     var tipo_cle = $('#tipo_cliente option:selected').val();
     var nombre = $('#nombre').val();
     var documento= $('#documento').val();
@@ -225,55 +228,54 @@ $('#registrar2').click(function () {
     var empresa = $('#empresa').val();
     var nit = $('#nit').val(); 
     var nit1 = $('#nit1').val(); 
-  
-    if(tipo_cle === '' || nombre===''||  documento===''){
-        Swal.fire({
-            icon: 'error',
-            text: 'Por favor ingrese los datos marcados con *',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });     
-    }else{
-        $.ajax({
-            type: "POST",
-            url: "registrar_cliente.php?var="+tipo_cle,
-            data: $("#form_cliente").serialize(),
-            success: function(data) {
-                //alert(data);
-                if(data==='Datos ingresados'){
-                    Swal.fire({
-                        icon: 'success',
-                        text: "Datos ingresados",
-                        showClass: {
-                            popup: 'animate__animated animate__fadeInDown'
-                        },
-                        hideClass: {
-                            popup: 'animate__animated animate__fadeOutUp'
-                        },
-                        showConfirmButton: false,
-                        timer: 2000
-                    });    
-                    clearCliente();
-                    $('#cedula').val(''); 
-                    document.getElementById("ocu").click();
 
-                }else{
-                    alert(data);
+    if(e.which == 13) {
+        if(tipo_cle === '' || nombre===''||  documento===''){
+            Swal.fire({
+                icon: 'error',
+                text: 'Por favor ingrese los datos marcados con *',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
                 }
-                
-                
-            }
-        });
+            });     
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "registrar_cliente.php?var="+tipo_cle,
+                data: $("#form_cliente").serialize(),
+                success: function(data) {
+                    //alert(data);
+                    if(data==='Datos ingresados'){
+                        Swal.fire({
+                            icon: 'success',
+                            text: "Datos ingresados",
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            },
+                            showConfirmButton: false,
+                            timer: 2000
+                        }); 
+                        $('#cedula').val($('#documento').val());    
+                        clearCliente(); 
+                        document.getElementById("ocu").click();
+    
+                    }else{
+                        alert(data);
+                    }
+                    
+                    
+                }
+            });
+        }
     }
 });
 
-function myTimer3() {
-   
-}
 //Método para el ingreso a la aplicación por medio del login
 $('#ingresar_login').click(function () {   
     var correo = $('#email').val();
@@ -1081,6 +1083,15 @@ function myTimer() {
 
 //Función para la sincronización de bases de datos
 $('#sincro').click(function(){   
+    //Desahilitar acciones 
+    $('.selec').prop("disabled",true);
+    $('.calcu').prop("disabled",true);
+    $('#cli').prop("disabled",true);
+    $('#realizar_pago').prop("disabled",true);
+    $('#prueba').prop("disabled",true);
+    $('#producto1').prop("disabled",true);
+
+    //Empezar sincronización
       $.ajax({
         url: "sincronizacion/comprobarConexionBD.php",
         type: "POST",
@@ -1090,19 +1101,19 @@ $('#sincro').click(function(){
                     icon: 'warning',
                     title: 'Por favor espere mientras se realiza la sincronización y se evidencie el mensaje de exito',
                     showConfirmButton: false,
-                    timer: 65000
+                    timer: 100000
                   });
                   $.ajax({
                     url: "exportar.php",
                     type: "POST",
                     success: function(data){
                         if(data ==='Importación realizada de forma correcta'){
-                            alert("Exportación hecha de la base de datos general");
+                            //alert("Exportación hecha de la base de datos general");
                             $.ajax({
                                 url: "importar.php",
                                 type: "POST",
                                 success: function(data){
-                                    alert(data);                     
+                                    //alert(data);                     
                                 }
             
                             });
@@ -1117,18 +1128,19 @@ $('#sincro').click(function(){
                     type: "POST",
                     success: function(data){
                         if(data ==='Importación realizada de forma correcta'){
-                            alert("Exportación hecha de la base de datos de fresca");
+                            //alert("Exportación hecha de la base de datos de fresca");
                             $.ajax({
                                 url: "importar2.php",
                                 type: "POST",
                                 success: function(data){
-                                    alert(data);
+                                    //alert(data);
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Sincronización exitosa',
                                         showConfirmButton: false,
                                         timer: 1500
                                       });
+                                    var myVar = setInterval(myTimer, 1500);  
                                 }
             
                             });
@@ -1432,9 +1444,15 @@ $('#producto3').keypress(function (f) {
 //Desabilitar editar y eliminación del datos dentro del input
 //keydown
 //Bloquear opciones de edición al peso
-$('#pesooo').keypress(function (evt) {
-    evt.preventDefault();
-    try {                
+/*$('#pesooo').keypress(function (evt) {
+    //evt.preventDefault();
+    if(evt.keyCode==110 || evt.keyCode > 48 && evt.keyCode < 57){
+        return true;
+    }
+    else{
+        return false;
+    }
+    /*try {                
         if ((evt.keyCode == 8 || evt.keyCode == 46))
             return false;
         else
@@ -1445,7 +1463,7 @@ $('#pesooo').keypress(function (evt) {
     {
         return false;
     }
-});
+})*/
 
 //Bloquear opciones de edición en el total de ventas credito
 $('#total_venCre').keypress(function (evt) {
@@ -1481,28 +1499,61 @@ $('#total_venDe').keypress(function (evt) {
 $("#pesooo").focus(function(e) {
     /*$('#pesooo').val(0.93);    
     $('#peso2').val(0.93);*/
-    $.ajax({
-        
+    $.ajax({     
         url: "lectura.php",
         success: function(data) {
-            $('#pesooo').val(data);
-            $('#peso2').val(data);
+            var valor = data.substring(0,6);
+             if(valor==='<br />'){
+                
+                //$('#producto1').focus();
+                $('#pesooo').val("Digite el peso");
+                //$('#peso2').val('');
+             }else{
+                 //alert("Se cargará automaticamente");
+                $('#pesooo').val(data);
+                $('#peso2').val(data);
+             }
         }
     }); 
 }); 
 
-$("#pesooo2").focus(function(e) {
-    $('#pesooo2').val(0.9);    
-    $('#peso3').val(0.9);
+//Solo se permiten números decimales en el input pesooo
+function isNumberKey(evt)
+{
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
 
-    /*$.ajax({
-        
-        url: "lectura.php",
+  return true;
+}
+
+//Límite de decimales en el input de pesooo
+function limitDecimalPlaces(e, count) {
+    if (e.target.value.indexOf('.') == -1) { return; }
+    if ((e.target.value.length - e.target.value.indexOf('.')) > count) {
+      e.target.value = parseFloat(e.target.value).toFixed(count);
+    }
+  }
+
+$("#pesooo2").focus(function(e) {
+    /*$('#pesooo2').val(0.9);    
+    $('#peso3').val(0.9);*/
+
+    $.ajax({     
+        url: "../lectura.php",
         success: function(data) {
-            $('#pesooo2').val(data);
-            $('#peso3').val(data);
+            var valor = data.substring(0,6);
+             if(valor==='<br />'){
+                
+                //$('#producto1').focus();
+                $('#pesooo2').val("Digite el peso");
+             }else{
+                 //alert("Se cargará automaticamente");
+                $('#pesooo2').val(data);
+                $('#peso3').val(data);
+             }
         }
-    }); */
+    });
 });   
 
 
@@ -1518,9 +1569,15 @@ $('.selec').keypress(function (e) {
     var producto = $('#producto').val();
     var cantidad = $('#cantidad').val();
     var peso = $('#peso2').val();
+    var peso1 = $('#pesooo').val();
     var codigo = $('#producto1').val();
 
     if(e.which == 13) {
+
+        if(peso === '' && peso1!='Digite el peso'){
+            $('#peso2').val(peso1);
+            peso = $('#pesooo').val();
+        }
         
         if(tipo==="cantidad" && cantidad===''){  
             $('#cantidad').focus();      
@@ -1598,7 +1655,8 @@ $('.selec').keypress(function (e) {
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOutUp'
                                 }
-                            });    
+                            }); 
+                            $('#peso2').val('');   
                         }else{
                             //Mostrar mensaje de alerta de pocas unidades
                             $.ajax({
@@ -1606,6 +1664,7 @@ $('.selec').keypress(function (e) {
                                 url: "mensaje.php?var="+cant,
                                 data: $("#venta").serialize(),
                                 success: function(data) {
+                                    //alert(data);
                                     if(data==="Hay pocas unidades del producto"){
                                         Swal.fire({
                                             icon: 'warning',
@@ -1624,9 +1683,9 @@ $('.selec').keypress(function (e) {
                                     url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
                                     data: $("#venta").serialize(),
                                     success: function(data) {
-                                       
+                                       //alert(data);
                                         DataArray = JSON.parse(data);  
-                                    
+                                        //alert(JSON.stringify(DataArray));
                                          
                                         createRow(DataArray);
                                         deleteRow(datos);  
@@ -1635,16 +1694,17 @@ $('.selec').keypress(function (e) {
                                         $.each(DataArray, function(i, _data) {
                                             var id = _data.id;
                                             var codigo =  _data.codigo;
-                                            var cantidad =  parseInt( _data.cantidad);
+                                            //var cantidad =  parseInt( _data.cantidad);
+                                            var cantidad =  parseFloat( _data.cantidad);
                                             var producto =  _data.producto;
-                                            var peso =  parseFloat(_data.peso);
+                                            //var peso =  parseFloat(_data.peso);
                                             var precio = parseFloat(_data.precio);
                                             var impuesto =  parseInt(_data.impuesto);
                                             var descuento = parseInt(_data.descuento);
                                             var total = parseFloat(_data.total);
                                             
                                         
-                                            datos.push({
+                                            /*datos.push({
                                                 'id': id,
                                                 'codigo': codigo,
                                                 'cantidad': cantidad,
@@ -1654,12 +1714,22 @@ $('.selec').keypress(function (e) {
                                                 'impuesto': impuesto,
                                                 'descuento': descuento,
                                                 'total' : total
+                                            })*/
+                                            datos.push({
+                                                'id': id,
+                                                'codigo': codigo,
+                                                'cantidad': cantidad,
+                                                'producto': producto,
+                                                'precio' : precio,
+                                                'impuesto': impuesto,
+                                                'descuento': descuento,
+                                                'total' : total
                                             })
                                     
                                         });
                                         //Suma de los total por productos seleccionados
                                         $.each(datos, function(i, _data) {
-                                            
+        
                                             total += parseFloat(_data.total);
                                         });
                                         
@@ -1686,17 +1756,13 @@ $('.selec').keypress(function (e) {
                                 venta = datos;
                                 $('#pesooo').val('');
                                 $('#peso2').val('');
-                                $('#producto').focus(); 
+                                $('#producto').focus();
                         }
                     }
                     
-                });
-                /*venta = datos;
-                $('#pesooo').val('');
-                $('#peso').val('');*/
-               
+                });               
             }       
-        }//IF DE VALIDAR DATOS VACIOS
+        } //IF DE VALIDAR DATOS VACIOS
     }//IF DEL ENTER
 
 });
@@ -1734,6 +1800,8 @@ var id_factura;
 //Realizar modificaciones de la facrtura y hacer el pago de la compra 
 $('#pagar').click(function(){  
     //verificarConexion();
+    $(this).prop("disabled",true);
+
     if($('#id_factCre').val()===''){
         referencia =  referencia = $('#id_factDe').val();
         $('#id_factDe').val('');
@@ -1741,7 +1809,8 @@ $('#pagar').click(function(){
         referencia =  referencia = $('#id_factCre').val();
         $('#id_factCre').val('')
     }
-
+    //console.log(datos);
+    
     $.ajax({
         type:"POST",
         url: "detalle_venta.php?cliente="+cedula_cliente,
@@ -1804,66 +1873,7 @@ $('#pagar').click(function(){
 
 //Realizar descuento de la disponibilidad del producto (si se requiere)
 $('#volver_stock').click(function(){
-    //alert(JSON.stringify(venta));
-    /*$.ajax({
-        type:"POST",
-        url: "detalle_venta.php?cliente="+cedula_cliente,
-        data: {var: venta},  
-        success: function(data) {
-            id_factura = data;
-            $.ajax({
-                type:"POST",
-                url: "volverStock.php?fac="+id_factura,
-                data: {var: venta, tipo_pago: pago},
-            
-                success: function(data) {
-                    alert(data);
-                    /*if(data==="Factura anulada"){
-                        Swal.fire({
-                            icon: 'success',
-                            text: data,
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInDown'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutUp'
-                            }
-                        });   
-                        window.location.href="index.php";  
-        
-                    }
-                    if(data ==="No se anulo la factura"){
-                        Swal.fire({
-                            icon: 'error',
-                            text: data,
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInDown'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutUp'
-                            }
-                        });     
-                    }
-                    var contenidoVen = document.getElementById("cont_ventas");
-                        contenidoVen.innerHTML = "";
-                      $('#total').val('');   
-                }
-            });
-        }
-    });*/
-
-    var contenidoVen = document.getElementById("cont_ventas");
-    contenidoVen.innerHTML = "";
-    $('#total').val('');  
-    $('#valor_ingre').val('');  
-    $('#vueltas').val('');  
-    $('#total_venDe').val(''); 
-    $('#id_factDe').val('');   
-    $('#total_venCre').val('');  
-    $('#id_factCre').val('');  
-    $('#total_venLink').val('');  
-    $('#id_factLink').val('');  
-   
+    var myVar = setInterval(myTimer, 200); 
 });
   
 //Descontar del inventario para pagos por las otras plataformas electrónicas
@@ -2017,7 +2027,6 @@ function createRow(data) {
     <td>`+data[i].codigo+`</td>
     <td>`+data[i].cantidad+`</td>
     <td>`+data[i].producto+`</td>
-    <td>`+data[i].peso+`</td>
     <td>`+data[i].precio+`</td>
     <td>`+data[i].impuesto+`</td>
     <td>`+data[i].descuento+`</td>
@@ -2025,6 +2034,19 @@ function createRow(data) {
     <td>`+data[i].opcion+`</td>  
     
     </tr>`;
+    /*var trElement = `<tr>
+    <td style="display:none">`+data[i].id+`</td>
+    <td>`+data[i].codigo+`</td>
+    <td>`+data[i].cantidad+`</td>
+    <td>`+data[i].producto+`</td>
+    <td>`+data[i].peso+`</td>
+    <td>`+data[i].precio+`</td>
+    <td>`+data[i].impuesto+`</td>
+    <td>`+data[i].descuento+`</td>
+    <td>`+data[i].total+`</td>
+    <td>`+data[i].opcion+`</td>  
+    
+    </tr>`;*/
     $('#cont_ventas').append(trElement);
     //trElement += "<td >" + data[i] + "</td>";
     }  
@@ -2135,9 +2157,14 @@ $('.select').keypress(function (e) {
     var producto = $('#producto2').val();
     var cantidad = $('#cantidad2').val();
     var peso = $('#peso3').val();
+    var peso1 = $('#pesooo2').val();
     var codigo = $('#producto3').val();
 
     if(e.which == 13) {
+        if(peso === '' && peso1!='Digite el peso'){
+            $('#peso3').val(peso1);
+            peso = $('#pesooo2').val();
+        }
         if(tipo1==="cantidad" && cantidad===''){  
             $('#cantidad2').focus();      
             Swal.fire({
@@ -2198,7 +2225,8 @@ $('.select').keypress(function (e) {
                         hideClass: {
                             popup: 'animate__animated animate__fadeOutUp'
                         }
-                    });    
+                    }); 
+                    $('#peso3').val('');   
                 }else{
                     $.ajax({
                         type:"POST",

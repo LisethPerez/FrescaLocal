@@ -5,7 +5,7 @@ $username="root";
 $password="";
 $db="basegeneral";
 
-$dump = 'mysql -h' .$servidor .' -u' .$username.' ' .$db .'< sincronizacion/control3_cosechafresca1.sql'; 
+$dump = 'mysql -h' .$servidor .' -u' .$username.' ' .$db .'< sincronizacion/control3_prueba1.sql'; 
 exec($dump, $output);
 echo "Base de datos de fresca actulizada";
 

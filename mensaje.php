@@ -23,10 +23,19 @@ if($numFilas = $sql->num_rows>0){
     include 'conexionBD.php';
     $consult1 = "SELECT * FROM stock WHERE producto_id_producto='{$idProduc}'";
     $sql1 = mysqli_query($conn,$consult1) or die(mysqli_error($conn));
-    $result1 = $sql1->fetch_object();
-    $cantidadStock = $result1->cantidad;
+    //$result1 = $sql1->fetch_object();
+    //$cantidadStock = $result1->cantidad;
 
-    if($cantidadStock<$stock_minimo){
+    $cantidadTotal = 0;
+
+    while($result1 = mysqli_fetch_assoc($sql1)){
+        $cantidadStock = $result1['cantidad'];
+        $cantidadTotal = $cantidadStock + $cantidadTotal;         
+    }
+
+    //echo $cantidadTotal;
+
+    if($cantidadTotal<$stock_minimo){
         echo "Hay pocas unidades del producto";
     }
 

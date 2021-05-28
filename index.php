@@ -193,7 +193,7 @@ display: block;
                                     <div class="card bg-flat-color-8 border border-secondary" >
                            
                                         <div class="card-header bg-dark">
-                                            <strong class="card-title text-light">Información venta</strong>
+                                            <strong class="card-title text-light">Información venta <label id="nom_clie"></label></strong>
                                         </div>
                                         <div class="card-body">
                                         <form id="venta" method="POST"> 
@@ -207,7 +207,7 @@ display: block;
                                                 <div class="col">
                                                         <label><a id="obte" class="">Peso (KG)</a></label>
                                                         <input type="hidden" id="peso2" name="peso2"></input>
-                                                        <input type="text" class="form-control selec" id="pesooo" name="pesooo" style="height:35px; font-size:160%;" required>
+                                                        <input type="text" class="form-control selec" id="pesooo" name="pesooo" style="height:35px; font-size:160%;" required oninput="limitDecimalPlaces(event, 3)" onkeypress="return isNumberKey(event)">
                                                        <!--<input type="text" class="form-control selec" name="peso" id="peso" placeholder="Peso" style="height:30px" required>-->
                                                 </div>
                                             </div><br>
@@ -231,7 +231,7 @@ display: block;
                                                         <th>Código</th>
                                                         <th>Cantidad</th>
                                                         <th>Producto</th>
-                                                        <th>Peso</th>
+                                                        <!--<th>Peso</th>-->
                                                         <th>Precio</th>
                                                         <th>Imp</th>
                                                         <th>Desc</th>
@@ -332,7 +332,7 @@ display: block;
                                                                                 $consulta = "SELECT * FROM categoria_cliente";
                                                                                 $sql = mysqli_query($conn,$consulta) or die(mysqli_error($conn));
                                                                             ?>
-                                                                            <select type="text" class="form-control" id="tipo_cliente" name="tipo_cliente" placeholder="Tipo cliente"  style="height:33px" onkeypress="return onlyLetters(event)" style="width:160px;" required>
+                                                                            <select type="text" class="form-control nuevoCli" id="tipo_cliente" name="tipo_cliente" placeholder="Tipo cliente"  style="height:33px" onkeypress="return onlyLetters(event)" style="width:160px;" required>
                                                                             
                                                                             <?php 
                                                                                 while ($valores = mysqli_fetch_object($sql)) {
@@ -349,7 +349,7 @@ display: block;
                                                                 <div class="form-row">
                                                                     <div class="col-12">
                                                                         <label for="validationCustom01">Nombre<strong style="color:#F71627">*</strong></label>
-                                                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" style="height:33px" onkeypress="return onlyLetters(event)"  required><br>
+                                                                        <input type="text" class="form-control nuevoCli" id="nombre" name="nombre" placeholder="Nombre completo" style="height:33px" onkeypress="return onlyLetters(event)"  required><br>
                                                                         <div class="invalid-feedback">
                                                                             Ingrese nombre
                                                                     </div>
@@ -358,12 +358,12 @@ display: block;
                                                                 <div class="form-row">
                                                                     <div class="col">
                                                                             <label for="validationCustom03">Documento<strong style="color:#F71627">*</strong></label>
-                                                                            <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento" style="height:33px" onkeypress="return onlyNums(event)" max="10" required><br>
+                                                                            <input type="text" class="form-control nuevoCli" id="documento" name="documento" placeholder="Documento" style="height:33px" onkeypress="return onlyNums(event)" max="10" required><br>
                                                                             
                                                                     </div>
                                                                     <div class="col">
                                                                         <label for="validationCustom03">Telefono</label>
-                                                                        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefono" maxlength="10" style="height:33px" onkeypress="return onlyNums(event)" required><br>
+                                                                        <input type="text" class="form-control nuevoCli" id="telefono" name="telefono" placeholder="Telefono" maxlength="10" style="height:33px" onkeypress="return onlyNums(event)" required><br>
                                                                         
                                                                     </div>
                                                                     
@@ -371,12 +371,12 @@ display: block;
                                                                 <div class="form-row">
                                                                     <div class="col">
                                                                         <label for="validationCustom03">Dirección</label>
-                                                                        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" style="height:33px" required><br>
+                                                                        <input type="text" class="form-control nuevoCli" id="direccion" name="direccion" placeholder="Direccion" style="height:33px" required><br>
                                                                         
                                                                     </div> 
                                                                     <div class="col">
                                                                             <label for="validationCustom03">Correo</label>
-                                                                            <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo"  style="height:33px" required><br>
+                                                                            <input type="email" class="form-control nuevoCli" id="correo" name="correo" placeholder="Correo"  style="height:33px" required><br>
                                                                            
                                                                     </div>    
                                                                  
@@ -384,18 +384,18 @@ display: block;
                                                                 <div class="form-row" id="info_insti">
                                                                     <div class="col">
                                                                         <label for="validationCustom03">Empresa</label>
-                                                                        <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa"  style="height:33px" onkeypress="return onlyLetters(event)" required><br>
+                                                                        <input type="text" class="form-control nuevoCli" id="empresa" name="empresa" placeholder="Empresa"  style="height:33px" onkeypress="return onlyLetters(event)" required><br>
                                                                        
                                                                     </div>
                                                                     <div class="col">       
                                                                     <label for="validationCustom03">Indentificación NIT</label>
                                                                         <div class="form-row">
                                                                             <div class="col"> 
-                                                                                <input type="text" class="form-control" id="nit" name="nit" placeholder="NIT"  style="height:33px; width:142px" onkeypress="return onlyNums(event)" required>
+                                                                                <input type="text" class="form-control nuevoCli" id="nit" name="nit" placeholder="NIT"  style="height:33px; width:142px" onkeypress="return onlyNums(event)" required>
                                                                             </div>
                                                                             <strong>-</strong>
                                                                             <div class="col"> 
-                                                                               <input type="number" class="form-control" id="nit1" name="nit1" placeholder="NIT"  style="height:33px; width:65px" min="1" max="9" onkeypress="return onlyNums(event)" required><br>
+                                                                               <input type="number" class="form-control nuevoCli" id="nit1" name="nit1" placeholder="NIT"  style="height:33px; width:65px" min="1" max="9" onkeypress="return onlyNums(event)" required><br>
                                                                             </div>
                                                                               
                                                                             </div>      
@@ -407,7 +407,7 @@ display: block;
                                                     </div> <!--modal-body-->
                                                     <div class="modal-footer">
                                                             <button type="button" class="btn btn-danger btn-sm" id="ocu" data-dismiss="modal">Cancelar</button>
-                                                            <button type="button" class="btn btn-success btn-sm" id="registrar2">Confirmar</button>
+                                                            <!--<button type="button" class="btn btn-success btn-sm" id="registrar2">Confirmar</button>-->
                                   
                                                     </div> <!--modal-footer-->
                                                     </form>
@@ -652,7 +652,7 @@ display: block;
                             <div class="col-lg-4">
                                 <div class="form-row">
                                     <div class="col">
-                                        <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:338px; height:50px"><i class="fa fa-user"></i>&nbsp;CLIENTE</button>
+                                        <button class="btn btn-primary btn-sm mb-2" id="cli" type="button" data-toggle="modal" data-target="#infoCliente" style="width:338px; height:50px"><i class="fa fa-user"></i>&nbsp;CLIENTE</button>
                                     </div>  
                                 </div>
                             
