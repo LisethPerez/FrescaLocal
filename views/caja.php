@@ -222,7 +222,7 @@ display: block;
                                                 <div class="col">
                                                     <label>Egresos</label>
                                                     <input type="hidden" id="totalEg" name="totalEg">
-                                                    <input type="text" class="form-control" id="totalEgr" name="totalEgr" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)" disabled>
+                                                    <input type="text" class="form-control" id="totalEgr" name="totalEgr" style="height:80px; font-size:300%;"  onkeypress="return onlyNums(event)">
                                                 </div>
                                                 
                                         </form> 
@@ -266,11 +266,14 @@ display: block;
                                                 </div>
                                                 
                                             </div>
+                                            <br>
                                             <div class="form-row">
                                                 <div class="col"></div>
-                                                <div class="col">
-                                                <br>
+                                                <div class="col text-center">
                                                     <button class="btn btn-success btn-sm mb-2" id="cerrar" type="button" style="width:170px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Cerrar caja</button>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <button class="btn btn-white btn-sm mb-2" id="fechaa" type="button" style="width:170px; height:50px; background:#F0A744; color:#FFF;" data-toggle="modal" data-target="#buscador"><i class="fa fa-cogs"></i>&nbsp;Reporte detallado</button>
                                                 </div>
                                                 <div class="col"></div>
                                             </div>
@@ -358,7 +361,66 @@ display: block;
                                                     </div><!--modal-content-->
                                                 </div> <!--modal-dialog-->
                                             </div><!--modal-fade-->
-
+                                            
+                                            <div class="modal fade" id="buscador" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id=""><strong>Informes de consolidados</strong></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                         </div>
+                                                        <div class="modal-body">
+                                                            <div class="card border border-secondary">
+                                                                <div class="card-header bg-dark">
+                                                                    <strong class="card-title text-light heading">Consolidado por fechas</strong>
+                                                                </div>
+                                                                    <div class="card-body">
+                                                                    <form  method="POST" id="consol" action="../generar_pdf6.php" target="_blank">
+                                                                        <div class="form-row">
+                                                                            <div class="form-group mx-sm-3">
+                                                                            </div>
+                                                                            <div class="form-group mx-sm-3">       
+                                                                                <label for="staticEmail2">Seleccione fecha</label>
+                                                                            </div>
+                                                                            <div class="form-group mx-sm-5">     
+                                                                                <input type="date" class="form-control" id="re" name="repo" placeholder="">
+                                                                            </div>
+                                                                            
+                                                                            <div class="form-group mx-sm-3">
+                                                                                <button type="submit" id="repo" value="" class="btn btn-success btn-sm mb-2 webb" >Generar consolidado</button>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </form>   
+                                                                    <hr>
+                                                                    <div class="form-row">
+                                                                        <div class="col" id="ventas_web">
+                                                                        </div>
+                                                                    </div>
+                                                                   
+                                                                </div><!--card-body-->
+                                                            </div><!--card-border-->
+                                                        </div><!--model-body-->
+                                                        <div class="modal-footer">
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                           
+                                                            <!--<button type="button" id="confi" class="btn btn-success btn-sm mb-2">CONFIRMAR</button>-->
+                                                           
+                                                        </div>
+                                                    </div><!--modal-content-->
+                                                </div> <!--modal-dialog-->
+                                            </div><!--modal-fade-->
+                                            <form id="" method="POST" action="../generar_pdf5.php" target="_blank">  
+                                                <input type="hidden" value="" id="base" name="var">
+                                                <input type="hidden" value="" id="eg" name="var1">
+                                                <input type="hidden" value="" id="to" name="var2">
+                                                <input type="hidden" value="" id="el" name="var3">
+                                                <input type="hidden" value="" id="we" name="var4">
+                                                <input type="hidden" value="" id="caj" name="var5">
+                                                <button type="submit" style="display:none;" id="submitCaja">
+                                            </form>
                                         </div><!--card-body-->
                        
                                     </div> <!--card bg-->

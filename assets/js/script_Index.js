@@ -485,7 +485,7 @@ var totalCaja = 0;
 //Colocar el valor de la base monetaria en caja
 $('#baseMo').keyup(function (e) {
     var myVar = setInterval(myTimer2, 1000);
-});    
+});   
 
 //Función para obtener el valor total de la caja
 function myTimer2() {
@@ -507,7 +507,9 @@ $('#cerrar').click(function(){
     var ingresosEfe = parseInt($('#totalEfe').val().replace(/[^a-zA-Z0-9]/g, ''));
     var ingresosEle = parseInt($('#totalTarj').val().replace(/[^a-zA-Z0-9]/g, ''));
     var egresos = parseInt($('#totalEgr').val().replace(/[^a-zA-Z0-9]/g, ''));
-    
+    var web = parseInt($('#totalElec').val().replace(/[^a-zA-Z0-9]/g, ''));
+    var caja = parseInt($('#dineCaja').val().replace(/[^a-zA-Z0-9]/g, ''));
+
     if($('#baseMo').val() === ''){
         Swal.fire({
             icon: 'error',
@@ -526,7 +528,7 @@ $('#cerrar').click(function(){
         $.ajax({
             url: "../cerrar_caja.php",
             type: "POST",
-            data:{var: base, var2:ingresosEfe, var3:ingresosEle, var4: egresos},
+            data:{var: base, var2:ingresosEfe, var3:ingresosEle, var4: egresos, var5: web},
             success: function(data){
                 //alert(data);
                 if(data==="Caja correcta"){
@@ -539,12 +541,21 @@ $('#cerrar').click(function(){
                         hideClass: {
                             popup: 'animate__animated animate__fadeOutUp'
                         }
-                    });  
-                    $('#baseMo').val(0);
-                    $('#totalEfe').val(0);
-                    $('#totalTarj').val(0);
-                    $('#totalEgr').val(0);
-                    $('#dineCaja').val(0);
+                    }); 
+                    $('#base').val(base);
+                    $('#eg').val(egresos);
+                    $('#to').val(ingresosEfe);
+                    $('#el').val(ingresosEle);
+                    $('#we').val(web);
+                    $('#caj').val(caja);
+                    document.getElementById("submitCaja").click();
+
+                    $('#baseMo').val('');
+                    $('#totalEfe').val('');
+                    $('#totalElec').val('');
+                    $('#totalTarj').val('');
+                    $('#totalEgr').val('');
+                    $('#dineCaja').val('');
 
                 }else if(data==="Ha ocurrido un error"){
                     Swal.fire({
@@ -869,6 +880,7 @@ var referencia;
     pago = $(this).val();
     if(tipo_domi === "Presencial"){
         if(pago === "Efectivo"){
+            $('#pagar').prop("disabled",true);
             $('#efectivo').show();
             $('#credito').hide();
             $('#debito').hide();
@@ -982,6 +994,14 @@ $('#baseMo').on('keyup', () => {
     var chain = String(value.replace(/\D/g, ""));
     const newValue = new Intl.NumberFormat('en-US').format(chain);
     $('#baseMo').val("$ " + newValue);
+
+});
+
+$('#totalEgr').on('keyup', () => {
+    const value = $('#totalEgr').val();
+    var chain = String(value.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    $('#totalEgr').val("$ " + newValue);
 
 });
 
@@ -1307,7 +1327,7 @@ $(document).ready(function(){
         }
     });
     //Obtener el total de ingresos diarios 
-    $.ajax({
+    /*$.ajax({
         url: "../egresos.php",
         type: "POST",
         success: function(data){
@@ -1318,7 +1338,7 @@ $(document).ready(function(){
             const newValue = new Intl.NumberFormat('en-US').format(chain);
             $('#totalEgr').val("$ " + newValue);        
         }
-    }); 
+    }); */
     //Ontener el total de ventas en efectivo del día
     $.ajax({
         url: "../ventas_efe.php",
@@ -1789,10 +1809,11 @@ $('#valor_ingre').keypress(function (e) {
             var residuo = valor_ingre-totaal;
             const newValue = new Intl.NumberFormat('en-US').format(residuo.toString().replace(/\D/g, ""));
             $('#vueltas').val("$" + newValue);
+            $('#pagar').prop("disabled",false);
         }
         
     }
-});   
+});  
 
 //Ingreso de JSON de los productos para descontarlos de stock y realizar la posterior venta
 var id_factura;
@@ -2047,7 +2068,8 @@ function createRow(data) {
     <td>`+data[i].opcion+`</td>  
     
     </tr>`;*/
-    $('#cont_ventas').append(trElement);
+    //$('#cont_ventas').append(trElement);
+    $('#cont_ventas').after(trElement);
     //trElement += "<td >" + data[i] + "</td>";
     }  
     //return trElement;

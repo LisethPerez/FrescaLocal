@@ -196,12 +196,8 @@ foreach ($datos as $product) {
             $mbd = new PDO('mysql:host=controler.com.co;dbname=control3_prueba2',$username,$password, array(PDO::ERRMODE_WARNING));
             $mbd->query($consult5);
         } catch (PDOException $e) {
-            //echo 'Falló la conexión: ' . $e->getMessage();
-            
-            //$sql1 = mysqli_query($conn1,$consulta1) or die(mysqli_error());
             
             $file = fopen("sincronizacion/sentenciasBD.txt","a+");
-            //$file = fopen('sentencias.txt', 'w');
             fwrite($file, '<?php'. PHP_EOL);
             fwrite($file, '$conn = mysqli_connect("controler.com.co","control3_cosechafresca2","vk{j@%zq2HWq","control3_prueba2") or die(mysqli_error());'. PHP_EOL);
             fwrite($file, '$consulta1="'.$consult5.'";' . PHP_EOL);
